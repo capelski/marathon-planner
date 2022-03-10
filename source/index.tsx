@@ -4,12 +4,12 @@ import { plan } from './plan';
 import { DistanceUnits, TrainingType } from './types';
 
 const getDisplayDistance = (distance: number, distanceUnits: DistanceUnits) =>
-  distanceUnits === DistanceUnits.km
-    ? `${Math.round(distance * 16.09) / 10} km`
-    : `${distance} miles`;
+  distanceUnits === DistanceUnits.kilometers
+    ? `${Math.round(distance * 16.09) / 10} ${DistanceUnits.kilometers}`
+    : `${distance} ${DistanceUnits.miles}`;
 
 const App: React.FC = () => {
-  const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(DistanceUnits.km);
+  const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(DistanceUnits.kilometers);
 
   return (
     <div>
@@ -49,14 +49,15 @@ const App: React.FC = () => {
       })}
       <h2>Settings</h2>
       <div>
+        Distance units:{' '}
         <input
-          checked={distanceUnits === DistanceUnits.km}
+          checked={distanceUnits === DistanceUnits.kilometers}
           name="distanceUnits"
           onChange={(event) => setDistanceUnits(event.target.value as DistanceUnits)}
           type="radio"
-          value={DistanceUnits.km}
+          value={DistanceUnits.kilometers}
         />{' '}
-        {DistanceUnits.km}
+        {DistanceUnits.kilometers}
         <input
           checked={distanceUnits === DistanceUnits.miles}
           name="distanceUnits"

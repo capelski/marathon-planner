@@ -1,6 +1,6 @@
 export enum DistanceUnits {
-  km = 'km',
-  miles = 'miles'
+  kilometers = 'km',
+  miles = 'mi'
 }
 
 export type Training =
