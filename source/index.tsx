@@ -3,6 +3,16 @@ import ReactDOM from 'react-dom';
 import { plan } from './plan';
 import { DistanceUnits, TrainingType } from './types';
 
+const trainingTypeColors = {
+  [TrainingType.speed]: '#fd600e',
+  [TrainingType.strength]: '#fea607',
+  [TrainingType.timed]: '#a2d11c',
+  [TrainingType.comfortable]: '#15546b',
+  [TrainingType.recovery]: '#830040',
+  [TrainingType.race]: 'lightgrey',
+  [TrainingType.rest]: 'lightgrey'
+};
+
 const getDisplayDistance = (distance: number, distanceUnits: DistanceUnits) =>
   distanceUnits === DistanceUnits.kilometers
     ? `${Math.round(distance * 16.09) / 10} ${DistanceUnits.kilometers}`
@@ -14,15 +24,23 @@ const App: React.FC = () => {
   return (
     <div>
       <h1>Marathon planner</h1>
+
+      <h2>Plan</h2>
       {plan.map((week) => {
         return (
           <div>
-            <h3>Week {week.number}</h3>
+            <h4>Week {week.number}</h4>
             <div className="week" style={{ display: 'flex' }}>
               {week.trainings.map((training) => {
                 return (
                   <div className="day" style={{ textAlign: 'center', width: '14.28%' }}>
-                    <div>{training.type}</div>
+                    <div
+                      style={{
+                        backgroundColor: trainingTypeColors[training.type],
+                        height: 10,
+                        marginLeft: 2
+                      }}
+                    />
                     {(training.type === TrainingType.comfortable ||
                       training.type === TrainingType.recovery ||
                       training.type === TrainingType.timed) && (
@@ -35,9 +53,7 @@ const App: React.FC = () => {
                           {training.intervalsNumber}x{' '}
                           {getDisplayDistance(training.intervalDistance, distanceUnits)}
                         </div>
-                        <div>
-                          Recovery: {getDisplayDistance(training.intervalRecovery, distanceUnits)}
-                        </div>
+                        <div>🔄 {getDisplayDistance(training.intervalRecovery, distanceUnits)}</div>
                       </div>
                     )}
                   </div>
@@ -47,6 +63,24 @@ const App: React.FC = () => {
           </div>
         );
       })}
+
+      <h2>Legend</h2>
+      {Object.values(TrainingType).map((trainingType) => {
+        return (
+          <div>
+            <span
+              style={{
+                backgroundColor: trainingTypeColors[trainingType],
+                display: 'inline-block',
+                height: 16,
+                width: 16
+              }}
+            />{' '}
+            {trainingType}
+          </div>
+        );
+      })}
+
       <h2>Settings</h2>
       <div>
         Distance units:{' '}

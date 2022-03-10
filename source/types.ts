@@ -18,14 +18,15 @@ export type Training =
       intervalsNumber: number;
     };
 
+// The existing TrainingType members order is needed for the legend to be displayed properly
 export enum TrainingType {
+  speed = 'speed',
+  strength = 'strength',
+  timed = 'timed',
   comfortable = 'comfortable',
   recovery = 'recovery',
   race = 'race',
-  rest = 'rest',
-  speed = 'speed',
-  strength = 'strength',
-  timed = 'timed'
+  rest = 'rest'
 }
 
 export type Week = {
