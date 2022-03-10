@@ -26,7 +26,7 @@
   "name": "marathon-planner",
   "scripts": {
     "build": "npm run clean && webpack --config webpack/production.config.js",
-    "clean": "rm -rf distribution",
+    "clean": "rm -rf docs",
     "clean:modules": "rm -rf node_modules",
     "format:check": "prettier --list-different './source/**/*.{ts,tsx}' './webpack/*.js' './**/*.json'",
     "format:fix": "prettier --write './source/**/*.{ts,tsx}' './webpack/*.js' './**/*.json'",

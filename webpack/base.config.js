@@ -23,7 +23,7 @@ module.exports = {
     ]
   },
   output: {
-    path: resolve(__dirname, '..', 'distribution'),
+    path: resolve(__dirname, '..', 'docs'),
     publicPath: '/'
   },
   plugins: [
