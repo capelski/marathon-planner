@@ -24,7 +24,7 @@ module.exports = {
   },
   output: {
     path: resolve(__dirname, '..', 'docs'),
-    publicPath: '/'
+    publicPath: '/marathon-planner'
   },
   plugins: [
     new HtmlWebpackPlugin({
