@@ -1,3 +1,8 @@
+export enum DistanceUnits {
+  km = 'km',
+  miles = 'miles'
+}
+
 export type Training =
   | {
       type: TrainingType.comfortable | TrainingType.recovery | TrainingType.timed;
