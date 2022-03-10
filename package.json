@@ -1,0 +1,36 @@
+{
+  "author": "Carles Capellas <capellas.carles@gmail.com>",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "html-loader": "^3.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
+    "prettier": "^2.5.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.3",
+    "webpack-merge": "^5.8.0"
+  },
+  "engines": {
+    "npm": ">=6.14.15",
+    "node": ">=14.18.2"
+  },
+  "license": "ISC",
+  "name": "marathon-planner",
+  "scripts": {
+    "build": "npm run clean && webpack --config webpack/production.config.js",
+    "clean": "rm -rf distribution",
+    "clean:modules": "rm -rf node_modules",
+    "format:check": "prettier --list-different './source/**/*.{ts,tsx}' './webpack/*.js' './**/*.json'",
+    "format:fix": "prettier --write './source/**/*.{ts,tsx}' './webpack/*.js' './**/*.json'",
+    "prepare": "husky install",
+    "start:dev": "webpack serve --config webpack/development.config.js"
+  }
+}
