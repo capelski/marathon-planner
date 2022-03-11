@@ -1,4 +1,4 @@
-import { TrainingType, Week } from './types';
+import { TrainingType, Week } from '../types';
 
 export const plan: Week[] = [
   {

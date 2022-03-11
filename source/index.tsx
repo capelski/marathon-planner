@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { plan } from './plan';
+import { plan } from './logic/plan';
 import { DistanceUnits, Training, TrainingType } from './types';
 
 const trainingTypeColors = {
