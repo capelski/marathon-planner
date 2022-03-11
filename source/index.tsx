@@ -64,12 +64,11 @@ const App: React.FC = () => {
                       training.type === TrainingType.strength) && (
                       <React.Fragment>
                         <div style={{ marginLeft: 8 }}>
-                          {trainingCoreSymbol} {training.intervalsNumber}x
+                          {trainingCoreSymbol} {training.intervalsNumber}x(
                           {getDisplayDistance(training.intervalDistance, distanceUnits)}
-                        </div>
-                        <div style={{ marginLeft: 8 }}>
+                          {' - '}
                           {recoveryIntervalSymbol}{' '}
-                          {getDisplayDistance(training.intervalRecovery, distanceUnits)}
+                          {getDisplayDistance(training.intervalRecovery, distanceUnits)})
                         </div>
                       </React.Fragment>
                     )}
