@@ -1,31 +1,15 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { getDisplayDistance } from './logic/distance-units';
 import { getFullPlan } from './logic/plan';
 import { sortedTrainingTypes, trainingTypeColors } from './logic/training-type';
-import { DistanceUnits, FullTraining, TrainingType } from './types';
+import { getWeekDistance } from './logic/week';
+import { DistanceUnits, TrainingType } from './types';
 
 const coolDownSymbol = '↘️';
 const recoveryIntervalSymbol = '🔄';
 const trainingCoreSymbol = '▶️';
 const warmUpSymbol = '↗️';
-
-const getTrainingDistance = (training: FullTraining) =>
-  training.type === TrainingType.moderate ||
-  training.type === TrainingType.race ||
-  training.type === TrainingType.recovery
-    ? training.distance
-    : training.type === TrainingType.timed
-    ? training.distance + training.warmUpDistance * 2
-    : training.type === TrainingType.speed || training.type === TrainingType.strength
-    ? training.intervalDistance * training.intervalsNumber +
-      training.intervalRecovery * (training.intervalsNumber - 1) +
-      training.warmUpDistance * 2
-    : 0;
-
-const getDisplayDistance = (distance: number, distanceUnits: DistanceUnits) =>
-  distanceUnits === DistanceUnits.kilometers
-    ? `${Math.round(distance * 16.09) / 10} ${DistanceUnits.kilometers}`
-    : `${distance} ${DistanceUnits.miles}`;
 
 const App: React.FC = () => {
   const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(DistanceUnits.kilometers);
@@ -41,13 +25,7 @@ const App: React.FC = () => {
           <div>
             <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
               <h4>Week {week.number}</h4>
-              <div>
-                👟{' '}
-                {getDisplayDistance(
-                  week.trainings.reduce((x, y) => x + getTrainingDistance(y), 0),
-                  distanceUnits
-                )}
-              </div>
+              <div>👟 {getDisplayDistance(getWeekDistance(week), distanceUnits)}</div>
             </div>
             <div className="week" style={{ display: 'flex', flexDirection: 'column' }}>
               {week.trainings.map((training) => {
