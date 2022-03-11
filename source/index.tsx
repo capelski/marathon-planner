@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { plan } from './logic/plan';
+import { sortedTrainingTypes, trainingTypeColors } from './logic/training-type';
 import { DistanceUnits, Training, TrainingType } from './types';
-
-const trainingTypeColors = {
-  [TrainingType.speed]: '#fd600e',
-  [TrainingType.strength]: '#fea607',
-  [TrainingType.race]: '#feff02',
-  [TrainingType.timed]: '#a2d11c',
-  [TrainingType.moderate]: '#4b944c',
-  [TrainingType.recovery]: '#15546b',
-  [TrainingType.rest]: 'lightgrey'
-};
 
 const getTrainingDistance = (training: Training, warmUpDistance: number) =>
   training.type === TrainingType.moderate ||
@@ -89,7 +80,7 @@ const App: React.FC = () => {
       })}
 
       <h2>Legend</h2>
-      {Object.values(TrainingType).map((trainingType) => {
+      {sortedTrainingTypes.map((trainingType) => {
         return (
           <div>
             <span

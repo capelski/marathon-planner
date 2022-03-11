@@ -1,3 +1,4 @@
+export { Dictionary } from './dictionary';
 export { DistanceUnits } from './distance-units';
 export { Training } from './training';
 export { TrainingType } from './training-type';
