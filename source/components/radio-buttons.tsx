@@ -12,6 +12,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = (props) => {
   return (
     <div>
       {`${props.label}: `}
+      <br />
       {props.options.map((option) => {
         return (
           <React.Fragment>

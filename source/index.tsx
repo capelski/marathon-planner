@@ -4,6 +4,7 @@ import { RadioButtons } from './components/radio-buttons';
 import { getDisplayDistance } from './logic/distance-units';
 import { getFullPlan } from './logic/plan';
 import { sortedTrainingTypes, trainingTypeColors } from './logic/training-type';
+import { warmUpDistances } from './logic/warm-up-distances';
 import { getWeekDistance } from './logic/week';
 import { DistanceUnits, TrainingType } from './types';
 
@@ -14,7 +15,8 @@ const warmUpSymbol = '↗️';
 
 const App: React.FC = () => {
   const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(DistanceUnits.kilometers);
-  const [plan] = useState(getFullPlan(1.5));
+  const [warmUpDistance, setWarmUpDistance] = useState(warmUpDistances[0]);
+  const [plan, setPlan] = useState(getFullPlan(warmUpDistances[0]));
 
   return (
     <div>
@@ -117,6 +119,20 @@ const App: React.FC = () => {
         onChange={(nextValue) => setDistanceUnits(nextValue as DistanceUnits)}
         options={[{ value: DistanceUnits.kilometers }, { value: DistanceUnits.miles }]}
         value={distanceUnits}
+      />
+      <RadioButtons
+        label="Warm up/Cool down distance"
+        name="warmUpDistance"
+        onChange={(nextValue) => {
+          const nextWarmUpDistance = parseFloat(nextValue);
+          setWarmUpDistance(nextWarmUpDistance);
+          setPlan(getFullPlan(nextWarmUpDistance));
+        }}
+        options={warmUpDistances.map((d) => ({
+          label: getDisplayDistance(d, distanceUnits),
+          value: String(d)
+        }))}
+        value={String(warmUpDistance)}
       />
     </div>
   );
