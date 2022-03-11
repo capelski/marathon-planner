@@ -1,5 +1,6 @@
-export { Dictionary } from './dictionary';
-export { DistanceUnits } from './distance-units';
-export { Training } from './training';
-export { TrainingType } from './training-type';
-export { Week } from './week';
+export * from './dictionary';
+export * from './distance-units';
+export * from './plan';
+export * from './training';
+export * from './training-type';
+export * from './week';

@@ -1,6 +1,11 @@
-import { Training } from './training';
+import { BaseTraining, FullTraining } from './training';
 
-export type Week = {
+export type BaseWeek = {
   number: number;
-  trainings: Training[];
+  trainings: BaseTraining[];
+};
+
+export type FullWeek = {
+  number: number;
+  trainings: FullTraining[];
 };

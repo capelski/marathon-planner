@@ -1,6 +1,6 @@
-import { TrainingType, Week } from '../types';
+import { BasePlan, FullPlan, FullWeek, TrainingType } from '../types';
 
-export const plan: Week[] = [
+export const basePlan: BasePlan = [
   {
     number: 1,
     trainings: [
@@ -595,3 +595,19 @@ export const plan: Week[] = [
     ]
   }
 ];
+
+export const getFullPlan = (warmUpDistance: number): FullPlan =>
+  basePlan.map<FullWeek>((w) => ({
+    number: w.number,
+    trainings: w.trainings.map((t) =>
+      t.type === TrainingType.moderate ||
+      t.type === TrainingType.race ||
+      t.type === TrainingType.recovery ||
+      t.type === TrainingType.rest
+        ? t
+        : {
+            ...t,
+            warmUpDistance
+          }
+    )
+  }));

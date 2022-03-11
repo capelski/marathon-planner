@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { plan } from './logic/plan';
+import { getFullPlan } from './logic/plan';
 import { sortedTrainingTypes, trainingTypeColors } from './logic/training-type';
-import { DistanceUnits, Training, TrainingType } from './types';
+import { DistanceUnits, FullTraining, TrainingType } from './types';
 
-const getTrainingDistance = (training: Training, warmUpDistance: number) =>
+const getTrainingDistance = (training: FullTraining) =>
   training.type === TrainingType.moderate ||
   training.type === TrainingType.race ||
   training.type === TrainingType.recovery
     ? training.distance
     : training.type === TrainingType.timed
-    ? training.distance + warmUpDistance * 2
+    ? training.distance + training.warmUpDistance * 2
     : training.type === TrainingType.speed || training.type === TrainingType.strength
     ? training.intervalDistance * training.intervalsNumber +
       training.intervalRecovery * (training.intervalsNumber - 1) +
-      warmUpDistance * 2
+      training.warmUpDistance * 2
     : 0;
 
 const getDisplayDistance = (distance: number, distanceUnits: DistanceUnits) =>
@@ -24,7 +24,7 @@ const getDisplayDistance = (distance: number, distanceUnits: DistanceUnits) =>
 
 const App: React.FC = () => {
   const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(DistanceUnits.kilometers);
-  const [warmUpDistance] = useState(1.5);
+  const [plan] = useState(getFullPlan(1.5));
 
   return (
     <div>
@@ -39,7 +39,7 @@ const App: React.FC = () => {
               <div>
                 👟{' '}
                 {getDisplayDistance(
-                  week.trainings.reduce((x, y) => x + getTrainingDistance(y, warmUpDistance), 0),
+                  week.trainings.reduce((x, y) => x + getTrainingDistance(y), 0),
                   distanceUnits
                 )}
               </div>
