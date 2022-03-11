@@ -5,11 +5,7 @@ export enum DistanceUnits {
 
 export type Training =
   | {
-      type:
-        | TrainingType.comfortable
-        | TrainingType.race
-        | TrainingType.recovery
-        | TrainingType.timed;
+      type: TrainingType.moderate | TrainingType.race | TrainingType.recovery | TrainingType.timed;
       distance: number;
     }
   | {
@@ -24,12 +20,12 @@ export type Training =
 
 // The existing TrainingType members order is needed for the legend to be displayed properly
 export enum TrainingType {
-  speed = 'speed',
-  strength = 'strength',
-  timed = 'timed',
+  speed = 'speed training',
+  strength = 'strength training',
   race = 'race',
-  comfortable = 'comfortable',
-  recovery = 'recovery',
+  timed = 'timed training',
+  moderate = 'moderate training',
+  recovery = 'recovery training',
   rest = 'rest'
 }
 

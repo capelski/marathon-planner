@@ -3,20 +3,18 @@ import ReactDOM from 'react-dom';
 import { plan } from './plan';
 import { DistanceUnits, Training, TrainingType } from './types';
 
-const racePaceColor = '#a2d11c';
-
 const trainingTypeColors = {
   [TrainingType.speed]: '#fd600e',
   [TrainingType.strength]: '#fea607',
-  [TrainingType.timed]: racePaceColor,
-  [TrainingType.race]: racePaceColor,
-  [TrainingType.comfortable]: '#4b944c',
+  [TrainingType.race]: '#feff02',
+  [TrainingType.timed]: '#a2d11c',
+  [TrainingType.moderate]: '#4b944c',
   [TrainingType.recovery]: '#15546b',
   [TrainingType.rest]: 'lightgrey'
 };
 
 const getTrainingDistance = (training: Training, warmUpDistance: number) =>
-  training.type === TrainingType.comfortable ||
+  training.type === TrainingType.moderate ||
   training.type === TrainingType.race ||
   training.type === TrainingType.recovery
     ? training.distance
@@ -66,7 +64,7 @@ const App: React.FC = () => {
                         marginLeft: 2
                       }}
                     />
-                    {(training.type === TrainingType.comfortable ||
+                    {(training.type === TrainingType.moderate ||
                       training.type === TrainingType.race ||
                       training.type === TrainingType.recovery ||
                       training.type === TrainingType.timed) && (
@@ -106,6 +104,8 @@ const App: React.FC = () => {
           </div>
         );
       })}
+      <br />
+      <div>🔄 Recovery</div>
 
       <h2>Settings</h2>
       <div>

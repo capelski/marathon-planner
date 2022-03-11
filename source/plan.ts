@@ -14,18 +14,18 @@ export const plan: Week[] = [
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 3
       },
       {
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 3
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 4
       }
     ]
@@ -37,26 +37,26 @@ export const plan: Week[] = [
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 2
       },
       {
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 3
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 3
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 3
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 4
       }
     ]
@@ -68,26 +68,26 @@ export const plan: Week[] = [
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 4
       },
       {
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 4
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 4
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 4
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 5
       }
     ]
@@ -99,26 +99,26 @@ export const plan: Week[] = [
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 5
       },
       {
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 3
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 3
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 5
       }
     ]
@@ -130,26 +130,26 @@ export const plan: Week[] = [
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 5
       },
       {
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 4
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 4
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 6
       }
     ]
@@ -179,11 +179,11 @@ export const plan: Week[] = [
         distance: 4
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 8
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 8
       }
     ]
@@ -213,11 +213,11 @@ export const plan: Week[] = [
         distance: 4
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 10
       }
     ]
@@ -247,11 +247,11 @@ export const plan: Week[] = [
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 10
       }
     ]
@@ -281,11 +281,11 @@ export const plan: Week[] = [
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 15
       }
     ]
@@ -315,11 +315,11 @@ export const plan: Week[] = [
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 8
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 10
       }
     ]
@@ -349,11 +349,11 @@ export const plan: Week[] = [
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 8
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 16
       }
     ]
@@ -383,11 +383,11 @@ export const plan: Week[] = [
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 8
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 10
       }
     ]
@@ -417,11 +417,11 @@ export const plan: Week[] = [
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 16
       }
     ]
@@ -451,11 +451,11 @@ export const plan: Week[] = [
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 8
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 10
       }
     ]
@@ -485,11 +485,11 @@ export const plan: Week[] = [
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 16
       }
     ]
@@ -519,11 +519,11 @@ export const plan: Week[] = [
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 8
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 10
       }
     ]
@@ -553,11 +553,11 @@ export const plan: Week[] = [
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 8
       }
     ]
@@ -570,22 +570,22 @@ export const plan: Week[] = [
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 5
       },
       {
         type: TrainingType.rest
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 6
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 5
       },
       {
-        type: TrainingType.comfortable,
+        type: TrainingType.moderate,
         distance: 3
       },
       {
