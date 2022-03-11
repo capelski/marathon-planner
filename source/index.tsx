@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom';
 import { plan } from './plan';
 import { DistanceUnits, TrainingType } from './types';
 
+const racePaceColor = '#a2d11c';
+
 const trainingTypeColors = {
   [TrainingType.speed]: '#fd600e',
   [TrainingType.strength]: '#fea607',
-  [TrainingType.timed]: '#a2d11c',
-  [TrainingType.comfortable]: '#15546b',
-  [TrainingType.recovery]: '#830040',
-  [TrainingType.race]: 'lightgrey',
+  [TrainingType.timed]: racePaceColor,
+  [TrainingType.race]: racePaceColor,
+  [TrainingType.comfortable]: '#4b944c',
+  [TrainingType.recovery]: '#15546b',
   [TrainingType.rest]: 'lightgrey'
 };
 
@@ -42,6 +44,7 @@ const App: React.FC = () => {
                       }}
                     />
                     {(training.type === TrainingType.comfortable ||
+                      training.type === TrainingType.race ||
                       training.type === TrainingType.recovery ||
                       training.type === TrainingType.timed) && (
                       <div>{getDisplayDistance(training.distance, distanceUnits)}</div>

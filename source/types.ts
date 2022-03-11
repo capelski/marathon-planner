@@ -5,11 +5,15 @@ export enum DistanceUnits {
 
 export type Training =
   | {
-      type: TrainingType.comfortable | TrainingType.recovery | TrainingType.timed;
+      type:
+        | TrainingType.comfortable
+        | TrainingType.race
+        | TrainingType.recovery
+        | TrainingType.timed;
       distance: number;
     }
   | {
-      type: TrainingType.race | TrainingType.rest;
+      type: TrainingType.rest;
     }
   | {
       type: TrainingType.speed | TrainingType.strength;
@@ -23,9 +27,9 @@ export enum TrainingType {
   speed = 'speed',
   strength = 'strength',
   timed = 'timed',
+  race = 'race',
   comfortable = 'comfortable',
   recovery = 'recovery',
-  race = 'race',
   rest = 'rest'
 }
 

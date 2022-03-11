@@ -589,7 +589,8 @@ export const plan: Week[] = [
         distance: 3
       },
       {
-        type: TrainingType.race
+        type: TrainingType.race,
+        distance: 26.2
       }
     ]
   }
