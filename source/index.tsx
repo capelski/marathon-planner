@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { plan } from './plan';
-import { DistanceUnits, TrainingType } from './types';
+import { DistanceUnits, Training, TrainingType } from './types';
 
 const racePaceColor = '#a2d11c';
 
@@ -15,6 +15,19 @@ const trainingTypeColors = {
   [TrainingType.rest]: 'lightgrey'
 };
 
+const getTrainingDistance = (training: Training, warmUpDistance: number) =>
+  training.type === TrainingType.comfortable ||
+  training.type === TrainingType.race ||
+  training.type === TrainingType.recovery
+    ? training.distance
+    : training.type === TrainingType.timed
+    ? training.distance + warmUpDistance * 2
+    : training.type === TrainingType.speed || training.type === TrainingType.strength
+    ? training.intervalDistance * training.intervalsNumber +
+      training.intervalRecovery * (training.intervalsNumber - 1) +
+      warmUpDistance * 2
+    : 0;
+
 const getDisplayDistance = (distance: number, distanceUnits: DistanceUnits) =>
   distanceUnits === DistanceUnits.kilometers
     ? `${Math.round(distance * 16.09) / 10} ${DistanceUnits.kilometers}`
@@ -22,6 +35,7 @@ const getDisplayDistance = (distance: number, distanceUnits: DistanceUnits) =>
 
 const App: React.FC = () => {
   const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(DistanceUnits.kilometers);
+  const [warmUpDistance] = useState(1.5);
 
   return (
     <div>
@@ -31,7 +45,16 @@ const App: React.FC = () => {
       {plan.map((week) => {
         return (
           <div>
-            <h4>Week {week.number}</h4>
+            <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
+              <h4>Week {week.number}</h4>
+              <div>
+                👟{' '}
+                {getDisplayDistance(
+                  week.trainings.reduce((x, y) => x + getTrainingDistance(y, warmUpDistance), 0),
+                  distanceUnits
+                )}
+              </div>
+            </div>
             <div className="week" style={{ display: 'flex' }}>
               {week.trainings.map((training) => {
                 return (
@@ -53,7 +76,7 @@ const App: React.FC = () => {
                       training.type === TrainingType.strength) && (
                       <div>
                         <div>
-                          {training.intervalsNumber}x{' '}
+                          {training.intervalsNumber}x
                           {getDisplayDistance(training.intervalDistance, distanceUnits)}
                         </div>
                         <div>🔄 {getDisplayDistance(training.intervalRecovery, distanceUnits)}</div>
