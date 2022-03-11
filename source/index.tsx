@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { RadioButtons } from './components/radio-buttons';
 import { getDisplayDistance } from './logic/distance-units';
 import { getFullPlan } from './logic/plan';
 import { sortedTrainingTypes, trainingTypeColors } from './logic/training-type';
@@ -110,25 +111,13 @@ const App: React.FC = () => {
       <div>{recoveryIntervalSymbol} Recovery interval</div>
 
       <h2>Settings</h2>
-      <div>
-        Distance units:{' '}
-        <input
-          checked={distanceUnits === DistanceUnits.kilometers}
-          name="distanceUnits"
-          onChange={(event) => setDistanceUnits(event.target.value as DistanceUnits)}
-          type="radio"
-          value={DistanceUnits.kilometers}
-        />{' '}
-        {DistanceUnits.kilometers}
-        <input
-          checked={distanceUnits === DistanceUnits.miles}
-          name="distanceUnits"
-          onChange={(event) => setDistanceUnits(event.target.value as DistanceUnits)}
-          type="radio"
-          value={DistanceUnits.miles}
-        />{' '}
-        {DistanceUnits.miles}
-      </div>
+      <RadioButtons
+        label="Distance units"
+        name="distanceUnits"
+        onChange={(nextValue) => setDistanceUnits(nextValue as DistanceUnits)}
+        options={[{ value: DistanceUnits.kilometers }, { value: DistanceUnits.miles }]}
+        value={distanceUnits}
+      />
     </div>
   );
 };
