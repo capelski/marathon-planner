@@ -4,6 +4,11 @@ import { getFullPlan } from './logic/plan';
 import { sortedTrainingTypes, trainingTypeColors } from './logic/training-type';
 import { DistanceUnits, FullTraining, TrainingType } from './types';
 
+const coolDownSymbol = '↘️';
+const recoveryIntervalSymbol = '🔄';
+const trainingCoreSymbol = '▶️';
+const warmUpSymbol = '↗️';
+
 const getTrainingDistance = (training: FullTraining) =>
   training.type === TrainingType.moderate ||
   training.type === TrainingType.race ||
@@ -44,31 +49,55 @@ const App: React.FC = () => {
                 )}
               </div>
             </div>
-            <div className="week" style={{ display: 'flex' }}>
+            <div className="week" style={{ display: 'flex', flexDirection: 'column' }}>
               {week.trainings.map((training) => {
                 return (
-                  <div className="day" style={{ textAlign: 'center', width: '14.28%' }}>
+                  <div
+                    className="day"
+                    style={{ alignItems: 'center', display: 'flex', flexDirection: 'row' }}
+                  >
                     <div
                       style={{
                         backgroundColor: trainingTypeColors[training.type],
-                        height: 10,
-                        marginLeft: 2
+                        height: 24,
+                        marginBottom: 4,
+                        width: 48
                       }}
                     />
+                    {(training.type === TrainingType.speed ||
+                      training.type === TrainingType.strength ||
+                      training.type === TrainingType.timed) && (
+                      <div style={{ marginLeft: 8 }}>
+                        {warmUpSymbol} {getDisplayDistance(training.warmUpDistance, distanceUnits)}
+                      </div>
+                    )}
                     {(training.type === TrainingType.moderate ||
                       training.type === TrainingType.race ||
                       training.type === TrainingType.recovery ||
                       training.type === TrainingType.timed) && (
-                      <div>{getDisplayDistance(training.distance, distanceUnits)}</div>
+                      <div style={{ marginLeft: 8 }}>
+                        {trainingCoreSymbol} {getDisplayDistance(training.distance, distanceUnits)}
+                      </div>
                     )}
                     {(training.type === TrainingType.speed ||
                       training.type === TrainingType.strength) && (
-                      <div>
-                        <div>
-                          {training.intervalsNumber}x
+                      <React.Fragment>
+                        <div style={{ marginLeft: 8 }}>
+                          {trainingCoreSymbol} {training.intervalsNumber}x
                           {getDisplayDistance(training.intervalDistance, distanceUnits)}
                         </div>
-                        <div>🔄 {getDisplayDistance(training.intervalRecovery, distanceUnits)}</div>
+                        <div style={{ marginLeft: 8 }}>
+                          {recoveryIntervalSymbol}{' '}
+                          {getDisplayDistance(training.intervalRecovery, distanceUnits)}
+                        </div>
+                      </React.Fragment>
+                    )}
+                    {(training.type === TrainingType.speed ||
+                      training.type === TrainingType.strength ||
+                      training.type === TrainingType.timed) && (
+                      <div style={{ marginLeft: 8 }}>
+                        {coolDownSymbol}{' '}
+                        {getDisplayDistance(training.warmUpDistance, distanceUnits)}
                       </div>
                     )}
                   </div>
@@ -82,13 +111,14 @@ const App: React.FC = () => {
       <h2>Legend</h2>
       {sortedTrainingTypes.map((trainingType) => {
         return (
-          <div>
+          <div style={{ alignItems: 'center', display: 'flex', marginBottom: 4 }}>
             <span
               style={{
                 backgroundColor: trainingTypeColors[trainingType],
                 display: 'inline-block',
-                height: 16,
-                width: 16
+                height: 24,
+                marginRight: 8,
+                width: 48
               }}
             />{' '}
             {trainingType}
@@ -96,7 +126,10 @@ const App: React.FC = () => {
         );
       })}
       <br />
-      <div>🔄 Recovery</div>
+      <div>{trainingCoreSymbol} Training core</div>
+      <div>{warmUpSymbol} Warm up</div>
+      <div>{coolDownSymbol} Cool down</div>
+      <div>{recoveryIntervalSymbol} Recovery interval</div>
 
       <h2>Settings</h2>
       <div>
