@@ -1,4 +1,4 @@
-import { TrainingType } from './training-type';
+import { TrainingType } from '../models';
 
 /* Distance training */
 

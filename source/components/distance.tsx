@@ -1,6 +1,6 @@
 import React from 'react';
-import { convertDistance } from '../logic/distance-units';
-import { DistanceUnits } from '../types';
+import { convertDistance } from '../logic';
+import { DistanceUnits } from '../models';
 
 export interface DistanceProps {
   displayUnits: boolean;

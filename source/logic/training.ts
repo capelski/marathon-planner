@@ -1,4 +1,5 @@
-import { FullTraining, TrainingType } from '../types';
+import { TrainingType } from '../models';
+import { FullTraining } from '../types';
 
 export const getTrainingDistance = (training: FullTraining) =>
   training.type === TrainingType.moderate ||

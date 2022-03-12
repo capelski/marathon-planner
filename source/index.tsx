@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
-import { Distance, getDisplayDistance } from './components/distance';
-import { RadioButtons } from './components/radio-buttons';
-import { getFullPlan } from './logic/plan';
-import { sortedTrainingTypes, trainingTypeColors } from './logic/training-type';
-import { warmUpDistances } from './logic/warm-up-distances';
-import { getWeekDistance } from './logic/week';
-import { DistanceUnits, TrainingType } from './types';
+import { Distance, RadioButtons, getDisplayDistance } from './components';
+import { getFullPlan, getWeekDistance } from './logic';
+import {
+  DistanceUnits,
+  warmUpDistances,
+  trainingTypeColors,
+  TrainingType,
+  sortedTrainingTypes
+} from './models';
 
 const coolDownSymbol = '↘️';
 const recoveryIntervalSymbol = '🔄';
