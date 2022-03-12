@@ -164,9 +164,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.speed,
-        intervalDistance: 0.25,
-        intervalRecovery: 0.25,
-        intervalsNumber: 12
+        intervals: {
+          intervalDistance: 0.25,
+          intervalsNumber: 12,
+          recoveryDistance: 0.25
+        }
       },
       {
         type: TrainingType.rest
@@ -198,9 +200,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.speed,
-        intervalDistance: 0.4,
-        intervalRecovery: 0.25,
-        intervalsNumber: 8
+        intervals: {
+          intervalDistance: 0.4,
+          intervalsNumber: 8,
+          recoveryDistance: 0.25
+        }
       },
       {
         type: TrainingType.rest
@@ -232,9 +236,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.speed,
-        intervalDistance: 0.5,
-        intervalRecovery: 0.25,
-        intervalsNumber: 6
+        intervals: {
+          intervalDistance: 0.5,
+          intervalsNumber: 6,
+          recoveryDistance: 0.25
+        }
       },
       {
         type: TrainingType.rest
@@ -266,9 +272,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.speed,
-        intervalDistance: 0.6,
-        intervalRecovery: 0.25,
-        intervalsNumber: 5
+        intervals: {
+          intervalDistance: 0.6,
+          intervalsNumber: 5,
+          recoveryDistance: 0.25
+        }
       },
       {
         type: TrainingType.rest
@@ -300,9 +308,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.speed,
-        intervalDistance: 0.75,
-        intervalRecovery: 0.25,
-        intervalsNumber: 4
+        intervals: {
+          intervalDistance: 0.75,
+          intervalsNumber: 4,
+          recoveryDistance: 0.25
+        }
       },
       {
         type: TrainingType.rest
@@ -334,9 +344,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.strength,
-        intervalDistance: 1,
-        intervalRecovery: 0.25,
-        intervalsNumber: 6
+        intervals: {
+          intervalDistance: 1,
+          intervalsNumber: 6,
+          recoveryDistance: 0.25
+        }
       },
       {
         type: TrainingType.rest
@@ -368,9 +380,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.strength,
-        intervalDistance: 1.5,
-        intervalRecovery: 0.5,
-        intervalsNumber: 4
+        intervals: {
+          intervalDistance: 1.5,
+          intervalsNumber: 4,
+          recoveryDistance: 0.5
+        }
       },
       {
         type: TrainingType.rest
@@ -402,9 +416,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.strength,
-        intervalDistance: 2,
-        intervalRecovery: 0.5,
-        intervalsNumber: 3
+        intervals: {
+          intervalDistance: 2,
+          intervalsNumber: 3,
+          recoveryDistance: 0.5
+        }
       },
       {
         type: TrainingType.rest
@@ -436,9 +452,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.strength,
-        intervalDistance: 3,
-        intervalRecovery: 1,
-        intervalsNumber: 2
+        intervals: {
+          intervalDistance: 3,
+          intervalsNumber: 2,
+          recoveryDistance: 1
+        }
       },
       {
         type: TrainingType.rest
@@ -470,9 +488,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.strength,
-        intervalDistance: 2,
-        intervalRecovery: 0.5,
-        intervalsNumber: 3
+        intervals: {
+          intervalDistance: 2,
+          intervalsNumber: 3,
+          recoveryDistance: 0.5
+        }
       },
       {
         type: TrainingType.rest
@@ -504,9 +524,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.strength,
-        intervalDistance: 1.5,
-        intervalRecovery: 0.25,
-        intervalsNumber: 4
+        intervals: {
+          intervalDistance: 1.5,
+          intervalsNumber: 4,
+          recoveryDistance: 0.25
+        }
       },
       {
         type: TrainingType.rest
@@ -538,9 +560,11 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.strength,
-        intervalDistance: 1,
-        intervalRecovery: 0.25,
-        intervalsNumber: 6
+        intervals: {
+          intervalDistance: 1,
+          intervalsNumber: 6,
+          recoveryDistance: 0.25
+        }
       },
       {
         type: TrainingType.rest

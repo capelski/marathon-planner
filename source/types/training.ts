@@ -1,4 +1,5 @@
 import { TrainingType } from '../models';
+import { Intervals } from './intervals';
 
 /* Distance training */
 
@@ -11,9 +12,7 @@ export type DistanceTraining = {
 
 export type BaseIntervalsTraining = {
   type: TrainingType.speed | TrainingType.strength;
-  intervalDistance: number;
-  intervalRecovery: number;
-  intervalsNumber: number;
+  intervals: Intervals;
 };
 
 export type FullIntervalsTraining = BaseIntervalsTraining & WarmUpTraining;
