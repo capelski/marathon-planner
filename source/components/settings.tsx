@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getFullPlan } from '../logic';
 import { DistanceUnits, warmUpDistances } from '../models';
 import { FullPlan } from '../types';
@@ -7,13 +7,15 @@ import { RadioButtons } from './radio-buttons';
 
 export interface SettingsProps {
   distanceUnits: DistanceUnits;
-  warmUpDistance: number;
   setDistanceUnits: (distanceUnits: DistanceUnits) => void;
   setPlan: (plan: FullPlan) => void;
-  setWarmUpDistance: (warmUpDistance: number) => void;
 }
 
 export const Settings: React.FC<SettingsProps> = (props) => {
+  const [targetPaceMinutes, setTargetPaceMinutes] = useState('5');
+  const [targetPaceSeconds, setTargetPaceSeconds] = useState('30');
+  const [warmUpDistance, setWarmUpDistance] = useState(warmUpDistances[0]);
+
   return (
     <React.Fragment>
       <h2>Settings</h2>
@@ -29,15 +31,33 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         name="warmUpDistance"
         onChange={(nextValue) => {
           const nextWarmUpDistance = parseFloat(nextValue);
-          props.setWarmUpDistance(nextWarmUpDistance);
+          setWarmUpDistance(nextWarmUpDistance);
           props.setPlan(getFullPlan(nextWarmUpDistance));
         }}
         options={warmUpDistances.map((d) => ({
           label: getDisplayDistance(d, props.distanceUnits, true),
           value: String(d)
         }))}
-        value={String(props.warmUpDistance)}
+        value={String(warmUpDistance)}
       />
+      <div>
+        Target pace:{' '}
+        <input
+          onChange={(event) => setTargetPaceMinutes(event.target.value)}
+          type="number"
+          style={{ width: 50 }}
+          value={targetPaceMinutes}
+        />
+        {" ' "}
+        <input
+          onChange={(event) => setTargetPaceSeconds(event.target.value)}
+          type="number"
+          style={{ width: 50 }}
+          value={targetPaceSeconds}
+        />
+        {' " / '}
+        {props.distanceUnits}
+      </div>
     </React.Fragment>
   );
 };

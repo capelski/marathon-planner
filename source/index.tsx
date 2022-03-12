@@ -7,7 +7,6 @@ import { DistanceUnits, warmUpDistances } from './models';
 
 const App: React.FC = () => {
   const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(DistanceUnits.kilometers);
-  const [warmUpDistance, setWarmUpDistance] = useState(warmUpDistances[0]);
   const [plan, setPlan] = useState(getFullPlan(warmUpDistances[0]));
   const isDesktop = useMediaQuery({ minWidth: 768 });
 
@@ -23,8 +22,6 @@ const App: React.FC = () => {
         distanceUnits={distanceUnits}
         setDistanceUnits={setDistanceUnits}
         setPlan={setPlan}
-        setWarmUpDistance={setWarmUpDistance}
-        warmUpDistance={warmUpDistance}
       />
     </div>
   );
