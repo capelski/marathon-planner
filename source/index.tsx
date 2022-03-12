@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
 import { Distance, RadioButtons, getDisplayDistance } from './components';
-import { getFullPlan, getWeekDistance } from './logic';
+import { getFullPlan, getWarmUpDistance, getWeekDistance } from './logic';
 import {
   DistanceUnits,
   warmUpDistances,
@@ -56,14 +56,12 @@ const App: React.FC = () => {
                         width: 48
                       }}
                     />
-                    {(training.type === TrainingType.speed ||
-                      training.type === TrainingType.strength ||
-                      training.type === TrainingType.timed) && (
+                    {getWarmUpDistance(training) > 0 && (
                       <div style={{ marginLeft: 8 }}>
                         {warmUpSymbol}{' '}
                         <Distance
                           displayUnits={isDesktop}
-                          distance={training.warmUpDistance}
+                          distance={getWarmUpDistance(training)}
                           distanceUnits={distanceUnits}
                         />
                       </div>
@@ -103,14 +101,12 @@ const App: React.FC = () => {
                         </div>
                       </React.Fragment>
                     )}
-                    {(training.type === TrainingType.speed ||
-                      training.type === TrainingType.strength ||
-                      training.type === TrainingType.timed) && (
+                    {getWarmUpDistance(training) > 0 && (
                       <div style={{ marginLeft: 8 }}>
                         {coolDownSymbol}{' '}
                         <Distance
                           displayUnits={isDesktop}
-                          distance={training.warmUpDistance}
+                          distance={getWarmUpDistance(training)}
                           distanceUnits={distanceUnits}
                         />
                       </div>
