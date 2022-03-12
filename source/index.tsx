@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
       <Plan distanceUnits={distanceUnits} isDesktop={isDesktop} plan={plan} />
 
-      <Legend />
+      <Legend isDesktop={isDesktop} />
 
       <Settings
         distanceUnits={distanceUnits}

@@ -18,13 +18,21 @@ export const Training: React.FC<TrainingProps> = (props) => {
   const warmUpDistance = getWarmUpDistance(props.training);
 
   return (
-    <div className="day" style={{ alignItems: 'center', display: 'flex', flexDirection: 'row' }}>
+    <div
+      className="day"
+      style={{
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: props.isDesktop ? 'column' : 'row',
+        width: props.isDesktop ? '14.28%' : undefined
+      }}
+    >
       <div
         style={{
           backgroundColor: trainingTypeColors[props.training.type],
-          height: 24,
+          height: props.isDesktop ? 16 : 24,
           marginBottom: 4,
-          width: 48
+          width: props.isDesktop ? 'calc(100% - 4px)' : 40
         }}
       />
       {warmUpDistance > 0 && (

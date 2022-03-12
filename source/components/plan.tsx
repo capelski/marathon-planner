@@ -29,7 +29,10 @@ export const Plan: React.FC<PlanProps> = (props) => {
                 />
               </div>
             </div>
-            <div className="week" style={{ display: 'flex', flexDirection: 'column' }}>
+            <div
+              className="week"
+              style={{ display: 'flex', flexDirection: props.isDesktop ? 'row' : 'column' }}
+            >
               {week.trainings.map((training) => {
                 return (
                   <Training
