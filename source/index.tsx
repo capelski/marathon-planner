@@ -33,9 +33,9 @@ const App: React.FC = () => {
               <div>
                 👟{' '}
                 <Distance
+                  displayUnits={true}
                   distance={getWeekDistance(week)}
                   distanceUnits={distanceUnits}
-                  isDesktop={isDesktop}
                 />
               </div>
             </div>
@@ -60,9 +60,9 @@ const App: React.FC = () => {
                       <div style={{ marginLeft: 8 }}>
                         {warmUpSymbol}{' '}
                         <Distance
+                          displayUnits={isDesktop}
                           distance={training.warmUpDistance}
                           distanceUnits={distanceUnits}
-                          isDesktop={isDesktop}
                         />
                       </div>
                     )}
@@ -73,9 +73,9 @@ const App: React.FC = () => {
                       <div style={{ marginLeft: 8 }}>
                         {trainingCoreSymbol}{' '}
                         <Distance
+                          displayUnits={isDesktop}
                           distance={training.distance}
                           distanceUnits={distanceUnits}
-                          isDesktop={isDesktop}
                         />
                       </div>
                     )}
@@ -86,16 +86,16 @@ const App: React.FC = () => {
                           {training.intervalsNumber}x(
                           {trainingCoreSymbol}{' '}
                           <Distance
+                            displayUnits={isDesktop}
                             distance={training.intervalDistance}
                             distanceUnits={distanceUnits}
-                            isDesktop={isDesktop}
                           />
                           {' - '}
                           {recoveryIntervalSymbol}{' '}
                           <Distance
+                            displayUnits={isDesktop}
                             distance={training.intervalRecovery}
                             distanceUnits={distanceUnits}
-                            isDesktop={isDesktop}
                           />
                           )
                         </div>
@@ -107,9 +107,9 @@ const App: React.FC = () => {
                       <div style={{ marginLeft: 8 }}>
                         {coolDownSymbol}{' '}
                         <Distance
+                          displayUnits={isDesktop}
                           distance={training.warmUpDistance}
                           distanceUnits={distanceUnits}
-                          isDesktop={isDesktop}
                         />
                       </div>
                     )}
