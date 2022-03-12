@@ -14,7 +14,14 @@ export const Plan: React.FC<PlanProps> = (props) => {
     <React.Fragment>
       <h2>Plan</h2>
       {props.plan.map((week) => {
-        return <Week distanceUnits={props.distanceUnits} isDesktop={props.isDesktop} week={week} />;
+        return (
+          <Week
+            distanceUnits={props.distanceUnits}
+            isDesktop={props.isDesktop}
+            key={week.number}
+            week={week}
+          />
+        );
       })}
     </React.Fragment>
   );

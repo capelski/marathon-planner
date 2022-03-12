@@ -15,7 +15,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = (props) => {
       <br />
       {props.options.map((option) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={option.value}>
             {' '}
             <input
               checked={props.value === option.value}

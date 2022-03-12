@@ -52,11 +52,12 @@ export const Week: React.FC<WeekProps> = (props) => {
           className="week"
           style={{ display: 'flex', flexDirection: props.isDesktop ? 'row' : 'column' }}
         >
-          {props.week.trainings.map((training) => {
+          {props.week.trainings.map((training, index) => {
             return (
               <Training
                 distanceUnits={props.distanceUnits}
                 isDesktop={props.isDesktop}
+                key={index}
                 training={training}
               />
             );

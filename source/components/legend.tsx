@@ -18,7 +18,10 @@ export const Legend: React.FC<LegendProps> = (props) => {
       <h2>Legend</h2>
       {sortedTrainingTypes.map((trainingType) => {
         return (
-          <div style={{ alignItems: 'center', display: 'flex', marginBottom: 4 }}>
+          <div
+            key={trainingType}
+            style={{ alignItems: 'center', display: 'flex', marginBottom: 4 }}
+          >
             <span
               style={{
                 backgroundColor: trainingTypeColors[trainingType],
