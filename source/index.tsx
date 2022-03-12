@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { useMediaQuery } from 'react-responsive';
+import { Distance, getDisplayDistance } from './components/distance';
 import { RadioButtons } from './components/radio-buttons';
-import { getDisplayDistance } from './logic/distance-units';
 import { getFullPlan } from './logic/plan';
 import { sortedTrainingTypes, trainingTypeColors } from './logic/training-type';
 import { warmUpDistances } from './logic/warm-up-distances';
@@ -17,6 +18,7 @@ const App: React.FC = () => {
   const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(DistanceUnits.kilometers);
   const [warmUpDistance, setWarmUpDistance] = useState(warmUpDistances[0]);
   const [plan, setPlan] = useState(getFullPlan(warmUpDistances[0]));
+  const isDesktop = useMediaQuery({ minWidth: 768 });
 
   return (
     <div>
@@ -28,7 +30,14 @@ const App: React.FC = () => {
           <div>
             <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
               <h4>Week {week.number}</h4>
-              <div>👟 {getDisplayDistance(getWeekDistance(week), distanceUnits)}</div>
+              <div>
+                👟{' '}
+                <Distance
+                  distance={getWeekDistance(week)}
+                  distanceUnits={distanceUnits}
+                  isDesktop={isDesktop}
+                />
+              </div>
             </div>
             <div className="week" style={{ display: 'flex', flexDirection: 'column' }}>
               {week.trainings.map((training) => {
@@ -49,7 +58,12 @@ const App: React.FC = () => {
                       training.type === TrainingType.strength ||
                       training.type === TrainingType.timed) && (
                       <div style={{ marginLeft: 8 }}>
-                        {warmUpSymbol} {getDisplayDistance(training.warmUpDistance, distanceUnits)}
+                        {warmUpSymbol}{' '}
+                        <Distance
+                          distance={training.warmUpDistance}
+                          distanceUnits={distanceUnits}
+                          isDesktop={isDesktop}
+                        />
                       </div>
                     )}
                     {(training.type === TrainingType.moderate ||
@@ -57,18 +71,33 @@ const App: React.FC = () => {
                       training.type === TrainingType.recovery ||
                       training.type === TrainingType.timed) && (
                       <div style={{ marginLeft: 8 }}>
-                        {trainingCoreSymbol} {getDisplayDistance(training.distance, distanceUnits)}
+                        {trainingCoreSymbol}{' '}
+                        <Distance
+                          distance={training.distance}
+                          distanceUnits={distanceUnits}
+                          isDesktop={isDesktop}
+                        />
                       </div>
                     )}
                     {(training.type === TrainingType.speed ||
                       training.type === TrainingType.strength) && (
                       <React.Fragment>
                         <div style={{ marginLeft: 8 }}>
-                          {trainingCoreSymbol} {training.intervalsNumber}x(
-                          {getDisplayDistance(training.intervalDistance, distanceUnits)}
+                          {training.intervalsNumber}x(
+                          {trainingCoreSymbol}{' '}
+                          <Distance
+                            distance={training.intervalDistance}
+                            distanceUnits={distanceUnits}
+                            isDesktop={isDesktop}
+                          />
                           {' - '}
                           {recoveryIntervalSymbol}{' '}
-                          {getDisplayDistance(training.intervalRecovery, distanceUnits)})
+                          <Distance
+                            distance={training.intervalRecovery}
+                            distanceUnits={distanceUnits}
+                            isDesktop={isDesktop}
+                          />
+                          )
                         </div>
                       </React.Fragment>
                     )}
@@ -77,7 +106,11 @@ const App: React.FC = () => {
                       training.type === TrainingType.timed) && (
                       <div style={{ marginLeft: 8 }}>
                         {coolDownSymbol}{' '}
-                        {getDisplayDistance(training.warmUpDistance, distanceUnits)}
+                        <Distance
+                          distance={training.warmUpDistance}
+                          distanceUnits={distanceUnits}
+                          isDesktop={isDesktop}
+                        />
                       </div>
                     )}
                   </div>
@@ -128,7 +161,7 @@ const App: React.FC = () => {
           setPlan(getFullPlan(nextWarmUpDistance));
         }}
         options={warmUpDistances.map((d) => ({
-          label: getDisplayDistance(d, distanceUnits),
+          label: getDisplayDistance(d, distanceUnits, isDesktop),
           value: String(d)
         }))}
         value={String(warmUpDistance)}
