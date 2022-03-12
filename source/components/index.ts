@@ -1,3 +1,3 @@
-export * from './distance';
-export * from './radio-buttons';
-export * from './training';
+export * from './legend';
+export * from './plan';
+export * from './settings';
