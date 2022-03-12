@@ -1,11 +1,10 @@
 import React from 'react';
-import { coolDownSymbol, warmUpSymbol } from '../constants';
+import { coolDownSymbol, trainingCoreSymbol, warmUpSymbol } from '../constants';
 import { getIntervals, getRegularDistance, getWarmUpDistance } from '../logic';
 import { trainingTypeColors, DistanceUnits } from '../models';
 import { FullTraining } from '../types';
 import { IntervalsDistance } from './intervals-distance';
 import { RegularDistance } from './regular-distance';
-import { WarmUpDistance } from './warm-up-distance';
 
 export interface TrainingProps {
   distanceUnits: DistanceUnits;
@@ -29,7 +28,7 @@ export const Training: React.FC<TrainingProps> = (props) => {
         }}
       />
       {warmUpDistance > 0 && (
-        <WarmUpDistance
+        <RegularDistance
           displayUnits={props.isDesktop}
           distance={warmUpDistance}
           distanceUnits={props.distanceUnits}
@@ -41,6 +40,7 @@ export const Training: React.FC<TrainingProps> = (props) => {
           displayUnits={props.isDesktop}
           distance={regularDistance}
           distanceUnits={props.distanceUnits}
+          symbol={trainingCoreSymbol}
         />
       )}
       {intervals && (
@@ -51,7 +51,7 @@ export const Training: React.FC<TrainingProps> = (props) => {
         />
       )}
       {warmUpDistance > 0 && (
-        <WarmUpDistance
+        <RegularDistance
           displayUnits={props.isDesktop}
           distance={warmUpDistance}
           distanceUnits={props.distanceUnits}
