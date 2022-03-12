@@ -93,7 +93,7 @@ const App: React.FC = () => {
           setPlan(getFullPlan(nextWarmUpDistance));
         }}
         options={warmUpDistances.map((d) => ({
-          label: getDisplayDistance(d, distanceUnits, isDesktop),
+          label: getDisplayDistance(d, distanceUnits, true),
           value: String(d)
         }))}
         value={String(warmUpDistance)}
