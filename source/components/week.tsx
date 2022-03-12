@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getWeekDistance } from '../logic';
 import { DistanceUnits } from '../models';
 import { FullWeek } from '../types';
@@ -12,18 +12,28 @@ export interface WeekProps {
 }
 
 export const Week: React.FC<WeekProps> = (props) => {
+  const weekKey = `is-week-${props.week.number}-collapsed`;
+
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  useEffect(() => {
+    const _isCollapsed = localStorage.getItem(weekKey);
+    if (_isCollapsed) {
+      setIsCollapsed(JSON.parse(_isCollapsed));
+    }
+  }, []);
+
+  const changeCollapseStatus = () => {
+    const nextIsCollapsed = !isCollapsed;
+    setIsCollapsed(nextIsCollapsed);
+    localStorage.setItem(weekKey, JSON.stringify(nextIsCollapsed));
+  };
 
   return (
     <div>
       <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
         <h4>
-          <span
-            onClick={() => {
-              setIsCollapsed(!isCollapsed);
-            }}
-            style={{ cursor: 'pointer' }}
-          >
+          <span onClick={changeCollapseStatus} style={{ cursor: 'pointer' }}>
             {isCollapsed ? '☞' : '☟'}
           </span>{' '}
           Week {props.week.number}
