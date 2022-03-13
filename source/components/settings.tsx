@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { getFullPlan } from '../logic';
+import { defaultPace, defaultWarmUpDistance } from '../constants';
+import { getFullPlan, getPace, getPaceMinutes, getPaceSeconds } from '../logic';
 import { DistanceUnits, warmUpDistances } from '../models';
 import { FullPlan } from '../types';
 import { getDisplayDistance } from './distance';
@@ -12,9 +13,26 @@ export interface SettingsProps {
 }
 
 export const Settings: React.FC<SettingsProps> = (props) => {
-  const [targetPaceMinutes, setTargetPaceMinutes] = useState('5');
-  const [targetPaceSeconds, setTargetPaceSeconds] = useState('30');
-  const [warmUpDistance, setWarmUpDistance] = useState(warmUpDistances[0]);
+  const [paceMinutes, setPaceMinutes] = useState(String(getPaceMinutes(defaultPace)));
+  const [paceSeconds, setPaceSeconds] = useState(String(getPaceSeconds(defaultPace)));
+  const [warmUpDistance, setWarmUpDistance] = useState(defaultWarmUpDistance);
+
+  const setPlan = (_paceMinutes: string, _paceSeconds: string, _warmUpDistance: number) => {
+    const pace = getPace(parseInt(_paceMinutes), parseInt(_paceSeconds));
+    props.setPlan(getFullPlan(_warmUpDistance, pace));
+  };
+
+  const paceChange = (_paceMinutes: string, _paceSeconds: string) => {
+    setPaceMinutes(_paceMinutes);
+    setPaceSeconds(_paceSeconds);
+    setPlan(_paceMinutes, _paceSeconds, warmUpDistance);
+  };
+
+  const warmUpDistanceChange = (_warmUpDistance: string) => {
+    const nextWarmUpDistance = parseFloat(_warmUpDistance);
+    setWarmUpDistance(nextWarmUpDistance);
+    setPlan(paceMinutes, paceSeconds, nextWarmUpDistance);
+  };
 
   return (
     <React.Fragment>
@@ -29,11 +47,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
       <RadioButtons
         label="Warm up/Cool down distance"
         name="warmUpDistance"
-        onChange={(nextValue) => {
-          const nextWarmUpDistance = parseFloat(nextValue);
-          setWarmUpDistance(nextWarmUpDistance);
-          props.setPlan(getFullPlan(nextWarmUpDistance));
-        }}
+        onChange={warmUpDistanceChange}
         options={warmUpDistances.map((d) => ({
           label: getDisplayDistance(d, props.distanceUnits, true),
           value: String(d)
@@ -41,19 +55,19 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         value={String(warmUpDistance)}
       />
       <div>
-        Target pace:{' '}
+        Race pace:{' '}
         <input
-          onChange={(event) => setTargetPaceMinutes(event.target.value)}
+          onChange={(event) => paceChange(event.target.value, paceSeconds)}
           type="number"
           style={{ width: 50 }}
-          value={targetPaceMinutes}
+          value={paceMinutes}
         />
         {" ' "}
         <input
-          onChange={(event) => setTargetPaceSeconds(event.target.value)}
+          onChange={(event) => paceChange(paceMinutes, event.target.value)}
           type="number"
           style={{ width: 50 }}
-          value={targetPaceSeconds}
+          value={paceSeconds}
         />
         {' " / '}
         {props.distanceUnits}

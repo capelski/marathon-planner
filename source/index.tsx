@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
 import { Legend, Settings, Plan } from './components';
+import { defaultDistanceUnits, defaultPace, defaultWarmUpDistance } from './constants';
 import { getFullPlan } from './logic';
-import { DistanceUnits, warmUpDistances } from './models';
+import { DistanceUnits } from './models';
 
 const App: React.FC = () => {
-  const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(DistanceUnits.kilometers);
-  const [plan, setPlan] = useState(getFullPlan(warmUpDistances[0]));
+  const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(defaultDistanceUnits);
+  const [plan, setPlan] = useState(getFullPlan(defaultWarmUpDistance, defaultPace));
   const isDesktop = useMediaQuery({ minWidth: 768 });
 
   return (
