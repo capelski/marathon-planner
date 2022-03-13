@@ -1,7 +1,42 @@
-export const getPace = (minutes: number, seconds: number) => {
-  return minutes * 60 + seconds;
+import { milesToKm } from '../constants';
+import { DistanceUnits } from '../models';
+import { Dictionary, Pace } from '../types';
+
+const paceConversions: Dictionary<
+  Dictionary<(pace: Pace) => Pace, DistanceUnits>,
+  DistanceUnits
+> = {
+  [DistanceUnits.kilometers]: {
+    [DistanceUnits.kilometers]: (pace) => pace,
+    [DistanceUnits.miles]: (pace) => ({
+      distanceUnits: DistanceUnits.miles,
+      seconds: Math.floor(pace.seconds * milesToKm)
+    })
+  },
+  [DistanceUnits.miles]: {
+    [DistanceUnits.kilometers]: (pace) => ({
+      distanceUnits: DistanceUnits.kilometers,
+      seconds: Math.ceil(pace.seconds / milesToKm)
+    }),
+    [DistanceUnits.miles]: (pace) => pace
+  }
 };
 
-export const getPaceMinutes = (pace: number) => Math.floor(pace / 60);
+export const convertPace = (pace: Pace, distanceUnits: DistanceUnits) => {
+  return paceConversions[pace.distanceUnits][distanceUnits](pace);
+};
 
-export const getPaceSeconds = (pace: number) => pace % 60;
+export const extractPaceMinutes = (pace: Pace) => {
+  return Math.floor(pace.seconds / 60);
+};
+
+export const extractPaceSeconds = (pace: Pace) => {
+  return pace.seconds % 60;
+};
+
+export const getPace = (distanceUnits: DistanceUnits, minutes: number, seconds: number): Pace => {
+  return {
+    distanceUnits,
+    seconds: minutes * 60 + seconds
+  };
+};

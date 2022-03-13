@@ -1,7 +1,7 @@
 import { basePlan, TrainingType } from '../models';
-import { FullPlan, FullWeek } from '../types';
+import { FullPlan, FullWeek, Pace } from '../types';
 
-export const getFullPlan = (warmUpDistance: number, _pace: number): FullPlan =>
+export const getFullPlan = (warmUpDistance: number, _pace: Pace): FullPlan =>
   basePlan.map<FullWeek>((w) => ({
     number: w.number,
     trainings: w.trainings.map((t) =>

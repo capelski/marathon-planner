@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { defaultPace, defaultWarmUpDistance } from '../constants';
-import { getFullPlan, getPace, getPaceMinutes, getPaceSeconds } from '../logic';
+import {
+  convertPace,
+  extractPaceMinutes,
+  extractPaceSeconds,
+  getFullPlan,
+  getPace
+} from '../logic';
 import { DistanceUnits, warmUpDistances } from '../models';
-import { FullPlan } from '../types';
+import { FullPlan, Pace } from '../types';
 import { getDisplayDistance } from './distance';
 import { RadioButtons } from './radio-buttons';
 
@@ -13,25 +19,33 @@ export interface SettingsProps {
 }
 
 export const Settings: React.FC<SettingsProps> = (props) => {
-  const [paceMinutes, setPaceMinutes] = useState(String(getPaceMinutes(defaultPace)));
-  const [paceSeconds, setPaceSeconds] = useState(String(getPaceSeconds(defaultPace)));
+  const [pace, setPace] = useState(defaultPace);
+  const [minutes, setMinutes] = useState(String(extractPaceMinutes(pace)));
+  const [seconds, setSeconds] = useState(String(extractPaceSeconds(pace)));
   const [warmUpDistance, setWarmUpDistance] = useState(defaultWarmUpDistance);
 
-  const setPlan = (_paceMinutes: string, _paceSeconds: string, _warmUpDistance: number) => {
-    const pace = getPace(parseInt(_paceMinutes), parseInt(_paceSeconds));
-    props.setPlan(getFullPlan(_warmUpDistance, pace));
+  const distanceUnitsChange = (nextValue: string) => {
+    props.setDistanceUnits(nextValue as DistanceUnits);
+    const nextPace = convertPace(pace, nextValue as DistanceUnits);
+    paceChange(nextPace);
   };
 
-  const paceChange = (_paceMinutes: string, _paceSeconds: string) => {
-    setPaceMinutes(_paceMinutes);
-    setPaceSeconds(_paceSeconds);
-    setPlan(_paceMinutes, _paceSeconds, warmUpDistance);
+  const paceChange = (nextPace: Pace) => {
+    setPace(nextPace);
+    setMinutes(String(extractPaceMinutes(nextPace) || ''));
+    setSeconds(String(extractPaceSeconds(nextPace) || ''));
+    props.setPlan(getFullPlan(warmUpDistance, nextPace));
+  };
+
+  const timeChange = (_minutes: string, _seconds: string) => {
+    const nextPace = getPace(props.distanceUnits, parseInt(_minutes) || 0, parseInt(_seconds) || 0);
+    paceChange(nextPace);
   };
 
   const warmUpDistanceChange = (_warmUpDistance: string) => {
     const nextWarmUpDistance = parseFloat(_warmUpDistance);
     setWarmUpDistance(nextWarmUpDistance);
-    setPlan(paceMinutes, paceSeconds, nextWarmUpDistance);
+    props.setPlan(getFullPlan(nextWarmUpDistance, pace));
   };
 
   return (
@@ -40,7 +54,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
       <RadioButtons
         label="Distance units"
         name="distanceUnits"
-        onChange={(nextValue) => props.setDistanceUnits(nextValue as DistanceUnits)}
+        onChange={distanceUnitsChange}
         options={[{ value: DistanceUnits.kilometers }, { value: DistanceUnits.miles }]}
         value={props.distanceUnits}
       />
@@ -57,17 +71,17 @@ export const Settings: React.FC<SettingsProps> = (props) => {
       <div>
         Race pace:{' '}
         <input
-          onChange={(event) => paceChange(event.target.value, paceSeconds)}
+          onChange={(event) => timeChange(event.target.value, seconds)}
           type="number"
           style={{ width: 50 }}
-          value={paceMinutes}
+          value={minutes}
         />
         {" ' "}
         <input
-          onChange={(event) => paceChange(paceMinutes, event.target.value)}
+          onChange={(event) => timeChange(minutes, event.target.value)}
           type="number"
           style={{ width: 50 }}
-          value={paceSeconds}
+          value={seconds}
         />
         {' " / '}
         {props.distanceUnits}
