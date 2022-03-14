@@ -1,32 +1,14 @@
 import { TrainingType } from '../models';
-import {
-  DetailedModerateTraining,
-  DetailedRaceDay,
-  DetailedRecoveryTraining,
-  DetailedRestDay,
-  DetailedSpeedTraining,
-  DetailedStrengthTraining,
-  DetailedTimedTraining,
-  Distance,
-  ModerateTraining,
-  RaceDay,
-  RecoveryTraining,
-  RestDay,
-  SpeedTraining,
-  StrengthTraining,
-  TimedTraining,
-  TrainingIntervals,
-  TrainingPaces
-} from '../types';
+import { DetailedTraining, Distance, Training, TrainingIntervals, TrainingPaces } from '../types';
 import { convertDistance, createDistance, mergeDistances, multiplyDistance } from './distance';
 
 const getDetailedDistanceTraining = <
-  T extends TrainingType.moderate | TrainingType.race | TrainingType.recovery
+  T extends TrainingType.moderate | TrainingType.race | TrainingType.recovery | TrainingType.rest
 >(
   distance: Distance,
   trainingPaces: TrainingPaces,
   type: T
-) => {
+): DetailedTraining => {
   const convertedDistance = convertDistance(distance, trainingPaces[type].distanceUnits);
   return {
     distance: { ...convertedDistance, pace: trainingPaces[type] },
@@ -40,7 +22,7 @@ const getDetailedIntervalsTraining = <T extends TrainingType.speed | TrainingTyp
   warmUpDistance: Distance,
   trainingPaces: TrainingPaces,
   type: T
-) => {
+): DetailedTraining => {
   const convertedIntervalDistance = convertDistance(
     intervals.intervalDistance,
     trainingPaces[type].distanceUnits
@@ -71,75 +53,36 @@ const getDetailedIntervalsTraining = <T extends TrainingType.speed | TrainingTyp
   };
 };
 
-export const getDetailedModerateTraining = (
+export const getDetailedTraining = (
+  training: Training,
   trainingPaces: TrainingPaces,
-  training: ModerateTraining
-): DetailedModerateTraining => {
-  return getDetailedDistanceTraining(training.distance, trainingPaces, training.type);
-};
-
-export const getDetailedRaceDay = (
-  trainingPaces: TrainingPaces,
-  training: RaceDay
-): DetailedRaceDay => {
-  return getDetailedDistanceTraining(training.distance, trainingPaces, training.type);
-};
-
-export const getDetailedRecoveryTraining = (
-  trainingPaces: TrainingPaces,
-  training: RecoveryTraining
-): DetailedRecoveryTraining => {
-  return getDetailedDistanceTraining(training.distance, trainingPaces, training.type);
-};
-
-export const getDetailedRestDay = (
-  trainingPaces: TrainingPaces,
-  training: RestDay
-): DetailedRestDay => {
-  return {
-    totalDistance: createDistance(0, trainingPaces.race.distanceUnits),
-    type: training.type
-  };
-};
-
-export const getDetailedSpeedTraining = (
-  trainingPaces: TrainingPaces,
-  training: SpeedTraining,
   warmUpDistance: Distance
-): DetailedSpeedTraining => {
-  return getDetailedIntervalsTraining(
-    training.intervals,
-    warmUpDistance,
-    trainingPaces,
-    training.type
-  );
+): DetailedTraining => {
+  return training.type === TrainingType.moderate ||
+    training.type === TrainingType.race ||
+    training.type === TrainingType.recovery
+    ? getDetailedDistanceTraining(training.distance, trainingPaces, training.type)
+    : training.type === TrainingType.rest
+    ? getDetailedDistanceTraining(
+        createDistance(0, trainingPaces.race.distanceUnits),
+        trainingPaces,
+        training.type
+      )
+    : training.type === TrainingType.speed || training.type === TrainingType.strength
+    ? getDetailedIntervalsTraining(training.intervals, warmUpDistance, trainingPaces, training.type)
+    : getDetailedTimedTraining(training.distance, trainingPaces, warmUpDistance, training.type);
 };
 
-export const getDetailedStrengthTraining = (
+const getDetailedTimedTraining = <T extends TrainingType.timed>(
+  distance: Distance,
   trainingPaces: TrainingPaces,
-  training: StrengthTraining,
-  warmUpDistance: Distance
-): DetailedStrengthTraining => {
-  return getDetailedIntervalsTraining(
-    training.intervals,
-    warmUpDistance,
-    trainingPaces,
-    training.type
-  );
-};
-
-export const getDetailedTimedTraining = (
-  trainingPaces: TrainingPaces,
-  training: TimedTraining,
-  warmUpDistance: Distance
-): DetailedTimedTraining => {
-  const convertedDistance = convertDistance(
-    training.distance,
-    trainingPaces[training.type].distanceUnits
-  );
+  warmUpDistance: Distance,
+  type: T
+): DetailedTraining => {
+  const convertedDistance = convertDistance(distance, trainingPaces[type].distanceUnits);
   const convertedWarmUpDistance = convertDistance(
     warmUpDistance,
-    trainingPaces[training.type].distanceUnits
+    trainingPaces[type].distanceUnits
   );
   const totalDistance = mergeDistances(
     convertedDistance,
@@ -147,9 +90,9 @@ export const getDetailedTimedTraining = (
   )!;
 
   return {
-    distance: { ...convertedDistance, pace: trainingPaces[training.type] },
+    distance: { ...convertedDistance, pace: trainingPaces[type] },
     totalDistance,
-    type: training.type,
+    type,
     warmUpDistance: { ...convertedWarmUpDistance, pace: trainingPaces[TrainingType.recovery] }
   };
 };
