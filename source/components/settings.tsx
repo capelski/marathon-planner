@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { defaultDistanceUnits, defaultRacePace, defaultWarmUpDistance } from '../constants';
 import {
+  convertDistance,
   convertPace,
   createDistance,
   extractPaceMinutes,
@@ -66,7 +67,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         name="warmUpDistance"
         onChange={warmUpDistanceChange}
         options={warmUpDistances.map((distance) => ({
-          label: getDisplayDistance(distance),
+          label: getDisplayDistance(convertDistance(distance, distanceUnits)),
           value: String(distance.value)
         }))}
         value={String(warmUpDistance.value)}
