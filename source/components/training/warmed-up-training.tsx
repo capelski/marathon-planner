@@ -1,7 +1,7 @@
 import React from 'react';
 import { coolDownSymbol, warmUpSymbol } from '../../constants';
 import { PacedDistance } from '../../types';
-import { PacedDistanceComponent } from '../paced-distance';
+import { DistanceComponent } from '../distance';
 
 export interface WarmedUpTrainingProps {
   warmUpDistance: PacedDistance;
@@ -10,9 +10,9 @@ export interface WarmedUpTrainingProps {
 export const WarmedUpTrainingComponent: React.FC<WarmedUpTrainingProps> = (props) => {
   return (
     <div>
-      <PacedDistanceComponent distance={props.warmUpDistance} symbol={warmUpSymbol} />
+      <DistanceComponent distance={props.warmUpDistance} symbol={warmUpSymbol} />
       {props.children}
-      <PacedDistanceComponent distance={props.warmUpDistance} symbol={coolDownSymbol} />
+      <DistanceComponent distance={props.warmUpDistance} symbol={coolDownSymbol} />
     </div>
   );
 };

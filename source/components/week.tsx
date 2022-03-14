@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getDisplayDistance } from '../logic';
+import { totalDistanceSymbol } from '../constants';
 import { DetailedWeek } from '../types';
+import { DistanceComponent } from './distance';
 import { Training } from './training';
 
 export interface WeekProps {
@@ -35,7 +36,7 @@ export const Week: React.FC<WeekProps> = (props) => {
           </span>{' '}
           Week {props.week.number}
         </h4>
-        <div>👟 {getDisplayDistance(props.week.totalDistance)}</div>
+        <DistanceComponent distance={props.week.totalDistance} symbol={totalDistanceSymbol} />
       </div>
       {!isCollapsed && (
         <div

@@ -2,7 +2,7 @@ import React from 'react';
 import { trainingCoreSymbol } from '../../constants';
 import { TrainingType, trainingTypeColors } from '../../models';
 import { DetailedTraining } from '../../types';
-import { PacedDistanceComponent } from '../paced-distance';
+import { DistanceComponent } from '../distance';
 import { IntervalsTraining } from './intervals-training';
 import { WarmedUpTrainingComponent } from './warmed-up-training';
 
@@ -33,13 +33,13 @@ export const Training: React.FC<TrainingProps> = (props) => {
       {props.training.type === TrainingType.moderate ||
       props.training.type === TrainingType.race ||
       props.training.type === TrainingType.recovery ? (
-        <PacedDistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
+        <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
       ) : props.training.type === TrainingType.speed ||
         props.training.type === TrainingType.strength ? (
         <IntervalsTraining training={props.training} />
       ) : props.training.type === TrainingType.timed ? (
         <WarmedUpTrainingComponent warmUpDistance={props.training.warmUpDistance}>
-          <PacedDistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
+          <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
         </WarmedUpTrainingComponent>
       ) : undefined}
     </div>
