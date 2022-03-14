@@ -5,7 +5,7 @@ import {
   speedPaceVariation,
   strengthPaceVariation
 } from '../constants';
-import { DistanceUnits } from '../models';
+import { DistanceUnits, TrainingType } from '../models';
 import { Dictionary, Pace, TrainingPaces } from '../types';
 
 const paceConversions: Dictionary<
@@ -49,11 +49,25 @@ export const getPace = (distanceUnits: DistanceUnits, minutes: number, seconds: 
 
 export const getTrainingPaces = (racePace: Pace): TrainingPaces => {
   return {
-    moderate: mergePaces(racePace, convertPace(moderatePaceVariation, racePace.distanceUnits)),
-    race: racePace,
-    recovery: mergePaces(racePace, convertPace(recoveryPaceVariation, racePace.distanceUnits)),
-    speed: mergePaces(racePace, convertPace(speedPaceVariation, racePace.distanceUnits)),
-    strength: mergePaces(racePace, convertPace(strengthPaceVariation, racePace.distanceUnits))
+    [TrainingType.moderate]: mergePaces(
+      racePace,
+      convertPace(moderatePaceVariation, racePace.distanceUnits)
+    ),
+    [TrainingType.race]: racePace,
+    [TrainingType.recovery]: mergePaces(
+      racePace,
+      convertPace(recoveryPaceVariation, racePace.distanceUnits)
+    ),
+    [TrainingType.rest]: racePace,
+    [TrainingType.speed]: mergePaces(
+      racePace,
+      convertPace(speedPaceVariation, racePace.distanceUnits)
+    ),
+    [TrainingType.strength]: mergePaces(
+      racePace,
+      convertPace(strengthPaceVariation, racePace.distanceUnits)
+    ),
+    [TrainingType.timed]: racePace
   };
 };
 
