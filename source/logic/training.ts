@@ -21,7 +21,7 @@ export const getRegularPace = (training: DetailedTraining) => {
     training.type === TrainingType.race ||
     training.type === TrainingType.recovery ||
     training.type === TrainingType.timed
-    ? training.pace
+    ? training.distance.pace
     : undefined;
 };
 
@@ -37,6 +37,6 @@ export const getWarmUpPace = (training: DetailedTraining) => {
   return training.type === TrainingType.timed ||
     training.type === TrainingType.speed ||
     training.type === TrainingType.strength
-    ? training.warmUpPace
+    ? training.warmUpDistance.pace
     : undefined;
 };

@@ -11,5 +11,4 @@ export type TrainingPaces = {
   recovery: Pace;
   speed: Pace;
   strength: Pace;
-  timed: Pace;
 };

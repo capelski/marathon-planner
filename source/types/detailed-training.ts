@@ -1,6 +1,5 @@
-import { Distance } from './distance';
+import { Distance, PacedDistance } from './distance';
 import { DetailedTrainingIntervals } from './training-intervals';
-import { Pace } from './pace';
 import {
   ModerateTraining,
   RaceDay,
@@ -22,12 +21,11 @@ type DetailedTrainingBase = {
 };
 
 type PacedTraining = {
-  pace: Pace;
+  distance: PacedDistance;
 };
 
 type WarmedUpTraining = {
-  warmUpDistance: Distance; // Warm up / Cool down distance
-  warmUpPace: Pace;
+  warmUpDistance: PacedDistance; // Warm up / Cool down distance
 };
 
 /* Detailed training types */

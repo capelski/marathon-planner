@@ -10,7 +10,7 @@ import {
 import { trainingTypeColors } from '../models';
 import { DetailedTraining } from '../types';
 import { IntervalsDistance } from './intervals-distance';
-import { PacedDistance } from './paced-distance';
+import { PacedDistanceComponent } from './paced-distance';
 
 export interface TrainingProps {
   isDesktop: boolean;
@@ -44,18 +44,14 @@ export const Training: React.FC<TrainingProps> = (props) => {
       />
       <div>
         {warmUpDistance && warmUpPace && (
-          <PacedDistance distance={warmUpDistance} symbol={warmUpSymbol} pace={warmUpPace} />
+          <PacedDistanceComponent distance={warmUpDistance} symbol={warmUpSymbol} />
         )}
         {regularDistance && regularPace && (
-          <PacedDistance
-            distance={regularDistance}
-            symbol={trainingCoreSymbol}
-            pace={regularPace}
-          />
+          <PacedDistanceComponent distance={regularDistance} symbol={trainingCoreSymbol} />
         )}
         {intervals && <IntervalsDistance intervals={intervals} />}
         {warmUpDistance && warmUpPace && (
-          <PacedDistance distance={warmUpDistance} symbol={coolDownSymbol} pace={warmUpPace} />
+          <PacedDistanceComponent distance={warmUpDistance} symbol={coolDownSymbol} />
         )}
       </div>
     </div>

@@ -27,8 +27,7 @@ export const getDetailedModerateTraining = (
     trainingPaces.moderate.distanceUnits
   );
   return {
-    distance: convertedDistance,
-    pace: trainingPaces.moderate,
+    distance: { ...convertedDistance, pace: trainingPaces.moderate },
     totalDistance: convertedDistance,
     type: training.type
   };
@@ -40,8 +39,7 @@ export const getDetailedRaceDay = (
 ): DetailedRaceDay => {
   const convertedDistance = convertDistance(training.distance, trainingPaces.race.distanceUnits);
   return {
-    distance: convertedDistance,
-    pace: trainingPaces.race,
+    distance: { ...convertedDistance, pace: trainingPaces.race },
     totalDistance: convertedDistance,
     type: training.type
   };
@@ -56,8 +54,7 @@ export const getDetailedRecoveryTraining = (
     trainingPaces.recovery.distanceUnits
   );
   return {
-    distance: convertedDistance,
-    pace: trainingPaces.recovery,
+    distance: { ...convertedDistance, pace: trainingPaces.recovery },
     totalDistance: convertedDistance,
     type: training.type
   };
@@ -98,16 +95,13 @@ export const getDetailedSpeedTraining = (
 
   return {
     intervals: {
-      intervalDistance: convertedIntervalDistance,
-      intervalPace: trainingPaces.speed,
+      intervalDistance: { ...convertedIntervalDistance, pace: trainingPaces.speed },
       intervalsNumber: training.intervals.intervalsNumber,
-      recoveryDistance: convertedRecoveryDistance,
-      recoveryPace: trainingPaces.recovery
+      recoveryDistance: { ...convertedRecoveryDistance, pace: trainingPaces.recovery }
     },
     totalDistance,
     type: training.type,
-    warmUpDistance: convertedWarmUpDistance,
-    warmUpPace: trainingPaces.recovery
+    warmUpDistance: { ...convertedWarmUpDistance, pace: trainingPaces.recovery }
   };
 };
 
@@ -136,16 +130,13 @@ export const getDetailedStrengthTraining = (
 
   return {
     intervals: {
-      intervalDistance: convertedIntervalDistance,
-      intervalPace: trainingPaces.strength,
+      intervalDistance: { ...convertedIntervalDistance, pace: trainingPaces.strength },
       intervalsNumber: training.intervals.intervalsNumber,
-      recoveryDistance: convertedRecoveryDistance,
-      recoveryPace: trainingPaces.recovery
+      recoveryDistance: { ...convertedRecoveryDistance, pace: trainingPaces.recovery }
     },
     totalDistance,
     type: training.type,
-    warmUpDistance: convertedWarmUpDistance,
-    warmUpPace: trainingPaces.recovery
+    warmUpDistance: { ...convertedWarmUpDistance, pace: trainingPaces.recovery }
   };
 };
 
@@ -154,10 +145,10 @@ export const getDetailedTimedTraining = (
   training: TimedTraining,
   warmUpDistance: Distance
 ): DetailedTimedTraining => {
-  const convertedDistance = convertDistance(training.distance, trainingPaces.timed.distanceUnits);
+  const convertedDistance = convertDistance(training.distance, trainingPaces.race.distanceUnits);
   const convertedWarmUpDistance = convertDistance(
     warmUpDistance,
-    trainingPaces.timed.distanceUnits
+    trainingPaces.recovery.distanceUnits
   );
   const totalDistance = mergeDistances(
     convertedDistance,
@@ -165,11 +156,9 @@ export const getDetailedTimedTraining = (
   )!;
 
   return {
-    distance: convertedDistance,
-    pace: trainingPaces.timed,
+    distance: { ...convertedDistance, pace: trainingPaces.race },
     totalDistance,
     type: training.type,
-    warmUpDistance: convertedWarmUpDistance,
-    warmUpPace: trainingPaces.recovery
+    warmUpDistance: { ...convertedWarmUpDistance, pace: trainingPaces.recovery }
   };
 };

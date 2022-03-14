@@ -1,19 +1,18 @@
 import React from 'react';
 import { paceSymbol } from '../constants';
 import { extractPaceMinutes, extractPaceSeconds, getDisplayDistance } from '../logic';
-import { Distance, Pace } from '../types';
+import { PacedDistance } from '../types';
 
 export interface PacedDistanceProps {
-  distance: Distance;
-  pace: Pace;
+  distance: PacedDistance;
   symbol: string;
 }
 
-export const PacedDistance: React.FC<PacedDistanceProps> = (props) => {
+export const PacedDistanceComponent: React.FC<PacedDistanceProps> = (props) => {
   return (
     <div>
       {props.symbol} {getDisplayDistance(props.distance)} {paceSymbol}{' '}
-      {extractPaceMinutes(props.pace)}' {extractPaceSeconds(props.pace)}"
+      {extractPaceMinutes(props.distance.pace)}' {extractPaceSeconds(props.distance.pace)}"
     </div>
   );
 };

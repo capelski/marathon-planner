@@ -53,8 +53,7 @@ export const getTrainingPaces = (racePace: Pace): TrainingPaces => {
     race: racePace,
     recovery: mergePaces(racePace, convertPace(recoveryPaceVariation, racePace.distanceUnits)),
     speed: mergePaces(racePace, convertPace(speedPaceVariation, racePace.distanceUnits)),
-    strength: mergePaces(racePace, convertPace(strengthPaceVariation, racePace.distanceUnits)),
-    timed: racePace
+    strength: mergePaces(racePace, convertPace(strengthPaceVariation, racePace.distanceUnits))
   };
 };
 

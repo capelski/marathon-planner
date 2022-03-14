@@ -1,5 +1,4 @@
-import { Distance } from './distance';
-import { Pace } from './pace';
+import { Distance, PacedDistance } from './distance';
 
 export type TrainingIntervals = {
   intervalDistance: Distance;
@@ -8,6 +7,6 @@ export type TrainingIntervals = {
 };
 
 export type DetailedTrainingIntervals = TrainingIntervals & {
-  intervalPace: Pace;
-  recoveryPace: Pace;
+  intervalDistance: PacedDistance;
+  recoveryDistance: PacedDistance;
 };
