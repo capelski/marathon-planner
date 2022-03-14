@@ -1,11 +1,14 @@
-import { BaseTraining, FullTraining } from './training';
+import { DetailedTraining } from './detailed-training';
+import { Distance } from './distance';
+import { Training } from './training';
 
-export type BaseWeek = {
+export type Week = {
   number: number;
-  trainings: BaseTraining[];
+  trainings: Training[];
 };
 
-export type FullWeek = {
+export type DetailedWeek = {
   number: number;
-  trainings: FullTraining[];
+  totalDistance: Distance;
+  trainings: DetailedTraining[];
 };

@@ -1,6 +1,12 @@
-import { milesToKm } from '../constants';
+import {
+  milesToKm,
+  moderatePaceVariation,
+  recoveryPaceVariation,
+  speedPaceVariation,
+  strengthPaceVariation
+} from '../constants';
 import { DistanceUnits } from '../models';
-import { Dictionary, Pace } from '../types';
+import { Dictionary, Pace, TrainingPaces } from '../types';
 
 const paceConversions: Dictionary<
   Dictionary<(pace: Pace) => Pace, DistanceUnits>,
@@ -39,4 +45,25 @@ export const getPace = (distanceUnits: DistanceUnits, minutes: number, seconds: 
     distanceUnits,
     seconds: minutes * 60 + seconds
   };
+};
+
+export const getTrainingPaces = (racePace: Pace): TrainingPaces => {
+  return {
+    moderate: mergePaces(racePace, convertPace(moderatePaceVariation, racePace.distanceUnits)),
+    race: racePace,
+    recovery: mergePaces(racePace, convertPace(recoveryPaceVariation, racePace.distanceUnits)),
+    speed: mergePaces(racePace, convertPace(speedPaceVariation, racePace.distanceUnits)),
+    strength: mergePaces(racePace, convertPace(strengthPaceVariation, racePace.distanceUnits)),
+    timed: racePace
+  };
+};
+
+/** Sums all the paces' seconds into a new pace object. All paces must be in the same DistanceUnits */
+export const mergePaces = (first: Pace, ...paces: Pace[]) => {
+  return paces.reduce<Pace>((mergedPaces, nextPace) => {
+    return {
+      distanceUnits: mergedPaces.distanceUnits,
+      seconds: mergedPaces.seconds + nextPace.seconds
+    };
+  }, first);
 };

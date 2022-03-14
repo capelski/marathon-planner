@@ -1,21 +1,28 @@
 import React from 'react';
 import { coolDownSymbol, trainingCoreSymbol, warmUpSymbol } from '../constants';
-import { getIntervals, getRegularDistance, getWarmUpDistance } from '../logic';
-import { trainingTypeColors, DistanceUnits } from '../models';
-import { FullTraining } from '../types';
+import {
+  getIntervals,
+  getRegularDistance,
+  getRegularPace,
+  getWarmUpDistance,
+  getWarmUpPace
+} from '../logic';
+import { trainingTypeColors } from '../models';
+import { DetailedTraining } from '../types';
 import { IntervalsDistance } from './intervals-distance';
-import { RegularDistance } from './regular-distance';
+import { PacedDistance } from './paced-distance';
 
 export interface TrainingProps {
-  distanceUnits: DistanceUnits;
   isDesktop: boolean;
-  training: FullTraining;
+  training: DetailedTraining;
 }
 
 export const Training: React.FC<TrainingProps> = (props) => {
   const regularDistance = getRegularDistance(props.training);
+  const regularPace = getRegularPace(props.training);
   const intervals = getIntervals(props.training);
   const warmUpDistance = getWarmUpDistance(props.training);
+  const warmUpPace = getWarmUpPace(props.training);
 
   return (
     <div
@@ -35,37 +42,22 @@ export const Training: React.FC<TrainingProps> = (props) => {
           width: props.isDesktop ? 'calc(100% - 4px)' : 40
         }}
       />
-      {warmUpDistance > 0 && (
-        <RegularDistance
-          displayUnits={props.isDesktop}
-          distance={warmUpDistance}
-          distanceUnits={props.distanceUnits}
-          symbol={warmUpSymbol}
-        />
-      )}
-      {regularDistance > 0 && (
-        <RegularDistance
-          displayUnits={props.isDesktop}
-          distance={regularDistance}
-          distanceUnits={props.distanceUnits}
-          symbol={trainingCoreSymbol}
-        />
-      )}
-      {intervals && (
-        <IntervalsDistance
-          displayUnits={props.isDesktop}
-          distanceUnits={props.distanceUnits}
-          intervals={intervals}
-        />
-      )}
-      {warmUpDistance > 0 && (
-        <RegularDistance
-          displayUnits={props.isDesktop}
-          distance={warmUpDistance}
-          distanceUnits={props.distanceUnits}
-          symbol={coolDownSymbol}
-        />
-      )}
+      <div>
+        {warmUpDistance && warmUpPace && (
+          <PacedDistance distance={warmUpDistance} symbol={warmUpSymbol} pace={warmUpPace} />
+        )}
+        {regularDistance && regularPace && (
+          <PacedDistance
+            distance={regularDistance}
+            symbol={trainingCoreSymbol}
+            pace={regularPace}
+          />
+        )}
+        {intervals && <IntervalsDistance intervals={intervals} />}
+        {warmUpDistance && warmUpPace && (
+          <PacedDistance distance={warmUpDistance} symbol={coolDownSymbol} pace={warmUpPace} />
+        )}
+      </div>
     </div>
   );
 };

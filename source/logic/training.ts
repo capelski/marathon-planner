@@ -1,38 +1,42 @@
 import { TrainingType } from '../models';
-import { FullTraining, Intervals } from '../types';
+import { DetailedTrainingIntervals, DetailedTraining } from '../types';
 
-export const getIntervals = (training: FullTraining): Intervals | undefined => {
+export const getIntervals = (training: DetailedTraining): DetailedTrainingIntervals | undefined => {
   return training.type === TrainingType.speed || training.type === TrainingType.strength
     ? training.intervals
     : undefined;
 };
 
-export const getIntervalsDistance = (training: FullTraining) => {
-  return training.type === TrainingType.speed || training.type === TrainingType.strength
-    ? training.intervals.intervalDistance * training.intervals.intervalsNumber +
-        training.intervals.recoveryDistance * (training.intervals.intervalsNumber - 1)
-    : 0;
-};
-
-export const getRegularDistance = (training: FullTraining) => {
+export const getRegularDistance = (training: DetailedTraining) => {
   return training.type === TrainingType.moderate ||
     training.type === TrainingType.race ||
     training.type === TrainingType.recovery ||
     training.type === TrainingType.timed
     ? training.distance
-    : 0;
+    : undefined;
 };
 
-export const getTrainingDistance = (training: FullTraining) => {
-  return (
-    getRegularDistance(training) + getIntervalsDistance(training) + getWarmUpDistance(training) * 2
-  );
+export const getRegularPace = (training: DetailedTraining) => {
+  return training.type === TrainingType.moderate ||
+    training.type === TrainingType.race ||
+    training.type === TrainingType.recovery ||
+    training.type === TrainingType.timed
+    ? training.pace
+    : undefined;
 };
 
-export const getWarmUpDistance = (training: FullTraining) => {
+export const getWarmUpDistance = (training: DetailedTraining) => {
   return training.type === TrainingType.speed ||
     training.type === TrainingType.strength ||
     training.type === TrainingType.timed
     ? training.warmUpDistance
-    : 0;
+    : undefined;
+};
+
+export const getWarmUpPace = (training: DetailedTraining) => {
+  return training.type === TrainingType.timed ||
+    training.type === TrainingType.speed ||
+    training.type === TrainingType.strength
+    ? training.warmUpPace
+    : undefined;
 };

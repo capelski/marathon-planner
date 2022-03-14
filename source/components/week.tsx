@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getWeekDistance } from '../logic';
-import { DistanceUnits } from '../models';
-import { FullWeek } from '../types';
-import { Distance } from './distance';
+import { getDisplayDistance } from '../logic';
+import { DetailedWeek } from '../types';
 import { Training } from './training';
 
 export interface WeekProps {
-  distanceUnits: DistanceUnits;
   isDesktop: boolean;
-  week: FullWeek;
+  week: DetailedWeek;
 }
 
 export const Week: React.FC<WeekProps> = (props) => {
@@ -38,14 +35,7 @@ export const Week: React.FC<WeekProps> = (props) => {
           </span>{' '}
           Week {props.week.number}
         </h4>
-        <div>
-          👟{' '}
-          <Distance
-            displayUnits={true}
-            distance={getWeekDistance(props.week)}
-            distanceUnits={props.distanceUnits}
-          />
-        </div>
+        <div>👟 {getDisplayDistance(props.week.totalDistance)}</div>
       </div>
       {!isCollapsed && (
         <div
@@ -53,14 +43,7 @@ export const Week: React.FC<WeekProps> = (props) => {
           style={{ display: 'flex', flexDirection: props.isDesktop ? 'row' : 'column' }}
         >
           {props.week.trainings.map((training, index) => {
-            return (
-              <Training
-                distanceUnits={props.distanceUnits}
-                isDesktop={props.isDesktop}
-                key={index}
-                training={training}
-              />
-            );
+            return <Training isDesktop={props.isDesktop} key={index} training={training} />;
           })}
         </div>
       )}

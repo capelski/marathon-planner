@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  trainingCoreSymbol,
-  warmUpSymbol,
   coolDownSymbol,
+  paceSymbol,
   recoveryIntervalSymbol,
-  totalDistanceSymbol
+  totalDistanceSymbol,
+  trainingCoreSymbol,
+  warmUpSymbol
 } from '../constants';
 import { sortedTrainingTypes, trainingTypeColors } from '../models';
 
@@ -40,6 +41,7 @@ export const Legend: React.FC<LegendProps> = (props) => {
       <div>{warmUpSymbol} Warm up</div>
       <div>{coolDownSymbol} Cool down</div>
       <div>{recoveryIntervalSymbol} Recovery interval</div>
+      <div>{paceSymbol} Pace</div>
       <div>{totalDistanceSymbol} Total distance</div>
     </React.Fragment>
   );

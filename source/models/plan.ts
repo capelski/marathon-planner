@@ -1,7 +1,8 @@
-import { BasePlan } from '../types';
+import { Plan } from '../types';
+import { DistanceUnits } from './distance-units';
 import { TrainingType } from './training-type';
 
-export const basePlan: BasePlan = [
+export const basePlan: Plan = [
   {
     number: 1,
     trainings: [
@@ -16,18 +17,27 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.moderate,
-        distance: 3
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 3
+        }
       },
       {
         type: TrainingType.rest
       },
       {
         type: TrainingType.moderate,
-        distance: 3
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 3
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       }
     ]
   },
@@ -39,26 +49,41 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.moderate,
-        distance: 2
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 2
+        }
       },
       {
         type: TrainingType.rest
       },
       {
         type: TrainingType.moderate,
-        distance: 3
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 3
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 3
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 3
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 3
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 3
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       }
     ]
   },
@@ -70,26 +95,41 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.moderate,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.rest
       },
       {
         type: TrainingType.moderate,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       }
     ]
   },
@@ -101,26 +141,41 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.moderate,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.rest
       },
       {
         type: TrainingType.moderate,
-        distance: 3
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 3
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 3
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 3
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       }
     ]
   },
@@ -132,26 +187,41 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.moderate,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.rest
       },
       {
         type: TrainingType.moderate,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       }
     ]
   },
@@ -160,14 +230,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.speed,
         intervals: {
-          intervalDistance: 0.25,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.25
+          },
           intervalsNumber: 12,
-          recoveryDistance: 0.25
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.25
+          }
         }
       },
       {
@@ -175,19 +254,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       }
     ]
   },
@@ -196,14 +287,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.speed,
         intervals: {
-          intervalDistance: 0.4,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.4
+          },
           intervalsNumber: 8,
-          recoveryDistance: 0.25
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.25
+          }
         }
       },
       {
@@ -211,19 +311,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 4
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 4
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 10
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 10
+        }
       }
     ]
   },
@@ -232,14 +344,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.speed,
         intervals: {
-          intervalDistance: 0.5,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.5
+          },
           intervalsNumber: 6,
-          recoveryDistance: 0.25
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.25
+          }
         }
       },
       {
@@ -247,19 +368,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 10
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 10
+        }
       }
     ]
   },
@@ -268,14 +401,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.speed,
         intervals: {
-          intervalDistance: 0.6,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.6
+          },
           intervalsNumber: 5,
-          recoveryDistance: 0.25
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.25
+          }
         }
       },
       {
@@ -283,19 +425,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 15
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 15
+        }
       }
     ]
   },
@@ -304,14 +458,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 7
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 7
+        }
       },
       {
         type: TrainingType.speed,
         intervals: {
-          intervalDistance: 0.75,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.75
+          },
           intervalsNumber: 4,
-          recoveryDistance: 0.25
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.25
+          }
         }
       },
       {
@@ -319,19 +482,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 10
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 10
+        }
       }
     ]
   },
@@ -340,14 +515,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.strength,
         intervals: {
-          intervalDistance: 1,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 1
+          },
           intervalsNumber: 6,
-          recoveryDistance: 0.25
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.25
+          }
         }
       },
       {
@@ -355,19 +539,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 16
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 16
+        }
       }
     ]
   },
@@ -376,14 +572,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.strength,
         intervals: {
-          intervalDistance: 1.5,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 1.5
+          },
           intervalsNumber: 4,
-          recoveryDistance: 0.5
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.5
+          }
         }
       },
       {
@@ -391,19 +596,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 9
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 9
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 10
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 10
+        }
       }
     ]
   },
@@ -412,14 +629,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 7
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 7
+        }
       },
       {
         type: TrainingType.strength,
         intervals: {
-          intervalDistance: 2,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 2
+          },
           intervalsNumber: 3,
-          recoveryDistance: 0.5
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.5
+          }
         }
       },
       {
@@ -427,19 +653,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 9
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 9
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 16
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 16
+        }
       }
     ]
   },
@@ -448,14 +686,20 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.strength,
         intervals: {
-          intervalDistance: 3,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 3
+          },
           intervalsNumber: 2,
-          recoveryDistance: 1
+          recoveryDistance: { distanceUnits: DistanceUnits.miles, value: 1 }
         }
       },
       {
@@ -463,19 +707,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 9
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 9
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 10
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 10
+        }
       }
     ]
   },
@@ -484,14 +740,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 7
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 7
+        }
       },
       {
         type: TrainingType.strength,
         intervals: {
-          intervalDistance: 2,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 2
+          },
           intervalsNumber: 3,
-          recoveryDistance: 0.5
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.5
+          }
         }
       },
       {
@@ -499,19 +764,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 10
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 10
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 16
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 16
+        }
       }
     ]
   },
@@ -520,14 +797,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.strength,
         intervals: {
-          intervalDistance: 1.5,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 1.5
+          },
           intervalsNumber: 4,
-          recoveryDistance: 0.25
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.25
+          }
         }
       },
       {
@@ -535,19 +821,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 10
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 10
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 10
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 10
+        }
       }
     ]
   },
@@ -556,14 +854,23 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 7
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 7
+        }
       },
       {
         type: TrainingType.strength,
         intervals: {
-          intervalDistance: 1,
+          intervalDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 1
+          },
           intervalsNumber: 6,
-          recoveryDistance: 0.25
+          recoveryDistance: {
+            distanceUnits: DistanceUnits.miles,
+            value: 0.25
+          }
         }
       },
       {
@@ -571,19 +878,31 @@ export const basePlan: BasePlan = [
       },
       {
         type: TrainingType.timed,
-        distance: 10
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 10
+        }
       },
       {
         type: TrainingType.recovery,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 8
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 8
+        }
       }
     ]
   },
@@ -592,30 +911,48 @@ export const basePlan: BasePlan = [
     trainings: [
       {
         type: TrainingType.recovery,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.rest
       },
       {
         type: TrainingType.moderate,
-        distance: 6
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 6
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 5
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 5
+        }
       },
       {
         type: TrainingType.moderate,
-        distance: 3
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 3
+        }
       },
       {
         type: TrainingType.race,
-        distance: 26.2
+        distance: {
+          distanceUnits: DistanceUnits.miles,
+          value: 26.2
+        }
       }
     ]
   }

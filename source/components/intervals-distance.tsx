@@ -1,35 +1,28 @@
 import React from 'react';
 import { recoveryIntervalSymbol, trainingCoreSymbol } from '../constants';
-import { DistanceUnits } from '../models';
-import { Intervals } from '../types';
-import { Distance } from './distance';
+import { DetailedTrainingIntervals } from '../types';
+import { PacedDistance } from './paced-distance';
 
 export interface IntervalsDistanceProps {
-  displayUnits: boolean;
-  distanceUnits: DistanceUnits;
-  intervals: Intervals;
+  intervals: DetailedTrainingIntervals;
 }
 
 export const IntervalsDistance: React.FC<IntervalsDistanceProps> = (props) => {
   return (
-    <React.Fragment>
-      <div style={{ marginLeft: 8 }}>
-        {props.intervals.intervalsNumber}x(
-        {trainingCoreSymbol}{' '}
-        <Distance
-          displayUnits={props.displayUnits}
+    <div style={{ alignItems: 'center', display: 'flex' }}>
+      <div>{props.intervals.intervalsNumber}x</div>
+      <div style={{ borderLeft: '1px solid black', marginLeft: 8, paddingLeft: 8 }}>
+        <PacedDistance
           distance={props.intervals.intervalDistance}
-          distanceUnits={props.distanceUnits}
+          pace={props.intervals.intervalPace}
+          symbol={trainingCoreSymbol}
         />
-        {' - '}
-        {recoveryIntervalSymbol}{' '}
-        <Distance
-          displayUnits={props.displayUnits}
+        <PacedDistance
           distance={props.intervals.recoveryDistance}
-          distanceUnits={props.distanceUnits}
+          pace={props.intervals.recoveryPace}
+          symbol={recoveryIntervalSymbol}
         />
-        )
       </div>
-    </React.Fragment>
+    </div>
   );
 };

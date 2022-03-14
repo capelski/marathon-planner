@@ -1,45 +1,52 @@
 import { TrainingType } from '../models';
-import { Intervals } from './intervals';
+import { Distance } from './distance';
+import { TrainingIntervals } from './training-intervals';
 
-/* Distance training */
+/* Common detailed training properties */
 
-export type DistanceTraining = {
-  type: TrainingType.moderate | TrainingType.race | TrainingType.recovery;
-  distance: number;
+type DistanceTraining = {
+  distance: Distance;
 };
 
-/* Intervals training */
-
-export type BaseIntervalsTraining = {
-  type: TrainingType.speed | TrainingType.strength;
-  intervals: Intervals;
+type IntervalsTraining = {
+  intervals: TrainingIntervals;
 };
 
-export type FullIntervalsTraining = BaseIntervalsTraining & WarmUpTraining;
+/* Training types */
 
-/* Rest day */
+export type ModerateTraining = {
+  type: TrainingType.moderate;
+} & DistanceTraining;
+
+export type RaceDay = {
+  type: TrainingType.race;
+} & DistanceTraining;
+
+export type RecoveryTraining = {
+  type: TrainingType.recovery;
+} & DistanceTraining;
 
 export type RestDay = {
   type: TrainingType.rest;
 };
 
-/* Timed training */
+export type SpeedTraining = {
+  type: TrainingType.speed;
+} & IntervalsTraining;
 
-export type BaseTimedTraining = {
-  distance: number;
+export type StrengthTraining = {
+  type: TrainingType.strength;
+} & IntervalsTraining;
+
+export type TimedTraining = {
   type: TrainingType.timed;
-};
+} & DistanceTraining;
 
-export type FullTimedTraining = BaseTimedTraining & WarmUpTraining;
-
-/* Warm-up training */
-
-export type WarmUpTraining = {
-  warmUpDistance: number; // Warm up / Cool down distance
-};
-
-/* All trainings */
-
-export type BaseTraining = DistanceTraining | BaseIntervalsTraining | RestDay | BaseTimedTraining;
-
-export type FullTraining = DistanceTraining | FullIntervalsTraining | RestDay | FullTimedTraining;
+export type Training =
+  | ModerateTraining
+  | RaceDay
+  | RecoveryTraining
+  | RestDay
+  | SpeedTraining
+  | StrengthTraining
+  | TimedTraining;

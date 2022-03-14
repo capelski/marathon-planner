@@ -2,28 +2,22 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
 import { Legend, Settings, Plan } from './components';
-import { defaultDistanceUnits, defaultPace, defaultWarmUpDistance } from './constants';
-import { getFullPlan } from './logic';
-import { DistanceUnits } from './models';
+import { defaultRacePace, defaultWarmUpDistance } from './constants';
+import { getDetailedPlan } from './logic';
 
 const App: React.FC = () => {
-  const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(defaultDistanceUnits);
-  const [plan, setPlan] = useState(getFullPlan(defaultWarmUpDistance, defaultPace));
+  const [plan, setPlan] = useState(getDetailedPlan(defaultWarmUpDistance, defaultRacePace));
   const isDesktop = useMediaQuery({ minWidth: 768 });
 
   return (
     <div>
       <h1>Marathon planner</h1>
 
-      <Plan distanceUnits={distanceUnits} isDesktop={isDesktop} plan={plan} />
+      <Plan isDesktop={isDesktop} plan={plan} />
 
       <Legend isDesktop={isDesktop} />
 
-      <Settings
-        distanceUnits={distanceUnits}
-        setDistanceUnits={setDistanceUnits}
-        setPlan={setPlan}
-      />
+      <Settings setPlan={setPlan} />
     </div>
   );
 };

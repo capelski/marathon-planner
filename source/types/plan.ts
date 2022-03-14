@@ -1,5 +1,5 @@
-import { BaseWeek, FullWeek } from './week';
+import { DetailedWeek, Week } from './week';
 
-export type BasePlan = BaseWeek[];
+export type Plan = Week[];
 
-export type FullPlan = FullWeek[];
+export type DetailedPlan = DetailedWeek[];
