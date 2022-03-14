@@ -12,7 +12,7 @@ import {
 
 /* Common detailed training properties */
 
-type DetailedIntervalsTraining = {
+export type DetailedIntervalsTraining = WarmedUpTraining & {
   intervals: DetailedTrainingIntervals;
 };
 
@@ -24,7 +24,7 @@ type PacedTraining = {
   distance: PacedDistance;
 };
 
-type WarmedUpTraining = {
+export type WarmedUpTraining = {
   warmUpDistance: PacedDistance; // Warm up / Cool down distance
 };
 
@@ -40,13 +40,11 @@ export type DetailedRestDay = DetailedTrainingBase & RestDay;
 
 export type DetailedSpeedTraining = DetailedTrainingBase &
   SpeedTraining &
-  DetailedIntervalsTraining &
-  WarmedUpTraining;
+  DetailedIntervalsTraining;
 
 export type DetailedStrengthTraining = DetailedTrainingBase &
   StrengthTraining &
-  DetailedIntervalsTraining &
-  WarmedUpTraining;
+  DetailedIntervalsTraining;
 
 export type DetailedTimedTraining = DetailedTrainingBase &
   TimedTraining &
