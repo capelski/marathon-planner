@@ -27,6 +27,7 @@ export type DetailedIntervalsTraining = DetailedTrainingBase & {
 
 type DetailedTrainingBase = {
   totalDistance: Distance;
+  totalSeconds: number;
 };
 
 export type DetailedWarmedUpTraining = DetailedTrainingBase & {
