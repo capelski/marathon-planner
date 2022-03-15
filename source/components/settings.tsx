@@ -60,6 +60,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         name="distanceUnits"
         onChange={distanceUnitsChange}
         options={[{ value: DistanceUnits.kilometers }, { value: DistanceUnits.miles }]}
+        style={{ marginBottom: 8 }}
         value={distanceUnits}
       />
       <RadioButtons
@@ -70,25 +71,28 @@ export const Settings: React.FC<SettingsProps> = (props) => {
           label: getDisplayDistance(convertDistance(distance, distanceUnits)),
           value: String(distance.value)
         }))}
+        style={{ marginBottom: 8 }}
         value={String(warmUpDistance.value)}
       />
-      <div>
-        Race pace:{' '}
-        <input
-          onChange={(event) => timeChange(event.target.value, seconds)}
-          type="number"
-          style={{ width: 50 }}
-          value={minutes}
-        />
-        {" ' "}
-        <input
-          onChange={(event) => timeChange(minutes, event.target.value)}
-          type="number"
-          style={{ width: 50 }}
-          value={seconds}
-        />
-        {' " / '}
-        {distanceUnits}
+      <div style={{ marginBottom: 8 }}>
+        Race pace: <br />
+        <div style={{ display: 'inline-block', marginLeft: 4, marginTop: 4 }}>
+          <input
+            onChange={(event) => timeChange(event.target.value, seconds)}
+            type="number"
+            style={{ width: 50 }}
+            value={minutes}
+          />
+          {" ' "}
+          <input
+            onChange={(event) => timeChange(minutes, event.target.value)}
+            type="number"
+            style={{ width: 50 }}
+            value={seconds}
+          />
+          {' " / '}
+          {distanceUnits}
+        </div>
       </div>
     </React.Fragment>
   );
