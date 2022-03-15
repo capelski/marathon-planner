@@ -1,4 +1,5 @@
 import {
+  longRunPaceVariation,
   milesToKm,
   moderatePaceVariation,
   recoveryPaceVariation,
@@ -49,6 +50,10 @@ export const getPace = (distanceUnits: DistanceUnits, minutes: number, seconds: 
 
 export const getTrainingPaces = (racePace: Pace): TrainingPaces => {
   return {
+    [TrainingType.longRun]: mergePaces(
+      racePace,
+      convertPace(longRunPaceVariation, racePace.distanceUnits)
+    ),
     [TrainingType.moderate]: mergePaces(
       racePace,
       convertPace(moderatePaceVariation, racePace.distanceUnits)

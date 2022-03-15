@@ -16,6 +16,11 @@ export const recoveryPaceVariation: Pace = {
   seconds: 120
 };
 
+export const longRunPaceVariation: Pace = {
+  distanceUnits: DistanceUnits.miles,
+  seconds: 40
+};
+
 export const strengthPaceVariation: Pace = {
   distanceUnits: DistanceUnits.miles,
   seconds: -10

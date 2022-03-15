@@ -3,7 +3,12 @@ import { DetailedTraining, Distance, Training, TrainingIntervals, TrainingPaces 
 import { convertDistance, createDistance, mergeDistances, multiplyDistance } from './distance';
 
 const getDetailedDistanceTraining = <
-  T extends TrainingType.moderate | TrainingType.race | TrainingType.recovery | TrainingType.rest
+  T extends
+    | TrainingType.longRun
+    | TrainingType.moderate
+    | TrainingType.race
+    | TrainingType.recovery
+    | TrainingType.rest
 >(
   distance: Distance,
   trainingPaces: TrainingPaces,
@@ -58,7 +63,8 @@ export const getDetailedTraining = (
   trainingPaces: TrainingPaces,
   warmUpDistance: Distance
 ): DetailedTraining => {
-  return training.type === TrainingType.moderate ||
+  return training.type === TrainingType.longRun ||
+    training.type === TrainingType.moderate ||
     training.type === TrainingType.race ||
     training.type === TrainingType.recovery
     ? getDetailedDistanceTraining(training.distance, trainingPaces, training.type)

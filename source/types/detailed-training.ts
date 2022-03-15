@@ -1,6 +1,7 @@
 import { Distance, PacedDistance } from './distance';
 import { DetailedTrainingIntervals } from './training-intervals';
 import {
+  LongRun,
   ModerateTraining,
   RaceDay,
   RecoveryTraining,
@@ -30,6 +31,8 @@ export type WarmedUpTraining = {
 
 /* Detailed training types */
 
+export type DetailedLongRun = DetailedTrainingBase & LongRun & PacedTraining;
+
 export type DetailedModerateTraining = DetailedTrainingBase & ModerateTraining & PacedTraining;
 
 export type DetailedRaceDay = DetailedTrainingBase & RaceDay & PacedTraining;
@@ -52,6 +55,7 @@ export type DetailedTimedTraining = DetailedTrainingBase &
   WarmedUpTraining;
 
 export type DetailedTraining =
+  | DetailedLongRun
   | DetailedModerateTraining
   | DetailedRaceDay
   | DetailedRestDay

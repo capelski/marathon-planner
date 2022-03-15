@@ -30,7 +30,8 @@ export const Training: React.FC<TrainingProps> = (props) => {
           width: props.isDesktop ? 'calc(100% - 4px)' : 40
         }}
       />
-      {props.training.type === TrainingType.moderate ||
+      {props.training.type === TrainingType.longRun ||
+      props.training.type === TrainingType.moderate ||
       props.training.type === TrainingType.race ||
       props.training.type === TrainingType.recovery ? (
         <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
