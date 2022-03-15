@@ -23,5 +23,5 @@ export const strengthPaceVariation: Pace = {
 
 export const speedPaceVariation: Pace = {
   distanceUnits: DistanceUnits.miles,
-  seconds: -20
+  seconds: -40
 };
