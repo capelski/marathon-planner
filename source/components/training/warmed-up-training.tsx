@@ -1,18 +1,18 @@
 import React from 'react';
-import { coolDownSymbol, warmUpSymbol } from '../../constants';
-import { PacedDistance } from '../../types';
+import { coolDownSymbol, trainingCoreSymbol, warmUpSymbol } from '../../constants';
+import { DetailedWarmedUpTraining } from '../../types';
 import { DistanceComponent } from '../distance';
 
 export interface WarmedUpTrainingProps {
-  warmUpDistance: PacedDistance;
+  training: DetailedWarmedUpTraining;
 }
 
-export const WarmedUpTrainingComponent: React.FC<WarmedUpTrainingProps> = (props) => {
+export const WarmedUpTraining: React.FC<WarmedUpTrainingProps> = (props) => {
   return (
     <div>
-      <DistanceComponent distance={props.warmUpDistance} symbol={warmUpSymbol} />
-      {props.children}
-      <DistanceComponent distance={props.warmUpDistance} symbol={coolDownSymbol} />
+      <DistanceComponent distance={props.training.warmUpDistance} symbol={warmUpSymbol} />
+      <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
+      <DistanceComponent distance={props.training.warmUpDistance} symbol={coolDownSymbol} />
     </div>
   );
 };

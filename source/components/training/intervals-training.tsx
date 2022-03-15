@@ -1,8 +1,12 @@
 import React from 'react';
-import { recoveryIntervalSymbol, trainingCoreSymbol } from '../../constants';
+import {
+  coolDownSymbol,
+  recoveryIntervalSymbol,
+  trainingCoreSymbol,
+  warmUpSymbol
+} from '../../constants';
 import { DetailedIntervalsTraining } from '../../types';
 import { DistanceComponent } from '../distance';
-import { WarmedUpTrainingComponent } from './warmed-up-training';
 
 export interface IntervalsTrainingProps {
   training: DetailedIntervalsTraining;
@@ -10,7 +14,9 @@ export interface IntervalsTrainingProps {
 
 export const IntervalsTraining: React.FC<IntervalsTrainingProps> = (props) => {
   return (
-    <WarmedUpTrainingComponent warmUpDistance={props.training.warmUpDistance}>
+    <div>
+      <DistanceComponent distance={props.training.warmUpDistance} symbol={warmUpSymbol} />
+
       <div style={{ alignItems: 'center', display: 'flex' }}>
         <div>{props.training.intervals.intervalsNumber}x</div>
         <div style={{ borderLeft: '1px solid black', marginLeft: 8, paddingLeft: 8 }}>
@@ -24,6 +30,8 @@ export const IntervalsTraining: React.FC<IntervalsTrainingProps> = (props) => {
           />
         </div>
       </div>
-    </WarmedUpTrainingComponent>
+
+      <DistanceComponent distance={props.training.warmUpDistance} symbol={coolDownSymbol} />
+    </div>
   );
 };

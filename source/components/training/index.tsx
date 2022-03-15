@@ -1,10 +1,10 @@
 import React from 'react';
 import { trainingCoreSymbol } from '../../constants';
-import { TrainingType, trainingTypeColors } from '../../models';
+import { TrainingCategory, trainingTypeColors } from '../../models';
 import { DetailedTraining } from '../../types';
 import { DistanceComponent } from '../distance';
 import { IntervalsTraining } from './intervals-training';
-import { WarmedUpTrainingComponent } from './warmed-up-training';
+import { WarmedUpTraining } from './warmed-up-training';
 
 export interface TrainingProps {
   isDesktop: boolean;
@@ -30,18 +30,12 @@ export const Training: React.FC<TrainingProps> = (props) => {
           width: props.isDesktop ? 'calc(100% - 4px)' : 40
         }}
       />
-      {props.training.type === TrainingType.longRun ||
-      props.training.type === TrainingType.moderate ||
-      props.training.type === TrainingType.race ||
-      props.training.type === TrainingType.recovery ? (
+      {props.training.category === TrainingCategory.distance ? (
         <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
-      ) : props.training.type === TrainingType.speed ||
-        props.training.type === TrainingType.strength ? (
+      ) : props.training.category === TrainingCategory.intervals ? (
         <IntervalsTraining training={props.training} />
-      ) : props.training.type === TrainingType.timed ? (
-        <WarmedUpTrainingComponent warmUpDistance={props.training.warmUpDistance}>
-          <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
-        </WarmedUpTrainingComponent>
+      ) : props.training.category === TrainingCategory.warmedUp ? (
+        <WarmedUpTraining training={props.training} />
       ) : undefined}
     </div>
   );

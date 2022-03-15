@@ -1,5 +1,5 @@
+import { TrainingCategory } from '../models';
 import { Distance, PacedDistance } from './distance';
-import { DetailedTrainingIntervals } from './training-intervals';
 import {
   LongRun,
   ModerateTraining,
@@ -10,10 +10,18 @@ import {
   StrengthTraining,
   TimedTraining
 } from './training';
+import { DetailedTrainingIntervals } from './training-intervals';
 
 /* Common detailed training properties */
 
-export type DetailedIntervalsTraining = WarmedUpTraining & {
+type DetailedDistanceTraining = DetailedTrainingBase & {
+  category: TrainingCategory.distance;
+  distance: PacedDistance;
+};
+
+export type DetailedIntervalsTraining = DetailedTrainingBase & {
+  category: TrainingCategory.intervals;
+  warmUpDistance: PacedDistance; // Warm up / Cool down distance
   intervals: DetailedTrainingIntervals;
 };
 
@@ -21,38 +29,46 @@ type DetailedTrainingBase = {
   totalDistance: Distance;
 };
 
-type PacedTraining = {
+export type DetailedWarmedUpTraining = DetailedTrainingBase & {
+  category: TrainingCategory.warmedUp;
   distance: PacedDistance;
-};
-
-export type WarmedUpTraining = {
   warmUpDistance: PacedDistance; // Warm up / Cool down distance
 };
 
 /* Detailed training types */
 
-export type DetailedLongRun = DetailedTrainingBase & LongRun & PacedTraining;
+export type DetailedLongRun = DetailedDistanceTraining & {
+  type: LongRun['type'];
+};
 
-export type DetailedModerateTraining = DetailedTrainingBase & ModerateTraining & PacedTraining;
+export type DetailedModerateTraining = DetailedDistanceTraining & {
+  type: ModerateTraining['type'];
+};
 
-export type DetailedRaceDay = DetailedTrainingBase & RaceDay & PacedTraining;
+export type DetailedRaceDay = DetailedDistanceTraining & {
+  type: RaceDay['type'];
+};
 
-export type DetailedRecoveryTraining = DetailedTrainingBase & RecoveryTraining & PacedTraining;
+export type DetailedRecoveryTraining = DetailedDistanceTraining & {
+  type: RecoveryTraining['type'];
+};
 
-export type DetailedRestDay = DetailedTrainingBase & RestDay;
+export type DetailedRestDay = DetailedTrainingBase & {
+  category: TrainingCategory.none;
+  type: RestDay['type'];
+};
 
-export type DetailedSpeedTraining = DetailedTrainingBase &
-  SpeedTraining &
-  DetailedIntervalsTraining;
+export type DetailedSpeedTraining = DetailedIntervalsTraining & {
+  type: SpeedTraining['type'];
+};
 
-export type DetailedStrengthTraining = DetailedTrainingBase &
-  StrengthTraining &
-  DetailedIntervalsTraining;
+export type DetailedStrengthTraining = DetailedIntervalsTraining & {
+  type: StrengthTraining['type'];
+};
 
-export type DetailedTimedTraining = DetailedTrainingBase &
-  TimedTraining &
-  PacedTraining &
-  WarmedUpTraining;
+export type DetailedTimedTraining = DetailedWarmedUpTraining & {
+  type: TimedTraining['type'];
+};
 
 export type DetailedTraining =
   | DetailedLongRun

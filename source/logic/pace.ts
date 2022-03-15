@@ -63,7 +63,10 @@ export const getTrainingPaces = (racePace: Pace): TrainingPaces => {
       racePace,
       convertPace(recoveryPaceVariation, racePace.distanceUnits)
     ),
-    [TrainingType.rest]: racePace,
+    [TrainingType.rest]: {
+      distanceUnits: racePace.distanceUnits,
+      seconds: 0
+    },
     [TrainingType.speed]: mergePaces(
       racePace,
       convertPace(speedPaceVariation, racePace.distanceUnits)
