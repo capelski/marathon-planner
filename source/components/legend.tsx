@@ -10,11 +10,7 @@ import {
 } from '../constants';
 import { sortedTrainingTypes, trainingTypeColors } from '../models';
 
-export interface LegendProps {
-  isDesktop: boolean;
-}
-
-export const Legend: React.FC<LegendProps> = (props) => {
+export const Legend: React.FC = () => {
   return (
     <React.Fragment>
       <h2>Legend</h2>
@@ -28,9 +24,9 @@ export const Legend: React.FC<LegendProps> = (props) => {
               style={{
                 backgroundColor: trainingTypeColors[trainingType],
                 display: 'inline-block',
-                height: props.isDesktop ? 16 : 24,
+                height: 24,
                 marginRight: 8,
-                width: props.isDesktop ? 'calc(14.28% / 2 - 4px)' : 40
+                width: 24
               }}
             />{' '}
             {trainingType}

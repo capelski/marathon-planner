@@ -26,13 +26,16 @@ export const Training: React.FC<TrainingProps> = (props) => {
     >
       <div
         style={{
+          alignSelf: 'stretch',
           backgroundColor: trainingTypeColors[props.training.type],
-          height: props.isDesktop ? 16 : 24,
+          height: props.isDesktop ? 16 : undefined,
           marginBottom: 4,
-          width: props.isDesktop ? 'calc(100% - 4px)' : 40
+          width: props.isDesktop ? 'calc(100% - 4px)' : 20
         }}
       />
-      <div style={{ paddingLeft: 4, paddingRight: 4 }}>
+      <div
+        style={{ marginBottom: 8, marginTop: 8, minHeight: '1em', paddingLeft: 4, paddingRight: 4 }}
+      >
         <ul style={{ marginBottom: 0, marginTop: 0, paddingInlineStart: 16 }}>
           {props.training.category === TrainingCategory.distance ? (
             <DistanceTraining training={props.training} />
@@ -45,7 +48,7 @@ export const Training: React.FC<TrainingProps> = (props) => {
 
         {props.training.category === TrainingCategory.intervals ||
         props.training.category === TrainingCategory.warmedUp ? (
-          <Inliner>
+          <Inliner style={{ marginTop: 8 }}>
             <DistanceComponent
               distance={props.training.totalDistance}
               symbol={totalDistanceSymbol}
