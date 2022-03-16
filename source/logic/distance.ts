@@ -31,7 +31,7 @@ export const createDistance = (value: number, distanceUnits: DistanceUnits): Dis
 };
 
 export const getDisplayDistance = (distance: Distance) => {
-  return `${distance.value} ${distance.distanceUnits}`;
+  return `${Math.floor(distance.value * 10) / 10} ${distance.distanceUnits}`;
 };
 
 /** Sums all the distances' value into a new distance object. All distances must be in the same DistanceUnits */

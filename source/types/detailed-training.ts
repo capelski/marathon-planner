@@ -14,7 +14,7 @@ import { DetailedTrainingIntervals } from './training-intervals';
 
 /* Common detailed training properties */
 
-type DetailedDistanceTraining = DetailedTrainingBase & {
+export type DetailedDistanceTraining = DetailedTrainingBase & {
   category: TrainingCategory.distance;
   distance: PacedDistance;
 };

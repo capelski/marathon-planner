@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { totalDistanceSymbol } from '../constants';
 import { DetailedWeek } from '../types';
 import { DistanceComponent } from './distance';
+import { Time } from './time';
 import { Training } from './training';
 
 export interface WeekProps {
@@ -29,14 +30,15 @@ export const Week: React.FC<WeekProps> = (props) => {
 
   return (
     <div>
-      <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
-        <h4>
+      <div style={{ alignItems: 'center', display: 'flex' }}>
+        <h4 style={{ flexGrow: 1 }}>
           <span onClick={changeCollapseStatus} style={{ cursor: 'pointer' }}>
             {isCollapsed ? '☞' : '☟'}
           </span>{' '}
           Week {props.week.number}
         </h4>
         <DistanceComponent distance={props.week.totalDistance} symbol={totalDistanceSymbol} />
+        <Time seconds={props.week.totalSeconds} />
       </div>
       {!isCollapsed && (
         <div

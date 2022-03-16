@@ -9,10 +9,16 @@ export interface WarmedUpTrainingProps {
 
 export const WarmedUpTraining: React.FC<WarmedUpTrainingProps> = (props) => {
   return (
-    <div>
-      <DistanceComponent distance={props.training.warmUpDistance} symbol={warmUpSymbol} />
-      <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
-      <DistanceComponent distance={props.training.warmUpDistance} symbol={coolDownSymbol} />
-    </div>
+    <React.Fragment>
+      <li>
+        <DistanceComponent distance={props.training.warmUpDistance} symbol={warmUpSymbol} />
+      </li>
+      <li>
+        <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
+      </li>
+      <li>
+        <DistanceComponent distance={props.training.warmUpDistance} symbol={coolDownSymbol} />
+      </li>
+    </React.Fragment>
   );
 };

@@ -14,24 +14,30 @@ export interface IntervalsTrainingProps {
 
 export const IntervalsTraining: React.FC<IntervalsTrainingProps> = (props) => {
   return (
-    <div>
-      <DistanceComponent distance={props.training.warmUpDistance} symbol={warmUpSymbol} />
+    <React.Fragment>
+      <li>
+        <DistanceComponent distance={props.training.warmUpDistance} symbol={warmUpSymbol} />
+      </li>
 
-      <div style={{ alignItems: 'center', display: 'flex' }}>
-        <div>{props.training.intervals.intervalsNumber}x</div>
-        <div style={{ borderLeft: '1px solid black', marginLeft: 8, paddingLeft: 8 }}>
-          <DistanceComponent
-            distance={props.training.intervals.intervalDistance}
-            symbol={trainingCoreSymbol}
-          />
-          <DistanceComponent
-            distance={props.training.intervals.recoveryDistance}
-            symbol={recoveryIntervalSymbol}
-          />
+      <li>
+        <div style={{ display: 'flex' }}>
+          <div>{props.training.intervals.intervalsNumber}x</div>
+          <div style={{ borderLeft: '1px solid black', marginLeft: 8, paddingLeft: 8 }}>
+            <DistanceComponent
+              distance={props.training.intervals.intervalDistance}
+              symbol={trainingCoreSymbol}
+            />
+            <DistanceComponent
+              distance={props.training.intervals.recoveryDistance}
+              symbol={recoveryIntervalSymbol}
+            />
+          </div>
         </div>
-      </div>
+      </li>
 
-      <DistanceComponent distance={props.training.warmUpDistance} symbol={coolDownSymbol} />
-    </div>
+      <li>
+        <DistanceComponent distance={props.training.warmUpDistance} symbol={coolDownSymbol} />
+      </li>
+    </React.Fragment>
   );
 };

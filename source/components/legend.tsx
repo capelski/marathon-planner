@@ -3,6 +3,7 @@ import {
   coolDownSymbol,
   paceSymbol,
   recoveryIntervalSymbol,
+  timeSymbol,
   totalDistanceSymbol,
   trainingCoreSymbol,
   warmUpSymbol
@@ -43,6 +44,7 @@ export const Legend: React.FC<LegendProps> = (props) => {
       <div>{recoveryIntervalSymbol} Recovery interval</div>
       <div>{paceSymbol} Pace</div>
       <div>{totalDistanceSymbol} Total distance</div>
+      <div>{timeSymbol} Total time</div>
     </React.Fragment>
   );
 };

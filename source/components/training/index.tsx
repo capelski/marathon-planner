@@ -1,8 +1,11 @@
 import React from 'react';
-import { trainingCoreSymbol } from '../../constants';
+import { totalDistanceSymbol } from '../../constants';
 import { TrainingCategory, trainingTypeColors } from '../../models';
 import { DetailedTraining } from '../../types';
 import { DistanceComponent } from '../distance';
+import { Inliner } from '../inliner';
+import { Time } from '../time';
+import { DistanceTraining } from './distance-training';
 import { IntervalsTraining } from './intervals-training';
 import { WarmedUpTraining } from './warmed-up-training';
 
@@ -16,7 +19,6 @@ export const Training: React.FC<TrainingProps> = (props) => {
     <div
       className="day"
       style={{
-        alignItems: 'center',
         display: 'flex',
         flexDirection: props.isDesktop ? 'column' : 'row',
         width: props.isDesktop ? '14.28%' : undefined
@@ -30,13 +32,28 @@ export const Training: React.FC<TrainingProps> = (props) => {
           width: props.isDesktop ? 'calc(100% - 4px)' : 40
         }}
       />
-      {props.training.category === TrainingCategory.distance ? (
-        <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
-      ) : props.training.category === TrainingCategory.intervals ? (
-        <IntervalsTraining training={props.training} />
-      ) : props.training.category === TrainingCategory.warmedUp ? (
-        <WarmedUpTraining training={props.training} />
-      ) : undefined}
+      <div style={{ paddingLeft: 4, paddingRight: 4 }}>
+        <ul style={{ marginBottom: 0, marginTop: 0, paddingInlineStart: 16 }}>
+          {props.training.category === TrainingCategory.distance ? (
+            <DistanceTraining training={props.training} />
+          ) : props.training.category === TrainingCategory.intervals ? (
+            <IntervalsTraining training={props.training} />
+          ) : props.training.category === TrainingCategory.warmedUp ? (
+            <WarmedUpTraining training={props.training} />
+          ) : undefined}
+        </ul>
+
+        {props.training.category === TrainingCategory.intervals ||
+        props.training.category === TrainingCategory.warmedUp ? (
+          <Inliner>
+            <DistanceComponent
+              distance={props.training.totalDistance}
+              symbol={totalDistanceSymbol}
+            />
+            <Time seconds={props.training.totalSeconds} />
+          </Inliner>
+        ) : undefined}
+      </div>
     </div>
   );
 };

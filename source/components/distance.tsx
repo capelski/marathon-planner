@@ -1,7 +1,9 @@
 import React from 'react';
-import { paceSymbol } from '../constants';
-import { extractPaceMinutes, extractPaceSeconds, getDisplayDistance } from '../logic';
+import { getDisplayDistance } from '../logic';
 import { Distance, PacedDistance } from '../types';
+import { Inliner } from './inliner';
+import { PaceComponent } from './pace';
+import { Time } from './time';
 
 export interface DistanceProps {
   distance: Distance | PacedDistance;
@@ -10,15 +12,16 @@ export interface DistanceProps {
 
 export const DistanceComponent: React.FC<DistanceProps> = (props) => {
   return (
-    <div>
-      {props.symbol} {getDisplayDistance(props.distance)}
+    <Inliner>
+      <span>
+        {props.symbol} {getDisplayDistance(props.distance)}
+      </span>
       {'pace' in props.distance ? (
         <React.Fragment>
-          {' '}
-          {paceSymbol} {extractPaceMinutes(props.distance.pace)}'{' '}
-          {extractPaceSeconds(props.distance.pace)}"
+          <PaceComponent pace={props.distance.pace} />
+          <Time seconds={props.distance.pace.seconds * props.distance.value} />
         </React.Fragment>
       ) : undefined}
-    </div>
+    </Inliner>
   );
 };
