@@ -30,12 +30,12 @@ export const Week: React.FC<WeekProps> = (props) => {
 
   return (
     <div>
-      <div style={{ alignItems: 'center', display: 'flex' }}>
+      <div
+        onClick={changeCollapseStatus}
+        style={{ alignItems: 'center', cursor: 'pointer', display: 'flex' }}
+      >
         <h4 style={{ flexGrow: 1 }}>
-          <span onClick={changeCollapseStatus} style={{ cursor: 'pointer' }}>
-            {isCollapsed ? '☞' : '☟'}
-          </span>{' '}
-          Week {props.week.number}
+          <span>{isCollapsed ? '☞' : '☟'}</span> Week {props.week.number}
         </h4>
         <DistanceComponent distance={props.week.totalDistance} symbol={totalDistanceSymbol} />
         <Time seconds={props.week.totalSeconds} />
