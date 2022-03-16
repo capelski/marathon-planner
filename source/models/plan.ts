@@ -948,7 +948,7 @@ export const basePlan: Plan = [
         }
       },
       {
-        type: TrainingType.longRun,
+        type: TrainingType.race,
         distance: {
           distanceUnits: DistanceUnits.miles,
           value: 26.2
