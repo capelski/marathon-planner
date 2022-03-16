@@ -3,9 +3,9 @@ import { Distance, PacedDistance } from './distance';
 import {
   LongRun,
   ModerateTraining,
-  RaceDay,
+  Race,
   RecoveryTraining,
-  RestDay,
+  Rest,
   SpeedTraining,
   StrengthTraining,
   TimedTraining
@@ -46,17 +46,17 @@ export type DetailedModerateTraining = DetailedDistanceTraining & {
   type: ModerateTraining['type'];
 };
 
-export type DetailedRaceDay = DetailedDistanceTraining & {
-  type: RaceDay['type'];
+export type DetailedRace = DetailedDistanceTraining & {
+  type: Race['type'];
 };
 
 export type DetailedRecoveryTraining = DetailedDistanceTraining & {
   type: RecoveryTraining['type'];
 };
 
-export type DetailedRestDay = DetailedTrainingBase & {
+export type DetailedRest = DetailedTrainingBase & {
   category: TrainingCategory.none;
-  type: RestDay['type'];
+  type: Rest['type'];
 };
 
 export type DetailedSpeedTraining = DetailedIntervalsTraining & {
@@ -74,10 +74,9 @@ export type DetailedTimedTraining = DetailedWarmedUpTraining & {
 export type DetailedTraining =
   | DetailedLongRun
   | DetailedModerateTraining
-  | DetailedRaceDay
-  | DetailedRestDay
+  | DetailedRace
   | DetailedRecoveryTraining
-  | DetailedRestDay
+  | DetailedRest
   | DetailedSpeedTraining
   | DetailedStrengthTraining
   | DetailedTimedTraining;

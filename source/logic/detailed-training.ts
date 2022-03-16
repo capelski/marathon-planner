@@ -4,7 +4,7 @@ import {
   Distance,
   LongRun,
   ModerateTraining,
-  RaceDay,
+  Race,
   RecoveryTraining,
   SpeedTraining,
   StrengthTraining,
@@ -15,7 +15,7 @@ import {
 import { convertDistance, createDistance, mergeDistances, multiplyDistance } from './distance';
 
 const getDetailedDistanceTraining = <
-  T extends LongRun | ModerateTraining | RaceDay | RecoveryTraining
+  T extends LongRun | ModerateTraining | Race | RecoveryTraining
 >(
   training: T,
   trainingPaces: TrainingPaces

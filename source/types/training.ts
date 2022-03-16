@@ -22,7 +22,7 @@ export type ModerateTraining = {
   type: TrainingType.moderate;
 } & DistanceTraining;
 
-export type RaceDay = {
+export type Race = {
   type: TrainingType.race;
 } & DistanceTraining;
 
@@ -30,7 +30,7 @@ export type RecoveryTraining = {
   type: TrainingType.recovery;
 } & DistanceTraining;
 
-export type RestDay = {
+export type Rest = {
   type: TrainingType.rest;
 };
 
@@ -49,9 +49,9 @@ export type TimedTraining = {
 export type Training =
   | LongRun
   | ModerateTraining
-  | RaceDay
+  | Race
   | RecoveryTraining
-  | RestDay
+  | Rest
   | SpeedTraining
   | StrengthTraining
   | TimedTraining;
