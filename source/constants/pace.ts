@@ -3,7 +3,7 @@ import { Pace } from '../types';
 
 export const defaultRacePace: Pace = {
   distanceUnits: DistanceUnits.kilometers,
-  seconds: 5 * 60 + 15 // 5' 15"
+  seconds: 5 * 60 + 30 // 5' 30"
 };
 
 export const moderatePaceVariation: Pace = {
