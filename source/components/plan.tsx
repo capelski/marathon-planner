@@ -11,6 +11,7 @@ const collapsedWeeksKey = 'collapsedWeeks';
 
 export const Plan: React.FC<PlanProps> = (props) => {
   const [collapsedWeeks, setCollapsedWeeks] = useState<Dictionary<boolean, number>>({});
+  const areAllWeeksCollapsed = props.plan.every((week) => collapsedWeeks[week.number]);
 
   useEffect(() => {
     const _collapsedWeeks = localStorage.getItem(collapsedWeeksKey);
@@ -19,7 +20,7 @@ export const Plan: React.FC<PlanProps> = (props) => {
     }
   }, []);
 
-  const changeCollapseStatus = (weekNumber: number) => {
+  const changeCollapsedStatus = (weekNumber: number) => {
     const nextCollapsedWeeks = {
       ...collapsedWeeks,
       [weekNumber]: !collapsedWeeks[weekNumber]
@@ -28,16 +29,29 @@ export const Plan: React.FC<PlanProps> = (props) => {
     localStorage.setItem(collapsedWeeksKey, JSON.stringify(nextCollapsedWeeks));
   };
 
+  const toggleCollapsedWeeks = () => {
+    setCollapsedWeeks(
+      areAllWeeksCollapsed
+        ? {}
+        : props.plan.reduce(
+            (_collapsedWeeks, week) => ({ ..._collapsedWeeks, [week.number]: true }),
+            {}
+          )
+    );
+  };
+
   return (
     <React.Fragment>
-      <h2>Plan</h2>
+      <h2 onClick={toggleCollapsedWeeks} style={{ cursor: 'pointer' }}>
+        <span>{areAllWeeksCollapsed ? '☞' : '☟'}</span> Plan
+      </h2>
       {props.plan.map((week) => {
         return (
           <Week
             isCollapsed={collapsedWeeks[week.number]}
             isDesktop={props.isDesktop}
             key={week.number}
-            toggleIsCollapsed={() => changeCollapseStatus(week.number)}
+            toggleIsCollapsed={() => changeCollapsedStatus(week.number)}
             week={week}
           />
         );
