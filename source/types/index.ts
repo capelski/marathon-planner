@@ -3,6 +3,7 @@ export * from './dictionary';
 export * from './distance';
 export * from './pace';
 export * from './plan';
+export * from './total-stats';
 export * from './training';
 export * from './training-intervals';
 export * from './week';

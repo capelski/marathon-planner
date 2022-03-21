@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
-import { Legend, Settings, Plan } from './components';
+import { Legend, Settings, Plan, Stats } from './components';
 import { defaultRacePace, defaultWarmUpDistance } from './constants';
 import { getDetailedPlan } from './logic';
 
@@ -18,6 +18,8 @@ const App: React.FC = () => {
       <Legend />
 
       <Settings setPlan={setPlan} />
+
+      <Stats plan={plan} />
     </div>
   );
 };

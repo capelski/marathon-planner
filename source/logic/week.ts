@@ -1,8 +1,8 @@
-import { DetailedTraining, WeekStats } from '../types';
+import { DetailedTraining, TotalStats } from '../types';
 import { createDistance, mergeDistances } from './distance';
 
 export const getWeekTotalStats = (detailedTrainings: DetailedTraining[]) => {
-  return detailedTrainings.reduce<WeekStats>(
+  return detailedTrainings.reduce<TotalStats>(
     (x, y) => {
       return {
         totalDistance: mergeDistances(x.totalDistance, y.totalDistance),

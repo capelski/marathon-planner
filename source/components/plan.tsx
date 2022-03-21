@@ -11,7 +11,7 @@ const collapsedWeeksKey = 'collapsedWeeks';
 
 export const Plan: React.FC<PlanProps> = (props) => {
   const [collapsedWeeks, setCollapsedWeeks] = useState<Dictionary<boolean, number>>({});
-  const areAllWeeksCollapsed = props.plan.every((week) => collapsedWeeks[week.number]);
+  const areAllWeeksCollapsed = props.plan.weeks.every((week) => collapsedWeeks[week.number]);
 
   useEffect(() => {
     const _collapsedWeeks = localStorage.getItem(collapsedWeeksKey);
@@ -33,7 +33,7 @@ export const Plan: React.FC<PlanProps> = (props) => {
     setCollapsedWeeks(
       areAllWeeksCollapsed
         ? {}
-        : props.plan.reduce(
+        : props.plan.weeks.reduce(
             (_collapsedWeeks, week) => ({ ..._collapsedWeeks, [week.number]: true }),
             {}
           )
@@ -45,7 +45,7 @@ export const Plan: React.FC<PlanProps> = (props) => {
       <h2 onClick={toggleCollapsedWeeks} style={{ cursor: 'pointer' }}>
         <span>{areAllWeeksCollapsed ? '☞' : '☟'}</span> Plan
       </h2>
-      {props.plan.map((week) => {
+      {props.plan.weeks.map((week) => {
         return (
           <Week
             isCollapsed={collapsedWeeks[week.number]}
