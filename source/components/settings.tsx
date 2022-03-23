@@ -1,55 +1,51 @@
-import React, { useState } from 'react';
-import { defaultDistanceUnits, defaultRacePace, defaultWarmUpDistance } from '../constants';
+import React, { useEffect, useState } from 'react';
 import {
   convertDistance,
-  convertPace,
   createDistance,
   extractPaceMinutes,
   extractPaceSeconds,
-  getDetailedPlan,
   getDisplayDistance,
   getPace
 } from '../logic';
 import { DistanceUnits, warmUpDistances } from '../models';
-import { DetailedPlan, Pace } from '../types';
+import { Distance, Pace } from '../types';
 import { RadioButtons } from './radio-buttons';
 
 export interface SettingsProps {
-  setPlan: (plan: DetailedPlan) => void;
+  distanceUnits: DistanceUnits;
+  racePace: Pace;
+  warmUpDistance: Distance;
+  setDistanceUnits: (distanceUnits: DistanceUnits) => void;
+  setRacePace: (racePace: Pace) => void;
+  setWarmUpDistance: (warmUpDistance: Distance) => void;
 }
 
 export const Settings: React.FC<SettingsProps> = (props) => {
-  const [distanceUnits, setDistanceUnits] = useState<DistanceUnits>(defaultDistanceUnits);
-  const [racePace, setPace] = useState(defaultRacePace);
-  const [minutes, setMinutes] = useState(String(extractPaceMinutes(defaultRacePace)));
-  const [seconds, setSeconds] = useState(String(extractPaceSeconds(defaultRacePace)));
-  const [warmUpDistance, setWarmUpDistance] = useState(defaultWarmUpDistance);
+  const [minutes, setMinutes] = useState(String(extractPaceMinutes(props.racePace)));
+  const [seconds, setSeconds] = useState(String(extractPaceSeconds(props.racePace)));
+
+  useEffect(() => {
+    setMinutes(String(extractPaceMinutes(props.racePace) || ''));
+    setSeconds(String(extractPaceSeconds(props.racePace) || ''));
+  }, [props.racePace]);
 
   const distanceUnitsChange = (nextValue: string) => {
-    setDistanceUnits(nextValue as DistanceUnits);
-    const nextPace = convertPace(racePace, nextValue as DistanceUnits);
-    racePaceChange(nextPace);
-  };
-
-  const racePaceChange = (nextPace: Pace) => {
-    setPace(nextPace);
-    setMinutes(String(extractPaceMinutes(nextPace) || ''));
-    setSeconds(String(extractPaceSeconds(nextPace) || ''));
-    props.setPlan(getDetailedPlan(warmUpDistance, nextPace));
+    props.setDistanceUnits(nextValue as DistanceUnits);
   };
 
   const timeChange = (_minutes: string, _seconds: string) => {
-    const nextPace = getPace(distanceUnits, parseInt(_minutes) || 0, parseInt(_seconds) || 0);
-    racePaceChange(nextPace);
+    const nextPace = getPace(props.distanceUnits, parseInt(_minutes) || 0, parseInt(_seconds) || 0);
+    setMinutes(String(extractPaceMinutes(nextPace) || ''));
+    setSeconds(String(extractPaceSeconds(nextPace) || ''));
+    props.setRacePace(nextPace);
   };
 
   const warmUpDistanceChange = (_warmUpDistance: string) => {
     const nextWarmUpDistance = createDistance(
       parseFloat(_warmUpDistance),
-      warmUpDistance.distanceUnits
+      props.warmUpDistance.distanceUnits
     );
-    setWarmUpDistance(nextWarmUpDistance);
-    props.setPlan(getDetailedPlan(nextWarmUpDistance, racePace));
+    props.setWarmUpDistance(nextWarmUpDistance);
   };
 
   return (
@@ -61,18 +57,18 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         onChange={distanceUnitsChange}
         options={[{ value: DistanceUnits.kilometers }, { value: DistanceUnits.miles }]}
         style={{ marginBottom: 8 }}
-        value={distanceUnits}
+        value={props.distanceUnits}
       />
       <RadioButtons
         label="Warm up/Cool down distance"
         name="warmUpDistance"
         onChange={warmUpDistanceChange}
         options={warmUpDistances.map((distance) => ({
-          label: getDisplayDistance(convertDistance(distance, distanceUnits)),
+          label: getDisplayDistance(convertDistance(distance, props.distanceUnits)),
           value: String(distance.value)
         }))}
         style={{ marginBottom: 8 }}
-        value={String(warmUpDistance.value)}
+        value={String(props.warmUpDistance.value)}
       />
       <div style={{ marginBottom: 8 }}>
         Race pace: <br />
@@ -91,7 +87,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
             value={seconds}
           />
           {' " / '}
-          {distanceUnits}
+          {props.distanceUnits}
         </div>
       </div>
     </React.Fragment>
