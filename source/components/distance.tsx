@@ -13,6 +13,7 @@ export interface DistanceProps {
 export const DistanceComponent: React.FC<DistanceProps> = (props) => {
   return (
     <Inliner>
+      {props.children}
       <span>
         {props.symbol} {getDisplayDistance(props.distance)}
       </span>

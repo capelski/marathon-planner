@@ -17,7 +17,9 @@ import { convertDistance, createDistance, mergeDistances, multiplyDistance } fro
 const getDetailedDistanceTraining = <
   T extends LongRun | ModerateTraining | Race | RecoveryTraining
 >(
+  number: number,
   training: T,
+  isTrainingCompleted: boolean,
   trainingPaces: TrainingPaces
 ): DetailedTraining => {
   const pace = trainingPaces[training.type];
@@ -25,6 +27,8 @@ const getDetailedDistanceTraining = <
   return {
     category: TrainingCategory.distance,
     distance: { ...convertedDistance, pace },
+    isCompleted: isTrainingCompleted,
+    number,
     totalDistance: convertedDistance,
     totalSeconds: convertedDistance.value * pace.seconds,
     type: training.type
@@ -32,7 +36,9 @@ const getDetailedDistanceTraining = <
 };
 
 const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining>(
+  number: number,
   training: T,
+  isTrainingCompleted: boolean,
   trainingPaces: TrainingPaces,
   warmUpDistance: Distance
 ): DetailedTraining => {
@@ -61,6 +67,8 @@ const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining
       intervalsNumber: training.intervals.intervalsNumber,
       recoveryDistance: { ...convertedRecoveryDistance, pace: recoveryPace }
     },
+    isCompleted: isTrainingCompleted,
+    number,
     totalDistance,
     totalSeconds:
       training.intervals.intervalsNumber * convertedIntervalDistance.value * mainPace.seconds +
@@ -74,29 +82,47 @@ const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining
 };
 
 export const getDetailedTraining = (
+  number: number,
   training: Training,
   trainingPaces: TrainingPaces,
-  warmUpDistance: Distance
+  warmUpDistance: Distance,
+  isTrainingCompleted: boolean
 ): DetailedTraining => {
   return training.type === TrainingType.longRun ||
     training.type === TrainingType.moderate ||
     training.type === TrainingType.race ||
     training.type === TrainingType.recovery
-    ? getDetailedDistanceTraining(training, trainingPaces)
+    ? getDetailedDistanceTraining(number, training, isTrainingCompleted, trainingPaces)
     : training.type === TrainingType.rest
     ? {
         category: TrainingCategory.none,
+        isCompleted: false,
+        number,
         totalDistance: createDistance(0, trainingPaces.race.distanceUnits),
         totalSeconds: 0,
         type: training.type
       }
     : training.type === TrainingType.speed || training.type === TrainingType.strength
-    ? getDetailedIntervalsTraining(training, trainingPaces, warmUpDistance)
-    : getDetailedWarmedUpTraining(training, trainingPaces, warmUpDistance);
+    ? getDetailedIntervalsTraining(
+        number,
+        training,
+        isTrainingCompleted,
+        trainingPaces,
+        warmUpDistance
+      )
+    : getDetailedWarmedUpTraining(
+        number,
+        training,
+        isTrainingCompleted,
+        trainingPaces,
+        warmUpDistance
+      );
 };
 
 const getDetailedWarmedUpTraining = <T extends TimedTraining>(
+  number: number,
   training: T,
+  isTrainingCompleted: boolean,
   trainingPaces: TrainingPaces,
   warmUpDistance: Distance
 ): DetailedTraining => {
@@ -113,6 +139,8 @@ const getDetailedWarmedUpTraining = <T extends TimedTraining>(
   return {
     category: TrainingCategory.warmedUp,
     distance: { ...convertedDistance, pace: mainPace },
+    isCompleted: isTrainingCompleted,
+    number,
     totalDistance,
     totalSeconds:
       convertedDistance.value * mainPace.seconds +

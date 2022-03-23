@@ -5,6 +5,7 @@ import { Week } from './week';
 export interface PlanProps {
   isDesktop: boolean;
   plan: DetailedPlan;
+  toggleTrainingCompleted: (weekNumber: number, trainingNumber: number) => void;
 }
 
 const collapsedWeeksKey = 'collapsedWeeks';
@@ -52,6 +53,7 @@ export const Plan: React.FC<PlanProps> = (props) => {
             isDesktop={props.isDesktop}
             key={week.number}
             toggleIsCollapsed={() => changeCollapsedStatus(week.number)}
+            toggleTrainingCompleted={props.toggleTrainingCompleted}
             week={week}
           />
         );

@@ -1,3 +1,4 @@
+export * from './completed-trainings';
 export * from './distance-units';
 export * from './miles-to-km';
 export * from './pace';

@@ -7,14 +7,18 @@ import { Inliner } from '../inliner';
 import { Time } from '../time';
 import { DistanceTraining } from './distance-training';
 import { IntervalsTraining } from './intervals-training';
+import { TrainingCheckbox } from './training-checkbox';
 import { WarmedUpTraining } from './warmed-up-training';
 
 export interface TrainingProps {
   isDesktop: boolean;
+  toggleTrainingCompleted: (trainingNumber: number) => void;
   training: DetailedTraining;
 }
 
 export const Training: React.FC<TrainingProps> = (props) => {
+  const toggleCompleted = () => props.toggleTrainingCompleted(props.training.number);
+
   return (
     <div
       className="day"
@@ -36,25 +40,33 @@ export const Training: React.FC<TrainingProps> = (props) => {
       <div
         style={{ marginBottom: 8, marginTop: 8, minHeight: '1em', paddingLeft: 4, paddingRight: 4 }}
       >
-        <ul style={{ marginBottom: 0, marginTop: 0, paddingInlineStart: 16 }}>
-          {props.training.category === TrainingCategory.distance ? (
-            <DistanceTraining training={props.training} />
-          ) : props.training.category === TrainingCategory.intervals ? (
-            <IntervalsTraining training={props.training} />
-          ) : props.training.category === TrainingCategory.warmedUp ? (
-            <WarmedUpTraining training={props.training} />
-          ) : undefined}
-        </ul>
+        {props.training.category === TrainingCategory.distance ? (
+          <DistanceTraining toggleCompleted={toggleCompleted} training={props.training} />
+        ) : undefined}
 
         {props.training.category === TrainingCategory.intervals ||
         props.training.category === TrainingCategory.warmedUp ? (
-          <Inliner style={{ marginTop: 8 }}>
-            <DistanceComponent
-              distance={props.training.totalDistance}
-              symbol={totalDistanceSymbol}
-            />
-            <Time seconds={props.training.totalSeconds} />
-          </Inliner>
+          <React.Fragment>
+            <ul style={{ marginBottom: 0, marginTop: 0, paddingInlineStart: 16 }}>
+              {props.training.category === TrainingCategory.intervals ? (
+                <IntervalsTraining training={props.training} />
+              ) : (
+                <WarmedUpTraining training={props.training} />
+              )}
+            </ul>
+
+            <Inliner style={{ marginTop: 8 }}>
+              <TrainingCheckbox
+                isCompleted={props.training.isCompleted}
+                toggleCompleted={toggleCompleted}
+              />
+              <DistanceComponent
+                distance={props.training.totalDistance}
+                symbol={totalDistanceSymbol}
+              />
+              <Time seconds={props.training.totalSeconds} />
+            </Inliner>
+          </React.Fragment>
         ) : undefined}
       </div>
     </div>

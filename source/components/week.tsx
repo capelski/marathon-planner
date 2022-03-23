@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { totalDistanceSymbol } from '../constants';
 import { DetailedWeek } from '../types';
 import { DistanceComponent } from './distance';
@@ -9,6 +9,7 @@ export interface WeekProps {
   isCollapsed?: boolean;
   isDesktop: boolean;
   toggleIsCollapsed: () => void;
+  toggleTrainingCompleted: (weekNumber: number, trainingNumber: number) => void;
   week: DetailedWeek;
 }
 
@@ -31,7 +32,16 @@ export const Week: React.FC<WeekProps> = (props) => {
           style={{ display: 'flex', flexDirection: props.isDesktop ? 'row' : 'column' }}
         >
           {props.week.trainings.map((training, index) => {
-            return <Training isDesktop={props.isDesktop} key={index} training={training} />;
+            return (
+              <Training
+                isDesktop={props.isDesktop}
+                key={index}
+                toggleTrainingCompleted={(trainingNumber) => {
+                  props.toggleTrainingCompleted(props.week.number, trainingNumber);
+                }}
+                training={training}
+              />
+            );
           })}
         </div>
       )}

@@ -1,3 +1,4 @@
+export * from './completed-trainings';
 export * from './detailed-training';
 export * from './dictionary';
 export * from './distance';

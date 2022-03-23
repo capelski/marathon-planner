@@ -26,6 +26,8 @@ export type DetailedIntervalsTraining = DetailedTrainingBase & {
 };
 
 type DetailedTrainingBase = {
+  number: number;
+  isCompleted: boolean;
   totalDistance: Distance;
   totalSeconds: number;
 };

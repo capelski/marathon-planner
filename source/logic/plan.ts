@@ -1,15 +1,34 @@
 import { basePlan } from '../models';
-import { DetailedPlan, DetailedTraining, DetailedWeek, Distance, Pace, TotalStats } from '../types';
+import {
+  CompletedTrainings,
+  DetailedPlan,
+  DetailedTraining,
+  DetailedWeek,
+  Distance,
+  Pace,
+  TotalStats
+} from '../types';
+import { getIsTrainingCompleted } from './completed-trainings';
 import { getDetailedTraining } from './detailed-training';
 import { createDistance, mergeDistances } from './distance';
 import { getTrainingPaces } from './pace';
 import { getWeekTotalStats } from './week';
 
-export const getDetailedPlan = (warmUpDistance: Distance, racePace: Pace): DetailedPlan => {
+export const getDetailedPlan = (
+  warmUpDistance: Distance,
+  racePace: Pace,
+  completedTrainings: CompletedTrainings
+): DetailedPlan => {
   const trainingPaces = getTrainingPaces(racePace);
   const weeks = basePlan.map<DetailedWeek>((week) => {
-    const detailedTrainings = week.trainings.map<DetailedTraining>((training) =>
-      getDetailedTraining(training, trainingPaces, warmUpDistance)
+    const detailedTrainings = week.trainings.map<DetailedTraining>((training, index) =>
+      getDetailedTraining(
+        index,
+        training,
+        trainingPaces,
+        warmUpDistance,
+        getIsTrainingCompleted(completedTrainings, week.number, index)
+      )
     );
     const weekStats = getWeekTotalStats(detailedTrainings);
 
