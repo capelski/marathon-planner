@@ -5,14 +5,12 @@ import {
   DetailedTraining,
   DetailedWeek,
   Distance,
-  Pace,
-  TotalStats
+  Pace
 } from '../types';
 import { getIsTrainingCompleted } from './completed-trainings';
 import { getDetailedTraining } from './detailed-training';
-import { createDistance, mergeDistances } from './distance';
 import { getTrainingPaces } from './pace';
-import { getWeekTotalStats } from './week';
+import { getPlanTotalStats, getWeekTotalStats } from './stats';
 
 export const getDetailedPlan = (
   warmUpDistance: Distance,
@@ -33,9 +31,8 @@ export const getDetailedPlan = (
     const weekStats = getWeekTotalStats(detailedTrainings);
 
     return {
+      ...weekStats,
       number: week.number,
-      totalDistance: weekStats.totalDistance,
-      totalSeconds: weekStats.totalSeconds,
       trainings: detailedTrainings
     };
   });
@@ -45,19 +42,4 @@ export const getDetailedPlan = (
     ...totalStats,
     weeks
   };
-};
-
-export const getPlanTotalStats = (weeks: DetailedWeek[]) => {
-  return weeks.reduce<TotalStats>(
-    (x, y) => {
-      return {
-        totalDistance: mergeDistances(x.totalDistance, y.totalDistance),
-        totalSeconds: x.totalSeconds + y.totalSeconds
-      };
-    },
-    {
-      totalDistance: createDistance(0, weeks[0].totalDistance.distanceUnits),
-      totalSeconds: 0
-    }
-  );
 };

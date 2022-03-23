@@ -1,8 +1,8 @@
 import { DetailedTraining } from './detailed-training';
-import { TotalStats } from './total-stats';
+import { Stats } from './stats';
 import { Training } from './training';
 
-export type DetailedWeek = TotalStats & {
+export type DetailedWeek = Stats & {
   number: number;
   trainings: DetailedTraining[];
 };

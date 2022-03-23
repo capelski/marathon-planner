@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
-import { Legend, Settings, Plan, Stats } from './components';
+import { Legend, Settings, Plan, StatsComponent } from './components';
 import {
   defaultCompletedTrainings,
   defaultDistanceUnits,
@@ -79,7 +79,7 @@ const App: React.FC = () => {
         warmUpDistance={warmUpDistance}
       />
 
-      <Stats plan={plan} />
+      <StatsComponent plan={plan} />
     </div>
   );
 };

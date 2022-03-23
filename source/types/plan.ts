@@ -1,8 +1,8 @@
-import { TotalStats } from './total-stats';
+import { Stats } from './stats';
 import { DetailedWeek, Week } from './week';
 
 export type Plan = Week[];
 
-export type DetailedPlan = TotalStats & {
+export type DetailedPlan = Stats & {
   weeks: DetailedWeek[];
 };

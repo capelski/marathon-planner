@@ -23,8 +23,8 @@ export const Week: React.FC<WeekProps> = (props) => {
         <h4 style={{ flexGrow: 1 }}>
           <span>{props.isCollapsed ? '☞' : '☟'}</span> Week {props.week.number}
         </h4>
-        <DistanceComponent distance={props.week.totalDistance} symbol={totalDistanceSymbol} />
-        <Time seconds={props.week.totalSeconds} />
+        <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
+        <Time seconds={props.week.total.seconds} />
       </div>
       {!props.isCollapsed && (
         <div
