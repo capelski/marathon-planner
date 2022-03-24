@@ -34,7 +34,6 @@ export const Week: React.FC<WeekProps> = (props) => {
           )}
         </h4>
         <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
-        <Time seconds={props.week.total.seconds} />
       </div>
       {!props.isCollapsed && (
         <div
