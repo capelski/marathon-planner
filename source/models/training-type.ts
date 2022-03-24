@@ -22,13 +22,40 @@ export const sortedTrainingTypes: TrainingType[] = [
   TrainingType.rest
 ];
 
-export const trainingTypeColors: Dictionary<string, TrainingType> = {
-  [TrainingType.longRun]: '#4b944c',
-  [TrainingType.moderate]: '#15546b',
-  [TrainingType.race]: '#feff02',
-  [TrainingType.recovery]: '#830040',
-  [TrainingType.rest]: 'lightgrey',
-  [TrainingType.speed]: '#fd600e',
-  [TrainingType.strength]: '#fea607',
-  [TrainingType.timed]: '#a2d11c'
+export const trainingTypeColors: Dictionary<
+  { backgroundColor: string; textColor: string },
+  TrainingType
+> = {
+  [TrainingType.longRun]: {
+    backgroundColor: '#4b944c',
+    textColor: 'white'
+  },
+  [TrainingType.moderate]: {
+    backgroundColor: '#15546b',
+    textColor: 'white'
+  },
+  [TrainingType.race]: {
+    backgroundColor: '#feff02',
+    textColor: 'black'
+  },
+  [TrainingType.recovery]: {
+    backgroundColor: '#830040',
+    textColor: 'white'
+  },
+  [TrainingType.rest]: {
+    backgroundColor: 'lightgrey',
+    textColor: 'black'
+  },
+  [TrainingType.speed]: {
+    backgroundColor: '#fd600e',
+    textColor: 'white'
+  },
+  [TrainingType.strength]: {
+    backgroundColor: '#fea607',
+    textColor: 'white'
+  },
+  [TrainingType.timed]: {
+    backgroundColor: '#a2d11c',
+    textColor: 'white'
+  }
 };

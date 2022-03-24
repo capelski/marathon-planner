@@ -15,10 +15,11 @@ import { getPlanTotalStats, getWeekTotalStats } from './stats';
 export const getDetailedPlan = (
   warmUpDistance: Distance,
   racePace: Pace,
-  completedTrainings: CompletedTrainings
+  completedTrainings: CompletedTrainings,
+  startDate: Date | undefined
 ): DetailedPlan => {
   const trainingPaces = getTrainingPaces(racePace);
-  const weeks = basePlan.map<DetailedWeek>((week) => {
+  const weeks = basePlan.map<DetailedWeek>((week, weekIndex) => {
     const detailedTrainings = week.trainings.map<DetailedTraining>((training, index) =>
       getDetailedTraining(
         index,
@@ -28,11 +29,19 @@ export const getDetailedPlan = (
         getIsTrainingCompleted(completedTrainings, week.number, index)
       )
     );
+
+    let weekStartDate: Date | undefined = undefined;
+    if (startDate) {
+      weekStartDate = new Date(startDate);
+      weekStartDate.setDate(weekStartDate.getDate() + weekIndex * 7);
+    }
+
     const weekStats = getWeekTotalStats(detailedTrainings);
 
     return {
       ...weekStats,
       number: week.number,
+      startDate: weekStartDate,
       trainings: detailedTrainings
     };
   });

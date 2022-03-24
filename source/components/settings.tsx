@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import {
   convertDistance,
   createDistance,
+  dateToString,
   extractPaceMinutes,
   extractPaceSeconds,
   getDisplayDistance,
-  getPace
+  getPace,
+  stringToDate
 } from '../logic';
 import { DistanceUnits, warmUpDistances } from '../models';
 import { Distance, Pace } from '../types';
@@ -14,10 +16,12 @@ import { RadioButtons } from './radio-buttons';
 export interface SettingsProps {
   distanceUnits: DistanceUnits;
   racePace: Pace;
-  warmUpDistance: Distance;
   setDistanceUnits: (distanceUnits: DistanceUnits) => void;
   setRacePace: (racePace: Pace) => void;
+  setStartDate: (startDate: Date | undefined) => void;
   setWarmUpDistance: (warmUpDistance: Distance) => void;
+  startDate: Date | undefined;
+  warmUpDistance: Distance;
 }
 
 export const Settings: React.FC<SettingsProps> = (props) => {
@@ -89,6 +93,17 @@ export const Settings: React.FC<SettingsProps> = (props) => {
           {' " / '}
           {props.distanceUnits}
         </div>
+      </div>
+      <div style={{ marginBottom: 8 }}>
+        Start date: <br />
+        <input
+          onChange={(event) => {
+            props.setStartDate(stringToDate(event.target.value));
+          }}
+          style={{ marginLeft: 4, marginTop: 4 }}
+          type="date"
+          value={dateToString(props.startDate)}
+        />
       </div>
     </React.Fragment>
   );

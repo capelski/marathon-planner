@@ -21,9 +21,10 @@ const App: React.FC = () => {
   const [completedTrainings, setCompletedTrainings] = useState(defaultCompletedTrainings);
   const [distanceUnits, setDistanceUnits] = useState(defaultDistanceUnits);
   const [plan, setPlan] = useState(
-    getDetailedPlan(defaultWarmUpDistance, defaultRacePace, defaultCompletedTrainings)
+    getDetailedPlan(defaultWarmUpDistance, defaultRacePace, defaultCompletedTrainings, undefined)
   );
   const [racePace, setRacePace] = useState(defaultRacePace);
+  const [startDate, setStartDate] = useState<Date | undefined>();
   const [warmUpDistance, setWarmUpDistance] = useState(defaultWarmUpDistance);
 
   const isDesktop = useMediaQuery({ minWidth: 768 });
@@ -36,7 +37,12 @@ const App: React.FC = () => {
 
   const racePaceChange = (nextRacePace: Pace) => {
     setRacePace(nextRacePace);
-    setPlan(getDetailedPlan(warmUpDistance, nextRacePace, completedTrainings));
+    setPlan(getDetailedPlan(warmUpDistance, nextRacePace, completedTrainings, startDate));
+  };
+
+  const startDateChange = (nextStartDate: Date | undefined) => {
+    setStartDate(nextStartDate);
+    setPlan(getDetailedPlan(warmUpDistance, racePace, completedTrainings, nextStartDate));
   };
 
   const trainingCompletedChange = (weekNumber: number, trainingNumber: number) => {
@@ -46,19 +52,19 @@ const App: React.FC = () => {
       trainingNumber
     );
     setCompletedTrainings(nextCompletedTrainings);
-    setPlan(getDetailedPlan(warmUpDistance, racePace, nextCompletedTrainings));
+    setPlan(getDetailedPlan(warmUpDistance, racePace, nextCompletedTrainings, startDate));
   };
 
   const warmUpDistanceChange = (nextWarmUpDistance: Distance) => {
     setWarmUpDistance(nextWarmUpDistance);
-    setPlan(getDetailedPlan(nextWarmUpDistance, racePace, completedTrainings));
+    setPlan(getDetailedPlan(nextWarmUpDistance, racePace, completedTrainings, startDate));
   };
 
   useEffect(() => {
     const nextCompletedTrainings = retrieveCompletedTrainings();
     if (nextCompletedTrainings) {
       setCompletedTrainings(nextCompletedTrainings);
-      setPlan(getDetailedPlan(warmUpDistance, racePace, nextCompletedTrainings));
+      setPlan(getDetailedPlan(warmUpDistance, racePace, nextCompletedTrainings, startDate));
     }
   }, []);
 
@@ -71,7 +77,9 @@ const App: React.FC = () => {
         racePace={racePace}
         setDistanceUnits={distanceUnitsChange}
         setRacePace={racePaceChange}
+        setStartDate={startDateChange}
         setWarmUpDistance={warmUpDistanceChange}
+        startDate={startDate}
         warmUpDistance={warmUpDistance}
       />
 

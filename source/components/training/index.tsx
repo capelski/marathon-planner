@@ -14,6 +14,7 @@ export interface TrainingProps {
   isDesktop: boolean;
   toggleTrainingCompleted: (trainingNumber: number) => void;
   training: DetailedTraining;
+  weekDay?: string;
 }
 
 export const Training: React.FC<TrainingProps> = (props) => {
@@ -31,12 +32,17 @@ export const Training: React.FC<TrainingProps> = (props) => {
       <div
         style={{
           alignSelf: 'stretch',
-          backgroundColor: trainingTypeColors[props.training.type],
-          height: props.isDesktop ? 16 : undefined,
+          backgroundColor: trainingTypeColors[props.training.type].backgroundColor,
+          color: trainingTypeColors[props.training.type].textColor,
+          height: props.isDesktop ? 18 : undefined,
           marginBottom: 4,
-          width: props.isDesktop ? 'calc(100% - 4px)' : 20
+          paddingTop: props.isDesktop ? undefined : 4,
+          textAlign: 'center',
+          width: props.isDesktop ? 'calc(100% - 4px)' : 24
         }}
-      />
+      >
+        {props.weekDay}
+      </div>
       <div
         style={{ marginBottom: 8, marginTop: 8, minHeight: '1em', paddingLeft: 4, paddingRight: 4 }}
       >

@@ -22,7 +22,7 @@ export const Legend: React.FC = () => {
           >
             <span
               style={{
-                backgroundColor: trainingTypeColors[trainingType],
+                backgroundColor: trainingTypeColors[trainingType].backgroundColor,
                 display: 'inline-block',
                 height: 24,
                 marginRight: 8,

@@ -4,6 +4,7 @@ import { Training } from './training';
 
 export type DetailedWeek = Stats & {
   number: number;
+  startDate: Date | undefined;
   trainings: DetailedTraining[];
 };
 
