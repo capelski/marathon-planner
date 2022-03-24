@@ -66,10 +66,6 @@ const App: React.FC = () => {
     <div>
       <h1>Marathon planner</h1>
 
-      <Plan isDesktop={isDesktop} plan={plan} toggleTrainingCompleted={trainingCompletedChange} />
-
-      <Legend />
-
       <Settings
         distanceUnits={distanceUnits}
         racePace={racePace}
@@ -78,6 +74,10 @@ const App: React.FC = () => {
         setWarmUpDistance={warmUpDistanceChange}
         warmUpDistance={warmUpDistance}
       />
+
+      <Plan isDesktop={isDesktop} plan={plan} toggleTrainingCompleted={trainingCompletedChange} />
+
+      <Legend />
 
       <StatsComponent plan={plan} />
     </div>
