@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
-import { Legend, Settings, Plan, StatsComponent } from './components';
+import { Legend, SettingsComponent, Plan, StatsComponent } from './components';
 import {
   defaultCompletedTrainings,
   defaultDistanceUnits,
@@ -11,11 +11,12 @@ import {
 import {
   convertPace,
   getDetailedPlan,
-  retrieveCompletedTrainings,
+  persistSettings,
+  retrieveSettings,
   toggleTrainingCompleted
 } from './logic';
 import { DistanceUnits } from './models';
-import { Distance, Pace } from './types';
+import { Distance, Pace, Settings } from './types';
 
 const App: React.FC = () => {
   const [completedTrainings, setCompletedTrainings] = useState(defaultCompletedTrainings);
@@ -30,19 +31,52 @@ const App: React.FC = () => {
   const isDesktop = useMediaQuery({ minWidth: 768 });
 
   const distanceUnitsChange = (nextDistanceUnits: DistanceUnits) => {
+    const nextRacePace = convertPace(racePace, nextDistanceUnits);
     setDistanceUnits(nextDistanceUnits);
-    const nextPace = convertPace(racePace, nextDistanceUnits);
-    racePaceChange(nextPace);
+    setRacePace(nextRacePace);
+
+    settingsUpdate({
+      distanceUnits: nextDistanceUnits,
+      completedTrainings,
+      racePace: nextRacePace,
+      startDate,
+      warmUpDistance
+    });
   };
 
   const racePaceChange = (nextRacePace: Pace) => {
     setRacePace(nextRacePace);
-    setPlan(getDetailedPlan(warmUpDistance, nextRacePace, completedTrainings, startDate));
+    settingsUpdate({
+      distanceUnits,
+      completedTrainings,
+      racePace: nextRacePace,
+      startDate,
+      warmUpDistance
+    });
+  };
+
+  const settingsUpdate = (settings: Settings) => {
+    setPlan(
+      getDetailedPlan(
+        settings.warmUpDistance,
+        settings.racePace,
+        settings.completedTrainings,
+        settings.startDate
+      )
+    );
+
+    persistSettings(settings);
   };
 
   const startDateChange = (nextStartDate: Date | undefined) => {
     setStartDate(nextStartDate);
-    setPlan(getDetailedPlan(warmUpDistance, racePace, completedTrainings, nextStartDate));
+    settingsUpdate({
+      distanceUnits,
+      completedTrainings,
+      racePace,
+      startDate: nextStartDate,
+      warmUpDistance
+    });
   };
 
   const trainingCompletedChange = (weekNumber: number, trainingNumber: number) => {
@@ -52,19 +86,43 @@ const App: React.FC = () => {
       trainingNumber
     );
     setCompletedTrainings(nextCompletedTrainings);
-    setPlan(getDetailedPlan(warmUpDistance, racePace, nextCompletedTrainings, startDate));
+    settingsUpdate({
+      distanceUnits,
+      completedTrainings: nextCompletedTrainings,
+      racePace,
+      startDate,
+      warmUpDistance
+    });
   };
 
   const warmUpDistanceChange = (nextWarmUpDistance: Distance) => {
     setWarmUpDistance(nextWarmUpDistance);
-    setPlan(getDetailedPlan(nextWarmUpDistance, racePace, completedTrainings, startDate));
+    settingsUpdate({
+      distanceUnits,
+      completedTrainings,
+      racePace,
+      startDate,
+      warmUpDistance: nextWarmUpDistance
+    });
   };
 
   useEffect(() => {
-    const nextCompletedTrainings = retrieveCompletedTrainings();
-    if (nextCompletedTrainings) {
-      setCompletedTrainings(nextCompletedTrainings);
-      setPlan(getDetailedPlan(warmUpDistance, racePace, nextCompletedTrainings, startDate));
+    const settings = retrieveSettings();
+    if (settings) {
+      setCompletedTrainings(settings.completedTrainings);
+      setDistanceUnits(settings.distanceUnits);
+      setRacePace(settings.racePace);
+      setStartDate(settings.startDate);
+      setWarmUpDistance(settings.warmUpDistance);
+
+      setPlan(
+        getDetailedPlan(
+          settings.warmUpDistance,
+          settings.racePace,
+          settings.completedTrainings,
+          settings.startDate
+        )
+      );
     }
   }, []);
 
@@ -72,7 +130,7 @@ const App: React.FC = () => {
     <div>
       <h1>Marathon planner</h1>
 
-      <Settings
+      <SettingsComponent
         distanceUnits={distanceUnits}
         racePace={racePace}
         setDistanceUnits={distanceUnitsChange}

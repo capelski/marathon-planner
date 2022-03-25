@@ -13,7 +13,7 @@ import { DistanceUnits, warmUpDistances } from '../models';
 import { Distance, Pace } from '../types';
 import { RadioButtons } from './radio-buttons';
 
-export interface SettingsProps {
+export interface SettingsComponentProps {
   distanceUnits: DistanceUnits;
   racePace: Pace;
   setDistanceUnits: (distanceUnits: DistanceUnits) => void;
@@ -24,7 +24,7 @@ export interface SettingsProps {
   warmUpDistance: Distance;
 }
 
-export const Settings: React.FC<SettingsProps> = (props) => {
+export const SettingsComponent: React.FC<SettingsComponentProps> = (props) => {
   const [minutes, setMinutes] = useState(String(extractPaceMinutes(props.racePace)));
   const [seconds, setSeconds] = useState(String(extractPaceSeconds(props.racePace)));
 
