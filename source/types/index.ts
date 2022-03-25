@@ -1,3 +1,4 @@
+export * from './collapsed-weeks';
 export * from './completed-trainings';
 export * from './detailed-training';
 export * from './dictionary';

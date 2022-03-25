@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { DetailedPlan, Dictionary } from '../types';
+import { persistCollapsedWeeks, retrieveCollapsedWeeks } from '../logic';
+import { CollapsedWeeks, DetailedPlan } from '../types';
 import { Week } from './week';
 
 export interface PlanProps {
@@ -8,16 +9,14 @@ export interface PlanProps {
   toggleTrainingCompleted: (weekNumber: number, trainingNumber: number) => void;
 }
 
-const collapsedWeeksKey = 'collapsedWeeks';
-
 export const Plan: React.FC<PlanProps> = (props) => {
-  const [collapsedWeeks, setCollapsedWeeks] = useState<Dictionary<boolean, number>>({});
+  const [collapsedWeeks, setCollapsedWeeks] = useState<CollapsedWeeks>({});
   const areAllWeeksCollapsed = props.plan.weeks.every((week) => collapsedWeeks[week.number]);
 
   useEffect(() => {
-    const _collapsedWeeks = localStorage.getItem(collapsedWeeksKey);
-    if (_collapsedWeeks) {
-      setCollapsedWeeks(JSON.parse(_collapsedWeeks));
+    const nextCollapsedWeeks = retrieveCollapsedWeeks();
+    if (nextCollapsedWeeks) {
+      setCollapsedWeeks(nextCollapsedWeeks);
     }
   }, []);
 
@@ -27,18 +26,18 @@ export const Plan: React.FC<PlanProps> = (props) => {
       [weekNumber]: !collapsedWeeks[weekNumber]
     };
     setCollapsedWeeks(nextCollapsedWeeks);
-    localStorage.setItem(collapsedWeeksKey, JSON.stringify(nextCollapsedWeeks));
+    persistCollapsedWeeks(nextCollapsedWeeks);
   };
 
   const toggleCollapsedWeeks = () => {
-    setCollapsedWeeks(
-      areAllWeeksCollapsed
-        ? {}
-        : props.plan.weeks.reduce(
-            (_collapsedWeeks, week) => ({ ..._collapsedWeeks, [week.number]: true }),
-            {}
-          )
-    );
+    const nextCollapsedWeeks = areAllWeeksCollapsed
+      ? {}
+      : props.plan.weeks.reduce(
+          (_collapsedWeeks, week) => ({ ..._collapsedWeeks, [week.number]: true }),
+          {}
+        );
+    setCollapsedWeeks(nextCollapsedWeeks);
+    persistCollapsedWeeks(nextCollapsedWeeks);
   };
 
   return (
