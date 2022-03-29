@@ -1,9 +1,8 @@
 import React from 'react';
 import { totalDistanceSymbol } from '../constants';
-import { dateToString, getDisplayWeekDays } from '../logic';
+import { dateToIsoString, getDisplayWeekDays } from '../logic';
 import { DetailedWeek } from '../types';
 import { DistanceComponent } from './distance';
-import { Time } from './time';
 import { Training } from './training';
 
 export interface WeekProps {
@@ -30,7 +29,7 @@ export const Week: React.FC<WeekProps> = (props) => {
         <h4 style={{ flexGrow: 1 }}>
           <span>{props.isCollapsed ? '☞' : '☟'}</span> Week {props.week.number}
           {props.week.startDate && (
-            <span style={{ fontWeight: 'normal' }}> - {dateToString(props.week.startDate)}</span>
+            <span style={{ fontWeight: 'normal' }}> - {dateToIsoString(props.week.startDate)}</span>
           )}
         </h4>
         <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />

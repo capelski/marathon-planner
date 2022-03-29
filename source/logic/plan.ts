@@ -8,6 +8,7 @@ import {
   Pace
 } from '../types';
 import { getIsTrainingCompleted } from './completed-trainings';
+import { addDays } from './dates';
 import { getDetailedTraining } from './detailed-training';
 import { getTrainingPaces } from './pace';
 import { getPlanTotalStats, getWeekTotalStats } from './stats';
@@ -32,8 +33,7 @@ export const getDetailedPlan = (
 
     let weekStartDate: Date | undefined = undefined;
     if (startDate) {
-      weekStartDate = new Date(startDate);
-      weekStartDate.setDate(weekStartDate.getDate() + weekIndex * 7);
+      weekStartDate = addDays(startDate, weekIndex * 7);
     }
 
     const weekStats = getWeekTotalStats(detailedTrainings);

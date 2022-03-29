@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import {
   convertDistance,
   createDistance,
-  dateToString,
+  dateToIsoString,
   extractPaceMinutes,
   extractPaceSeconds,
   getDisplayDistance,
   getPace,
-  stringToDate
+  isoStringToLocalDate
 } from '../logic';
 import { DistanceUnits, warmUpDistances } from '../models';
 import { Distance, Pace } from '../types';
@@ -98,11 +98,11 @@ export const SettingsComponent: React.FC<SettingsComponentProps> = (props) => {
         Start date: <br />
         <input
           onChange={(event) => {
-            props.setStartDate(stringToDate(event.target.value));
+            props.setStartDate(isoStringToLocalDate(event.target.value));
           }}
           style={{ marginLeft: 4, marginTop: 4 }}
           type="date"
-          value={dateToString(props.startDate)}
+          value={dateToIsoString(props.startDate)}
         />
       </div>
     </React.Fragment>

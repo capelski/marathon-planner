@@ -1,4 +1,5 @@
 import { Settings } from '../types';
+import { isoStringToLocalDate } from './dates';
 
 const settingsKey = 'settings';
 
@@ -12,7 +13,7 @@ export const retrieveSettings = (): Settings | undefined => {
 
   if (stringifiedSettings) {
     settings = JSON.parse(stringifiedSettings);
-    settings.startDate = new Date(settings.startDate);
+    settings.startDate = isoStringToLocalDate(settings.startDate);
   }
 
   return settings;
