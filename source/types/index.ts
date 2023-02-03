@@ -3,6 +3,7 @@ export * from './completed-trainings';
 export * from './detailed-training';
 export * from './dictionary';
 export * from './distance';
+export * from './optional-date';
 export * from './pace';
 export * from './plan';
 export * from './settings';

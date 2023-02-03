@@ -1,4 +1,4 @@
-import { Dictionary } from '../types';
+import { Dictionary, OptionalDate } from '../types';
 
 const weekDays: Dictionary<string, number> = {
   0: 'Sunday',
@@ -21,7 +21,7 @@ export const addDays = (date: Date, days: number) => {
   return nextDate;
 };
 
-export const dateToIsoString = (date: Date | undefined) =>
+export const dateToIsoString = (date: OptionalDate) =>
   date ? date.toISOString().split('T')[0] : '';
 
 export const getDisplayWeekDays = (date: Date) => {

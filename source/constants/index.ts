@@ -1,6 +1,5 @@
 export * from './completed-trainings';
-export * from './distance-units';
 export * from './miles-to-km';
 export * from './pace';
+export * from './settings';
 export * from './symbols';
-export * from './warm-up-distances';

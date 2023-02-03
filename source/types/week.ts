@@ -1,10 +1,11 @@
 import { DetailedTraining } from './detailed-training';
+import { OptionalDate } from './optional-date';
 import { Stats } from './stats';
 import { Training } from './training';
 
 export type DetailedWeek = Stats & {
   number: number;
-  startDate: Date | undefined;
+  startDate: OptionalDate;
   trainings: DetailedTraining[];
 };
 
