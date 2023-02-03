@@ -7,14 +7,14 @@ import { Time } from './time';
 
 export interface DistanceProps {
   distance: Distance | PacedDistance;
-  symbol: string;
+  symbol?: string;
 }
 
 export const DistanceComponent: React.FC<DistanceProps> = (props) => {
   return (
     <Inliner>
       {props.children}
-      <span>
+      <span style={{ paddingRight: 4 }}>
         {props.symbol} {getDisplayDistance(props.distance)}
       </span>
       {'pace' in props.distance ? (

@@ -12,16 +12,19 @@ export interface StatsComponentProps {
 export const StatsComponent: React.FC<StatsComponentProps> = (props) => {
   return (
     <div>
-      <h2>Stats</h2>
-      <h3>Totals</h3>
       <Inliner>
         <DistanceComponent distance={props.plan.total.distance} symbol={totalDistanceSymbol} />
-        <Time seconds={props.plan.total.seconds} />
+        (<DistanceComponent distance={props.plan.completed.distance} /> completed,{' '}
+        {Math.floor(
+          (10000 * props.plan.completed.distance.value) / props.plan.total.distance.value
+        ) / 100}
+        %)
       </Inliner>
-      <h3>Completed</h3>
       <Inliner>
-        <DistanceComponent distance={props.plan.completed.distance} symbol={totalDistanceSymbol} />
-        <Time seconds={props.plan.completed.seconds} />
+        <Time seconds={props.plan.total.seconds} />
+        (<Time hideSymbol={true} seconds={props.plan.completed.seconds} /> completed,{' '}
+        {Math.floor((10000 * props.plan.completed.seconds) / props.plan.total.seconds) / 100}
+        %)
       </Inliner>
     </div>
   );

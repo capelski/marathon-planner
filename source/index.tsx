@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useMediaQuery } from 'react-responsive';
-import { BaseSettingsComponent, Legend, Plan, StatsComponent } from './components';
+import { BaseSettingsComponent, Legend, Plan } from './components';
 import { defaultBaseSettings, defaultCompletedTrainings } from './constants';
 import {
   getDetailedPlan,
@@ -74,8 +74,6 @@ const App: React.FC = () => {
       <Plan isDesktop={isDesktop} plan={plan} toggleTrainingCompleted={trainingCompletedChange} />
 
       <Legend />
-
-      <StatsComponent plan={plan} />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { persistCollapsedWeeks, retrieveCollapsedWeeks } from '../logic';
 import { CollapsedWeeks, DetailedPlan } from '../types';
+import { StatsComponent } from './stats';
 import { Week } from './week';
 
 export interface PlanProps {
@@ -45,6 +46,7 @@ export const Plan: React.FC<PlanProps> = (props) => {
       <h2 onClick={toggleCollapsedWeeks} style={{ cursor: 'pointer' }}>
         <span>{areAllWeeksCollapsed ? '☞' : '☟'}</span> Plan
       </h2>
+      <StatsComponent plan={props.plan} />
       {props.plan.weeks.map((week) => {
         return (
           <Week

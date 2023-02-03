@@ -9,7 +9,7 @@ interface PaceComponentProps {
 
 export const PaceComponent: React.FC<PaceComponentProps> = (props) => {
   return (
-    <span style={{ paddingLeft: 4 }}>
+    <span style={{ paddingRight: 4 }}>
       {paceSymbol} {extractPaceMinutes(props.pace)}' {extractPaceSeconds(props.pace)}"
     </span>
   );
