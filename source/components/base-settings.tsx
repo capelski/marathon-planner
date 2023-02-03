@@ -20,13 +20,8 @@ export interface BaseSettingsComponentProps {
 }
 
 export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (props) => {
-  const [minutes, setMinutes] = useState(String(extractPaceMinutes(props.baseSettings.racePace)));
-  const [seconds, setSeconds] = useState(String(extractPaceSeconds(props.baseSettings.racePace)));
-
-  useEffect(() => {
-    setMinutes(String(extractPaceMinutes(props.baseSettings.racePace) || ''));
-    setSeconds(String(extractPaceSeconds(props.baseSettings.racePace) || ''));
-  }, [props.baseSettings.racePace]);
+  const [minutes, setMinutes] = useState(extractPaceMinutes(props.baseSettings.racePace));
+  const [seconds, setSeconds] = useState(extractPaceSeconds(props.baseSettings.racePace));
 
   const distanceUnitsChange = (nextValue: string) => {
     const nextDistanceUnits = nextValue as DistanceUnits;
@@ -52,8 +47,8 @@ export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (prop
       parseInt(_minutes) || 0,
       parseInt(_seconds) || 0
     );
-    setMinutes(String(extractPaceMinutes(nextRacePace) || ''));
-    setSeconds(String(extractPaceSeconds(nextRacePace) || ''));
+    setMinutes(extractPaceMinutes(nextRacePace));
+    setSeconds(extractPaceSeconds(nextRacePace));
     props.setBaseSettings({
       ...props.baseSettings,
       racePace: nextRacePace
@@ -70,6 +65,11 @@ export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (prop
       warmUpDistance: nextWarmUpDistance
     });
   };
+
+  useEffect(() => {
+    setMinutes(extractPaceMinutes(props.baseSettings.racePace));
+    setSeconds(extractPaceSeconds(props.baseSettings.racePace));
+  }, [props.baseSettings.racePace]);
 
   return (
     <React.Fragment>
@@ -97,17 +97,17 @@ export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (prop
         Race pace: <br />
         <div style={{ display: 'inline-block', marginLeft: 4, marginTop: 4 }}>
           <input
-            onChange={(event) => timeChange(event.target.value, seconds)}
+            onChange={(event) => timeChange(event.target.value, String(seconds))}
             type="number"
             style={{ width: 50 }}
-            value={minutes}
+            value={String(minutes)}
           />
           {" ' "}
           <input
-            onChange={(event) => timeChange(minutes, event.target.value)}
+            onChange={(event) => timeChange(String(minutes), event.target.value)}
             type="number"
             style={{ width: 50 }}
-            value={seconds}
+            value={String(seconds)}
           />
           {' " / '}
           {props.baseSettings.distanceUnits}
