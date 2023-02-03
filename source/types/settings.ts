@@ -7,6 +7,7 @@ import { Pace } from './pace';
 export type BaseSettings = {
   distanceUnits: DistanceUnits;
   racePace: Pace;
+  skipRecovery: boolean;
   startDate: OptionalDate;
   warmUpDistance: Distance;
 };

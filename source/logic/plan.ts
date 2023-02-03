@@ -9,6 +9,7 @@ import { getPlanTotalStats, getWeekTotalStats } from './stats';
 export const getDetailedPlan = ({
   completedTrainings,
   racePace,
+  skipRecovery,
   startDate,
   warmUpDistance
 }: Settings): DetailedPlan => {
@@ -20,7 +21,8 @@ export const getDetailedPlan = ({
         training,
         trainingPaces,
         warmUpDistance,
-        getIsTrainingCompleted(completedTrainings, week.number, index)
+        getIsTrainingCompleted(completedTrainings, week.number, index),
+        skipRecovery
       )
     );
 

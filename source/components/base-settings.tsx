@@ -33,6 +33,13 @@ export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (prop
     });
   };
 
+  const skipRecoveryChange = (nextSkipRecovery: boolean) => {
+    props.setBaseSettings({
+      ...props.baseSettings,
+      skipRecovery: nextSkipRecovery
+    });
+  };
+
   const startDateChange = (nextDate: string) => {
     const nextStartDate = isoStringToLocalDate(nextDate);
     props.setBaseSettings({
@@ -121,6 +128,16 @@ export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (prop
           type="date"
           value={dateToIsoString(props.baseSettings.startDate)}
         />
+      </div>
+      <div style={{ marginBottom: 8 }}>
+        <input
+          checked={props.baseSettings.skipRecovery}
+          onChange={(event) => {
+            skipRecoveryChange(event.target.checked);
+          }}
+          type="checkbox"
+        />
+        Skip recovery trainings
       </div>
     </React.Fragment>
   );

@@ -55,6 +55,7 @@ const App: React.FC = () => {
       setBaseSettings({
         distanceUnits: settings.distanceUnits,
         racePace: settings.racePace,
+        skipRecovery: settings.skipRecovery,
         startDate: settings.startDate,
         warmUpDistance: settings.warmUpDistance
       });

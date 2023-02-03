@@ -81,27 +81,37 @@ const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining
   };
 };
 
+const getDetailedRestTraining = (
+  number: number,
+  trainingPaces: TrainingPaces
+): DetailedTraining => ({
+  category: TrainingCategory.none,
+  isCompleted: false,
+  number,
+  totalDistance: createDistance(0, trainingPaces.race.distanceUnits),
+  totalSeconds: 0,
+  type: TrainingType.rest
+});
+
 export const getDetailedTraining = (
   number: number,
   training: Training,
   trainingPaces: TrainingPaces,
   warmUpDistance: Distance,
-  isTrainingCompleted: boolean
+  isTrainingCompleted: boolean,
+  skipRecovery: boolean
 ): DetailedTraining => {
+  if (skipRecovery && training.type === TrainingType.recovery) {
+    return getDetailedRestTraining(number, trainingPaces);
+  }
+
   return training.type === TrainingType.longRun ||
     training.type === TrainingType.moderate ||
     training.type === TrainingType.race ||
     training.type === TrainingType.recovery
     ? getDetailedDistanceTraining(number, training, isTrainingCompleted, trainingPaces)
     : training.type === TrainingType.rest
-    ? {
-        category: TrainingCategory.none,
-        isCompleted: false,
-        number,
-        totalDistance: createDistance(0, trainingPaces.race.distanceUnits),
-        totalSeconds: 0,
-        type: training.type
-      }
+    ? getDetailedRestTraining(number, trainingPaces)
     : training.type === TrainingType.speed || training.type === TrainingType.strength
     ? getDetailedIntervalsTraining(
         number,
