@@ -43,10 +43,12 @@ export const Plan: React.FC<PlanProps> = (props) => {
 
   return (
     <React.Fragment>
-      <h2 onClick={toggleCollapsedWeeks} style={{ cursor: 'pointer' }}>
-        <span>{areAllWeeksCollapsed ? '☞' : '☟'}</span> Plan
-      </h2>
       <StatsComponent plan={props.plan} />
+      <div style={{ marginTop: 8 }}>
+        <button onClick={toggleCollapsedWeeks}>
+          {areAllWeeksCollapsed ? 'Expand' : 'Collapse'} all
+        </button>
+      </div>
       {props.plan.weeks.map((week) => {
         return (
           <Week
