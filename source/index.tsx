@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 import { useMediaQuery } from 'react-responsive';
-import { BaseSettingsComponent, Legend, Plan } from './components';
+import { BaseSettingsComponent, Inliner, Legend, Plan } from './components';
 import { defaultBaseSettings, defaultCompletedTrainings } from './constants';
 import {
   getDetailedPlan,
@@ -14,6 +15,7 @@ import { BaseSettings, Settings } from './types';
 const App: React.FC = () => {
   const [baseSettings, setBaseSettings] = useState(defaultBaseSettings);
   const [completedTrainings, setCompletedTrainings] = useState(defaultCompletedTrainings);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [plan, setPlan] = useState(
     getDetailedPlan({
       ...defaultBaseSettings,
@@ -49,6 +51,8 @@ const App: React.FC = () => {
     });
   };
 
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
   useEffect(() => {
     const settings = retrieveSettings();
     if (settings) {
@@ -67,9 +71,22 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <h1>Marathon planner</h1>
+      <Inliner style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+        <h2>Marathon planner</h2>
+        <span style={{ cursor: 'pointer', fontSize: 24, paddingRight: 8 }} onClick={toggleModal}>
+          ⚙️
+        </span>
+      </Inliner>
 
-      <BaseSettingsComponent baseSettings={baseSettings} setBaseSettings={baseSettingsChange} />
+      <Modal isOpen={isModalOpen} onRequestClose={toggleModal} style={{ content: { inset: 0 } }}>
+        <div style={{ display: 'flex', fontSize: 20, justifyContent: 'end' }}>
+          <span onClick={toggleModal} style={{ cursor: 'pointer' }}>
+            ✖️
+          </span>
+        </div>
+
+        <BaseSettingsComponent baseSettings={baseSettings} setBaseSettings={baseSettingsChange} />
+      </Modal>
 
       <Plan isDesktop={isDesktop} plan={plan} toggleTrainingCompleted={trainingCompletedChange} />
 
@@ -79,4 +96,6 @@ const App: React.FC = () => {
 };
 
 const appPlaceholder = document.getElementById('app-placeholder');
+
+Modal.setAppElement(appPlaceholder!);
 ReactDOM.render(<App />, appPlaceholder);
