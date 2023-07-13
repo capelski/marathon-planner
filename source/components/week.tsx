@@ -26,7 +26,7 @@ export const Week: React.FC<WeekProps> = (props) => {
         onClick={props.toggleIsCollapsed}
         style={{ alignItems: 'center', cursor: 'pointer', display: 'flex' }}
       >
-        <h4 style={{ flexGrow: 1 }}>
+        <h4 style={{ flexGrow: 1, marginBottom: 0 }}>
           <span>{props.isCollapsed ? '☞' : '☟'}</span> Week {props.week.number}
           {props.week.startDate && (
             <span style={{ fontWeight: 'normal' }}> - {dateToIsoString(props.week.startDate)}</span>
@@ -37,7 +37,12 @@ export const Week: React.FC<WeekProps> = (props) => {
       {!props.isCollapsed && (
         <div
           className="week"
-          style={{ display: 'flex', flexDirection: props.isDesktop ? 'row' : 'column' }}
+          style={{
+            display: 'flex',
+            flexDirection: props.isDesktop ? 'row' : 'column',
+            paddingLeft: 20,
+            paddingTop: 8
+          }}
         >
           {props.week.trainings.map((training, index) => {
             return (
