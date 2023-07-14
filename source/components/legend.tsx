@@ -8,9 +8,18 @@ import {
   trainingCoreSymbol,
   warmUpSymbol
 } from '../constants';
-import { sortedTrainingTypes, trainingTypeColors } from '../models';
+import { getTrainingPaces } from '../logic';
+import { TrainingType, sortedTrainingTypes, trainingTypeColors } from '../models';
+import { Pace } from '../types';
+import { PaceComponent } from './pace';
 
-export const Legend: React.FC = () => {
+export interface LegendProps {
+  racePace: Pace;
+}
+
+export const Legend: React.FC<LegendProps> = (props) => {
+  const trainingPaces = getTrainingPaces(props.racePace);
+
   return (
     <React.Fragment>
       <h2>Legend</h2>
@@ -30,6 +39,12 @@ export const Legend: React.FC = () => {
               }}
             />{' '}
             {trainingType}
+            {trainingType !== TrainingType.rest && (
+              <React.Fragment>
+                &nbsp;-&nbsp;
+                <PaceComponent pace={trainingPaces[trainingType]} />
+              </React.Fragment>
+            )}
           </div>
         );
       })}

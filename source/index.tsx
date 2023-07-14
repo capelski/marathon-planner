@@ -90,7 +90,7 @@ const App: React.FC = () => {
 
       <Plan isDesktop={isDesktop} plan={plan} toggleTrainingCompleted={trainingCompletedChange} />
 
-      <Legend />
+      <Legend racePace={baseSettings.racePace} />
     </div>
   );
 };
