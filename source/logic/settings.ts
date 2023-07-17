@@ -1,3 +1,4 @@
+import { defaultBaseSettings, defaultCompletedTrainings, defaultSkippedWeeks } from '../constants';
 import { Settings } from '../types';
 import { isoStringToLocalDate } from './dates';
 
@@ -9,12 +10,20 @@ export const persistSettings = (settings: Settings) => {
 
 export const retrieveSettings = (): Settings | undefined => {
   const stringifiedSettings = localStorage.getItem(settingsKey);
-  let settings = undefined;
-
-  if (stringifiedSettings) {
-    settings = JSON.parse(stringifiedSettings);
-    settings.startDate = isoStringToLocalDate(settings.startDate);
+  if (!stringifiedSettings) {
+    return undefined;
   }
 
-  return settings;
+  const settings: Partial<Omit<Settings, 'startDate'> & { startDate: string }> =
+    JSON.parse(stringifiedSettings);
+
+  return <Settings>{
+    completedTrainings: settings.completedTrainings || defaultCompletedTrainings,
+    distanceUnits: settings.distanceUnits || defaultBaseSettings.distanceUnits,
+    racePace: settings.racePace || defaultBaseSettings.racePace,
+    skippedWeeks: settings.skippedWeeks || defaultSkippedWeeks,
+    skipRecovery: settings.skipRecovery || defaultBaseSettings.skipRecovery,
+    startDate: isoStringToLocalDate(settings.startDate),
+    warmUpDistance: settings.warmUpDistance || defaultBaseSettings.warmUpDistance
+  };
 };

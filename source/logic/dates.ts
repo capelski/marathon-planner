@@ -31,7 +31,7 @@ export const getDisplayWeekDays = (date: Date) => {
   return Array.from(Array(7).keys()).map((x) => weekDays[(x + weekFirstDay) % 7]);
 };
 
-export const isoStringToLocalDate = (string: string) => (string ? new Date(string) : undefined);
+export const isoStringToLocalDate = (string?: string) => (string ? new Date(string) : undefined);
 
 const localDateToIsoDate = (date: Date) => {
   const stringifiedIsoDate = dateToIsoString(date);
