@@ -78,8 +78,8 @@ const App: React.FC = () => {
         startDate: settings.startDate,
         warmUpDistance: settings.warmUpDistance
       });
-      setCompletedTrainings(settings.completedTrainings);
-      setSkippedWeeks(settings.skippedWeeks);
+      setCompletedTrainings(settings.completedTrainings || {});
+      setSkippedWeeks(settings.skippedWeeks || {});
 
       setPlan(getDetailedPlan(settings));
     }
