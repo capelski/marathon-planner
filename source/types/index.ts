@@ -7,6 +7,7 @@ export * from './optional-date';
 export * from './pace';
 export * from './plan';
 export * from './settings';
+export * from './skipped-weeks';
 export * from './stats';
 export * from './training';
 export * from './training-intervals';

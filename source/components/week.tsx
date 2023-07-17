@@ -9,6 +9,7 @@ export interface WeekProps {
   isCollapsed?: boolean;
   isDesktop: boolean;
   toggleIsCollapsed: () => void;
+  toggleSkippedWeek: (weekNumber: number) => void;
   toggleTrainingCompleted: (weekNumber: number, trainingNumber: number) => void;
   week: DetailedWeek;
 }
@@ -31,31 +32,42 @@ export const Week: React.FC<WeekProps> = (props) => {
           {props.week.startDate && (
             <span style={{ fontWeight: 'normal' }}> - {dateToIsoString(props.week.startDate)}</span>
           )}
+          {props.week.isSkipped && (
+            <span style={{ fontWeight: 'normal', opacity: 0.75 }}> ⛔️</span>
+          )}
         </h4>
         <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
       </div>
       {!props.isCollapsed && (
-        <div
-          className="week"
-          style={{
-            display: 'flex',
-            flexDirection: props.isDesktop ? 'row' : 'column',
-            paddingLeft: 20
-          }}
-        >
-          {props.week.trainings.map((training, index) => {
-            return (
-              <Training
-                isDesktop={props.isDesktop}
-                key={index}
-                toggleTrainingCompleted={(trainingNumber) => {
-                  props.toggleTrainingCompleted(props.week.number, trainingNumber);
-                }}
-                training={training}
-                weekDay={weekDays && weekDays[index]}
-              />
-            );
-          })}
+        <div style={{ paddingLeft: 20 }}>
+          <div
+            className="week"
+            style={{
+              display: 'flex',
+              flexDirection: props.isDesktop ? 'row' : 'column'
+            }}
+          >
+            {props.week.trainings.map((training, index) => {
+              return (
+                <Training
+                  isDesktop={props.isDesktop}
+                  key={index}
+                  toggleTrainingCompleted={(trainingNumber) => {
+                    props.toggleTrainingCompleted(props.week.number, trainingNumber);
+                  }}
+                  training={training}
+                  weekDay={weekDays && weekDays[index]}
+                />
+              );
+            })}
+          </div>
+          {props.week.number !== 18 && (
+            <div style={{ marginTop: 8 }}>
+              <button onClick={() => props.toggleSkippedWeek(props.week.number)}>
+                {props.week.isSkipped ? 'Enable' : 'Skip'}
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

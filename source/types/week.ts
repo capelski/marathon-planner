@@ -4,6 +4,7 @@ import { Stats } from './stats';
 import { Training } from './training';
 
 export type DetailedWeek = Stats & {
+  isSkipped: boolean;
   number: number;
   startDate: OptionalDate;
   trainings: DetailedTraining[];

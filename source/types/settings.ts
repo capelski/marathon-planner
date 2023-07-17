@@ -3,6 +3,7 @@ import { CompletedTrainings } from './completed-trainings';
 import { Distance } from './distance';
 import { OptionalDate } from './optional-date';
 import { Pace } from './pace';
+import { SkippedWeeks } from './skipped-weeks';
 
 export type BaseSettings = {
   distanceUnits: DistanceUnits;
@@ -14,4 +15,5 @@ export type BaseSettings = {
 
 export type Settings = BaseSettings & {
   completedTrainings: CompletedTrainings;
+  skippedWeeks: SkippedWeeks;
 };

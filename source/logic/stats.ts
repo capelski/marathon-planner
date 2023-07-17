@@ -13,18 +13,20 @@ export const getPlanTotalStats = (weeks: DetailedWeek[]): Stats => {
     }
   };
 
-  return weeks.reduce((reducedStats, week) => {
-    return {
-      completed: {
-        distance: mergeDistances(reducedStats.completed.distance, week.completed.distance),
-        seconds: reducedStats.completed.seconds + week.completed.seconds
-      },
-      total: {
-        distance: mergeDistances(reducedStats.total.distance, week.total.distance),
-        seconds: reducedStats.total.seconds + week.total.seconds
-      }
-    };
-  }, initialStats);
+  return weeks
+    .filter((week) => !week.isSkipped)
+    .reduce((reducedStats, week) => {
+      return {
+        completed: {
+          distance: mergeDistances(reducedStats.completed.distance, week.completed.distance),
+          seconds: reducedStats.completed.seconds + week.completed.seconds
+        },
+        total: {
+          distance: mergeDistances(reducedStats.total.distance, week.total.distance),
+          seconds: reducedStats.total.seconds + week.total.seconds
+        }
+      };
+    }, initialStats);
 };
 
 export const getWeekTotalStats = (detailedTrainings: DetailedTraining[]): Stats => {

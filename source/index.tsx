@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import { useMediaQuery } from 'react-responsive';
 import { BaseSettingsComponent, Inliner, Legend, Plan } from './components';
-import { defaultBaseSettings, defaultCompletedTrainings } from './constants';
+import { defaultBaseSettings, defaultCompletedTrainings, defaultSkippedWeeks } from './constants';
 import {
   getDetailedPlan,
   persistSettings,
   retrieveSettings,
+  toggleSkippedWeek,
   toggleTrainingCompleted
 } from './logic';
 import { BaseSettings, Settings } from './types';
@@ -15,11 +16,13 @@ import { BaseSettings, Settings } from './types';
 const App: React.FC = () => {
   const [baseSettings, setBaseSettings] = useState(defaultBaseSettings);
   const [completedTrainings, setCompletedTrainings] = useState(defaultCompletedTrainings);
+  const [skippedWeeks, setSkippedWeeks] = useState(defaultSkippedWeeks);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [plan, setPlan] = useState(
     getDetailedPlan({
       ...defaultBaseSettings,
-      completedTrainings: defaultCompletedTrainings
+      completedTrainings: defaultCompletedTrainings,
+      skippedWeeks: defaultSkippedWeeks
     })
   );
 
@@ -29,13 +32,24 @@ const App: React.FC = () => {
     setBaseSettings(nextBaseSettings);
     settingsUpdate({
       ...nextBaseSettings,
-      completedTrainings
+      completedTrainings,
+      skippedWeeks
     });
   };
 
   const settingsUpdate = (settings: Settings) => {
     setPlan(getDetailedPlan(settings));
     persistSettings(settings);
+  };
+
+  const skippedWeekChange = (weekNumber: number) => {
+    const nextSkippedWeeks = toggleSkippedWeek(skippedWeeks, weekNumber);
+    setSkippedWeeks(nextSkippedWeeks);
+    settingsUpdate({
+      ...baseSettings,
+      completedTrainings,
+      skippedWeeks: nextSkippedWeeks
+    });
   };
 
   const trainingCompletedChange = (weekNumber: number, trainingNumber: number) => {
@@ -47,7 +61,8 @@ const App: React.FC = () => {
     setCompletedTrainings(nextCompletedTrainings);
     settingsUpdate({
       ...baseSettings,
-      completedTrainings: nextCompletedTrainings
+      completedTrainings: nextCompletedTrainings,
+      skippedWeeks
     });
   };
 
@@ -64,6 +79,7 @@ const App: React.FC = () => {
         warmUpDistance: settings.warmUpDistance
       });
       setCompletedTrainings(settings.completedTrainings);
+      setSkippedWeeks(settings.skippedWeeks);
 
       setPlan(getDetailedPlan(settings));
     }
@@ -88,7 +104,12 @@ const App: React.FC = () => {
         <BaseSettingsComponent baseSettings={baseSettings} setBaseSettings={baseSettingsChange} />
       </Modal>
 
-      <Plan isDesktop={isDesktop} plan={plan} toggleTrainingCompleted={trainingCompletedChange} />
+      <Plan
+        isDesktop={isDesktop}
+        plan={plan}
+        toggleSkippedWeek={skippedWeekChange}
+        toggleTrainingCompleted={trainingCompletedChange}
+      />
 
       <Legend racePace={baseSettings.racePace} />
     </div>
