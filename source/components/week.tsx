@@ -1,6 +1,6 @@
 import React from 'react';
 import { totalDistanceSymbol } from '../constants';
-import { dateToIsoString, getDisplayWeekDays } from '../logic';
+import { addDays, dateToIsoString, getDisplayWeekDays } from '../logic';
 import { DetailedWeek } from '../types';
 import { DistanceComponent } from './distance';
 import { Training } from './training';
@@ -21,11 +21,20 @@ export const Week: React.FC<WeekProps> = (props) => {
       props.isDesktop ? wd : wd.substring(0, 2)
     );
 
+  const now = new Date();
+  const isActiveWeek =
+    props.week.startDate && props.week.startDate < now && addDays(props.week.startDate, 7) > now;
+
   return (
     <div>
       <div
         onClick={props.toggleIsCollapsed}
-        style={{ alignItems: 'center', cursor: 'pointer', display: 'flex' }}
+        style={{
+          alignItems: 'center',
+          backgroundColor: isActiveWeek ? 'rgba(254, 166, 7, 0.25)' : undefined,
+          cursor: 'pointer',
+          display: 'flex'
+        }}
       >
         <h4 style={{ flexGrow: 1, marginBottom: 8, marginTop: 8 }}>
           <span>{props.isCollapsed ? '☞' : '☟'}</span> Week {props.week.number}
@@ -39,7 +48,7 @@ export const Week: React.FC<WeekProps> = (props) => {
         <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
       </div>
       {!props.isCollapsed && (
-        <div style={{ paddingLeft: 20 }}>
+        <div style={{ paddingTop: 8, paddingLeft: 20 }}>
           <div
             className="week"
             style={{
@@ -62,7 +71,7 @@ export const Week: React.FC<WeekProps> = (props) => {
             })}
           </div>
           {props.week.number !== 18 && (
-            <div style={{ marginTop: 8 }}>
+            <div style={{ marginBottom: 8, marginTop: 8 }}>
               <button onClick={() => props.toggleSkippedWeek(props.week.number)}>
                 {props.week.isSkipped ? 'Enable' : 'Skip'}
               </button>
