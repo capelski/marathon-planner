@@ -11,6 +11,7 @@ import {
 import { getTrainingPaces } from '../logic';
 import { TrainingType, sortedTrainingTypes, trainingTypeColors } from '../models';
 import { BaseSettings } from '../types';
+import { Inliner } from './inliner';
 import { PaceComponent } from './pace';
 
 export interface LegendProps {
@@ -54,13 +55,17 @@ export const Legend: React.FC<LegendProps> = (props) => {
           );
         })}
       <br />
-      <div>{trainingCoreSymbol} Training core</div>
-      <div>{warmUpSymbol} Warm up</div>
-      <div>{coolDownSymbol} Cool down</div>
-      <div>{recoveryIntervalSymbol} Recovery interval</div>
-      <div>{paceSymbol} Pace</div>
-      <div>{totalDistanceSymbol} Total distance</div>
-      <div>{timeSymbol} Total time</div>
+      <Inliner>
+        <span style={{ paddingRight: 8 }}>{trainingCoreSymbol} Training core</span>
+        <span style={{ paddingRight: 8 }}>{warmUpSymbol} Warm up</span>
+        <span style={{ paddingRight: 8 }}>{coolDownSymbol} Cool down</span>
+        <span style={{ paddingRight: 8 }}>{recoveryIntervalSymbol} Recovery interval</span>
+      </Inliner>
+      <Inliner style={{ marginBottom: 16 }}>
+        <span style={{ paddingRight: 8 }}>{paceSymbol} Pace</span>
+        <span style={{ paddingRight: 8 }}>{totalDistanceSymbol} Total distance</span>
+        <span style={{ paddingRight: 8 }}>{timeSymbol} Total time</span>
+      </Inliner>
     </React.Fragment>
   );
 };
