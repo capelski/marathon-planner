@@ -113,7 +113,7 @@ export const App: React.FC = () => {
         toggleTrainingCompleted={trainingCompletedChange}
       />
 
-      <Legend racePace={baseSettings.racePace} />
+      <Legend baseSettings={baseSettings} />
     </div>
   );
 };
