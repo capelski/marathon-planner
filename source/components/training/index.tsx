@@ -1,5 +1,5 @@
 import React from 'react';
-import { totalDistanceSymbol } from '../../constants';
+import { currentColor, totalDistanceSymbol } from '../../constants';
 import { TrainingCategory, trainingTypeColors } from '../../models';
 import { DetailedTraining } from '../../types';
 import { DistanceComponent } from '../distance';
@@ -11,11 +11,15 @@ import { TrainingCheckbox } from './training-checkbox';
 import { WarmedUpTraining } from './warmed-up-training';
 
 export interface TrainingProps {
+  isCurrentTraining?: boolean;
   isDesktop: boolean;
   toggleTrainingCompleted: (trainingNumber: number) => void;
   training: DetailedTraining;
   weekDay?: string;
 }
+
+const spacing = 4;
+const margin = `${spacing}px ${spacing}px 0 0`; // Right and top
 
 export const Training: React.FC<TrainingProps> = (props) => {
   const toggleCompleted = () => props.toggleTrainingCompleted(props.training.number);
@@ -31,20 +35,24 @@ export const Training: React.FC<TrainingProps> = (props) => {
     >
       <div
         style={{
-          alignSelf: 'stretch',
           backgroundColor: trainingTypeColors[props.training.type].backgroundColor,
           color: trainingTypeColors[props.training.type].textColor,
-          height: props.isDesktop ? 18 : undefined,
-          marginBottom: 4,
-          paddingTop: props.isDesktop ? undefined : 4,
-          textAlign: 'center',
-          width: props.isDesktop ? 'calc(100% - 4px)' : 24
+          margin,
+          minHeight: '1em',
+          minWidth: 24,
+          padding: `${spacing / 2}px 0`,
+          textAlign: 'center'
         }}
       >
         {props.weekDay}
       </div>
       <div
-        style={{ marginBottom: 8, marginTop: 8, minHeight: '1em', paddingLeft: 4, paddingRight: 4 }}
+        style={{
+          backgroundColor: props.isCurrentTraining ? currentColor : undefined,
+          flexGrow: 1,
+          margin,
+          padding: `${spacing * 2}px ${spacing}px`
+        }}
       >
         {props.training.category === TrainingCategory.distance ? (
           <DistanceTraining toggleCompleted={toggleCompleted} training={props.training} />

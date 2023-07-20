@@ -1,5 +1,5 @@
 import React from 'react';
-import { activeElementColor, totalDistanceSymbol } from '../constants';
+import { currentColor, totalDistanceSymbol } from '../constants';
 import { addDays, dateToIsoString, getDisplayWeekDays } from '../logic';
 import { DetailedWeek } from '../types';
 import { DistanceComponent } from './distance';
@@ -22,8 +22,11 @@ export const Week: React.FC<WeekProps> = (props) => {
     );
 
   const now = new Date();
-  const isActiveWeek =
-    props.week.startDate && props.week.startDate < now && addDays(props.week.startDate, 7) > now;
+  const isCurrentWeek =
+    props.isCollapsed &&
+    props.week.startDate &&
+    props.week.startDate < now &&
+    addDays(props.week.startDate, 7) > now;
 
   return (
     <div>
@@ -31,7 +34,7 @@ export const Week: React.FC<WeekProps> = (props) => {
         onClick={props.toggleIsCollapsed}
         style={{
           alignItems: 'center',
-          backgroundColor: isActiveWeek ? activeElementColor : undefined,
+          backgroundColor: isCurrentWeek ? currentColor : undefined,
           cursor: 'pointer',
           display: 'flex'
         }}
@@ -48,7 +51,7 @@ export const Week: React.FC<WeekProps> = (props) => {
         <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
       </div>
       {!props.isCollapsed && (
-        <div style={{ paddingTop: 8, paddingLeft: 20 }}>
+        <div style={{ paddingLeft: 20 }}>
           <div
             className="week"
             style={{
@@ -57,8 +60,14 @@ export const Week: React.FC<WeekProps> = (props) => {
             }}
           >
             {props.week.trainings.map((training, index) => {
+              const isCurrentTraining =
+                props.week.startDate &&
+                addDays(props.week.startDate, index) < now &&
+                addDays(props.week.startDate, index + 1) > now;
+
               return (
                 <Training
+                  isCurrentTraining={isCurrentTraining}
                   isDesktop={props.isDesktop}
                   key={index}
                   toggleTrainingCompleted={(trainingNumber) => {
