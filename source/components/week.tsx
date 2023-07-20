@@ -1,5 +1,5 @@
 import React from 'react';
-import { totalDistanceSymbol } from '../constants';
+import { activeElementColor, totalDistanceSymbol } from '../constants';
 import { addDays, dateToIsoString, getDisplayWeekDays } from '../logic';
 import { DetailedWeek } from '../types';
 import { DistanceComponent } from './distance';
@@ -31,7 +31,7 @@ export const Week: React.FC<WeekProps> = (props) => {
         onClick={props.toggleIsCollapsed}
         style={{
           alignItems: 'center',
-          backgroundColor: isActiveWeek ? 'rgba(254, 166, 7, 0.25)' : undefined,
+          backgroundColor: isActiveWeek ? activeElementColor : undefined,
           cursor: 'pointer',
           display: 'flex'
         }}

@@ -1,3 +1,4 @@
+export * from './colors';
 export * from './completed-trainings';
 export * from './miles-to-km';
 export * from './pace';
