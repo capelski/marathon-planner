@@ -1,6 +1,5 @@
 import { TrainingType } from '../models';
 import { Distance } from './distance';
-import { TrainingIntervals } from './training-intervals';
 
 /* Common detailed training properties */
 
@@ -9,7 +8,9 @@ type DistanceTraining = {
 };
 
 type IntervalsTraining = {
-  intervals: TrainingIntervals;
+  intervalDistance: Distance;
+  intervalsNumber: number;
+  recoveryDistance: Distance;
 };
 
 /* Training types */
@@ -36,11 +37,13 @@ export type Rest = {
 
 export type SpeedTraining = {
   type: TrainingType.speed;
-} & IntervalsTraining;
+  intervals: IntervalsTraining;
+};
 
 export type StrengthTraining = {
   type: TrainingType.strength;
-} & IntervalsTraining;
+  intervals: IntervalsTraining;
+};
 
 export type TimedTraining = {
   type: TrainingType.timed;

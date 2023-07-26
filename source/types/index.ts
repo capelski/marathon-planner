@@ -10,5 +10,4 @@ export * from './settings';
 export * from './skipped-weeks';
 export * from './stats';
 export * from './training';
-export * from './training-intervals';
 export * from './week';

@@ -10,7 +10,6 @@ import {
   StrengthTraining,
   TimedTraining
 } from './training';
-import { DetailedTrainingIntervals } from './training-intervals';
 
 /* Common detailed training properties */
 
@@ -22,7 +21,11 @@ export type DetailedDistanceTraining = DetailedTrainingBase & {
 export type DetailedIntervalsTraining = DetailedTrainingBase & {
   category: TrainingCategory.intervals;
   warmUpDistance: PacedDistance; // Warm up / Cool down distance
-  intervals: DetailedTrainingIntervals;
+  intervals: {
+    intervalDistance: PacedDistance;
+    intervalsNumber: number;
+    recoveryDistance: PacedDistance;
+  };
 };
 
 type DetailedTrainingBase = {
