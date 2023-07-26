@@ -69,6 +69,7 @@ export const Week: React.FC<WeekProps> = (props) => {
                 <Training
                   isCurrentTraining={isCurrentTraining}
                   isDesktop={props.isDesktop}
+                  isSkippedWeek={props.week.isSkipped}
                   key={index}
                   toggleTrainingCompleted={(trainingNumber) => {
                     props.toggleTrainingCompleted(props.week.number, trainingNumber);
