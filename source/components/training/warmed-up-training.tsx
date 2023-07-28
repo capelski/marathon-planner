@@ -23,10 +23,7 @@ export const WarmedUpTraining: React.FC<WarmedUpTrainingProps> = (props) => {
         </li>
       </ul>
 
-      <TrainingTotals
-        distance={props.training.totalDistance}
-        seconds={props.training.totalSeconds}
-      />
+      <TrainingTotals distance={props.training.totalDistance} />
     </React.Fragment>
   );
 };

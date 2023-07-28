@@ -33,12 +33,12 @@ export const convertPace = (pace: Pace, distanceUnits: DistanceUnits) => {
   return paceConversions[pace.distanceUnits][distanceUnits](pace);
 };
 
-export const extractPaceMinutes = (pace: Pace) => {
-  return Math.floor(pace.seconds / 60);
+export const extractPaceMinutes = (pace: number) => {
+  return Math.floor(pace / 60);
 };
 
-export const extractPaceSeconds = (pace: Pace) => {
-  return pace.seconds % 60;
+export const extractPaceSeconds = (pace: number) => {
+  return pace % 60;
 };
 
 export const getPace = (distanceUnits: DistanceUnits, minutes: number, seconds: number): Pace => {

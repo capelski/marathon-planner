@@ -5,6 +5,7 @@ export * from './dictionary';
 export * from './distance';
 export * from './optional-date';
 export * from './pace';
+export * from './paced-distance';
 export * from './plan';
 export * from './settings';
 export * from './skipped-weeks';

@@ -65,7 +65,7 @@ export const Training: React.FC<TrainingProps> = (props) => {
         }}
       >
         {props.training.category === TrainingCategory.distance ? (
-          <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
+          <DistanceComponent distance={props.training.totalDistance} symbol={trainingCoreSymbol} />
         ) : props.training.category === TrainingCategory.intervals ? (
           <IntervalsTraining training={props.training} />
         ) : props.training.category === TrainingCategory.warmedUp ? (

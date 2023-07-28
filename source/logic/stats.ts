@@ -46,12 +46,15 @@ export const getWeekTotalStats = (detailedTrainings: DetailedTraining[]): Stats 
       completed: training.isCompleted
         ? {
             distance: mergeDistances(reducedStats.completed.distance, training.totalDistance),
-            seconds: reducedStats.completed.seconds + training.totalSeconds
+            seconds:
+              reducedStats.completed.seconds +
+              training.totalDistance.pace * training.totalDistance.value
           }
         : reducedStats.completed,
       total: {
         distance: mergeDistances(reducedStats.total.distance, training.totalDistance),
-        seconds: reducedStats.total.seconds + training.totalSeconds
+        seconds:
+          reducedStats.total.seconds + training.totalDistance.pace * training.totalDistance.value
       }
     };
   }, initialStats);

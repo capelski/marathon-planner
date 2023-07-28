@@ -19,8 +19,8 @@ export const DistanceComponent: React.FC<DistanceProps> = (props) => {
       </span>
       {'pace' in props.distance ? (
         <React.Fragment>
-          <PaceComponent pace={props.distance.pace} />
-          <Time seconds={props.distance.pace.seconds * props.distance.value} />
+          <PaceComponent seconds={props.distance.pace} />
+          <Time seconds={props.distance.pace * props.distance.value} />
         </React.Fragment>
       ) : undefined}
     </Inliner>

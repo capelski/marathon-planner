@@ -48,7 +48,7 @@ export const Legend: React.FC<LegendProps> = (props) => {
               {trainingType !== TrainingType.rest && (
                 <React.Fragment>
                   &nbsp;-&nbsp;
-                  <PaceComponent pace={trainingPaces[trainingType]} />
+                  <PaceComponent seconds={trainingPaces[trainingType].seconds} />
                 </React.Fragment>
               )}
             </div>

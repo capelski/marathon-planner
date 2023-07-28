@@ -1,16 +1,15 @@
 import React from 'react';
 import { paceSymbol } from '../constants';
 import { extractPaceMinutes, extractPaceSeconds } from '../logic';
-import { Pace } from '../types';
 
 interface PaceComponentProps {
-  pace: Pace;
+  seconds: number;
 }
 
 export const PaceComponent: React.FC<PaceComponentProps> = (props) => {
   return (
     <span style={{ paddingRight: 4 }}>
-      {paceSymbol} {extractPaceMinutes(props.pace)}' {extractPaceSeconds(props.pace)}"
+      {paceSymbol} {extractPaceMinutes(props.seconds)}' {extractPaceSeconds(props.seconds)}"
     </span>
   );
 };

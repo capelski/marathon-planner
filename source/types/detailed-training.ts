@@ -1,5 +1,5 @@
 import { TrainingCategory } from '../models';
-import { Distance, PacedDistance } from './distance';
+import { PacedDistance } from './paced-distance';
 import {
   LongRun,
   ModerateTraining,
@@ -15,7 +15,6 @@ import {
 
 export type DetailedDistanceTraining = DetailedTrainingBase & {
   category: TrainingCategory.distance;
-  distance: PacedDistance;
 };
 
 export type DetailedIntervalsTraining = DetailedTrainingBase & {
@@ -31,8 +30,7 @@ export type DetailedIntervalsTraining = DetailedTrainingBase & {
 type DetailedTrainingBase = {
   number: number;
   isCompleted: boolean;
-  totalDistance: Distance;
-  totalSeconds: number;
+  totalDistance: PacedDistance;
 };
 
 export type DetailedWarmedUpTraining = DetailedTrainingBase & {

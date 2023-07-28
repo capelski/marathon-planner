@@ -12,7 +12,8 @@ import {
   Training,
   TrainingPaces
 } from '../types';
-import { convertDistance, createDistance, mergeDistances, multiplyDistance } from './distance';
+import { createDistance } from './distance';
+import { getPacedDistance, mergePacedDistances, multiplyPacedDistance } from './paced-distance';
 
 const getDetailedDistanceTraining = <
   T extends LongRun | ModerateTraining | Race | RecoveryTraining
@@ -23,14 +24,13 @@ const getDetailedDistanceTraining = <
   trainingPaces: TrainingPaces
 ): DetailedTraining => {
   const pace = trainingPaces[training.type];
-  const convertedDistance = convertDistance(training.distance, pace.distanceUnits);
+  const pacedDistance = getPacedDistance(training.distance, pace);
+
   return {
     category: TrainingCategory.distance,
-    distance: { ...convertedDistance, pace },
     isCompleted: isTrainingCompleted,
     number,
-    totalDistance: convertedDistance,
-    totalSeconds: convertedDistance.value * pace.seconds,
+    totalDistance: pacedDistance,
     type: training.type
   };
 };
@@ -45,39 +45,28 @@ const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining
   const mainPace = trainingPaces[training.type];
   const recoveryPace = trainingPaces[TrainingType.recovery];
 
-  const convertedIntervalDistance = convertDistance(
-    training.intervals.intervalDistance,
-    mainPace.distanceUnits
+  const pacedIntervalDistance = getPacedDistance(training.intervals.intervalDistance, mainPace);
+  const pacedRecoveryDistance = getPacedDistance(training.intervals.recoveryDistance, recoveryPace);
+  const pacedWarmedUpDistance = getPacedDistance(warmUpDistance, recoveryPace);
+
+  const totalDistance = mergePacedDistances(
+    multiplyPacedDistance(pacedIntervalDistance, training.intervals.intervalsNumber),
+    multiplyPacedDistance(pacedRecoveryDistance, training.intervals.intervalsNumber - 1),
+    multiplyPacedDistance(pacedWarmedUpDistance, 2)
   );
-  const convertedRecoveryDistance = convertDistance(
-    training.intervals.recoveryDistance,
-    mainPace.distanceUnits
-  );
-  const convertedWarmUpDistance = convertDistance(warmUpDistance, mainPace.distanceUnits);
-  const totalDistance = mergeDistances(
-    multiplyDistance(convertedIntervalDistance, training.intervals.intervalsNumber),
-    multiplyDistance(convertedRecoveryDistance, training.intervals.intervalsNumber - 1),
-    multiplyDistance(convertedWarmUpDistance, 2)
-  )!;
 
   return {
     category: TrainingCategory.intervals,
     intervals: {
-      intervalDistance: { ...convertedIntervalDistance, pace: mainPace },
+      intervalDistance: pacedIntervalDistance,
       intervalsNumber: training.intervals.intervalsNumber,
-      recoveryDistance: { ...convertedRecoveryDistance, pace: recoveryPace }
+      recoveryDistance: pacedRecoveryDistance
     },
     isCompleted: isTrainingCompleted,
     number,
     totalDistance,
-    totalSeconds:
-      training.intervals.intervalsNumber * convertedIntervalDistance.value * mainPace.seconds +
-      (training.intervals.intervalsNumber - 1) *
-        convertedRecoveryDistance.value *
-        recoveryPace.seconds +
-      2 * convertedWarmUpDistance.value * recoveryPace.seconds,
     type: training.type,
-    warmUpDistance: { ...convertedWarmUpDistance, pace: recoveryPace }
+    warmUpDistance: pacedWarmedUpDistance
   };
 };
 
@@ -88,8 +77,10 @@ const getDetailedRestTraining = (
   category: TrainingCategory.none,
   isCompleted: false,
   number,
-  totalDistance: createDistance(0, trainingPaces.race.distanceUnits),
-  totalSeconds: 0,
+  totalDistance: getPacedDistance(
+    createDistance(0, trainingPaces.race.distanceUnits),
+    trainingPaces.rest
+  ),
   type: TrainingType.rest
 });
 
@@ -139,23 +130,21 @@ const getDetailedWarmedUpTraining = <T extends TimedTraining>(
   const mainPace = trainingPaces[training.type];
   const recoveryPace = trainingPaces[TrainingType.recovery];
 
-  const convertedDistance = convertDistance(training.distance, mainPace.distanceUnits);
-  const convertedWarmUpDistance = convertDistance(warmUpDistance, mainPace.distanceUnits);
-  const totalDistance = mergeDistances(
-    convertedDistance,
-    multiplyDistance(convertedWarmUpDistance, 2)
-  )!;
+  const pacedDistance = getPacedDistance(training.distance, mainPace);
+  const pacedWarmUpDistance = getPacedDistance(warmUpDistance, recoveryPace);
+
+  const totalDistance = mergePacedDistances(
+    pacedDistance,
+    multiplyPacedDistance(pacedWarmUpDistance, 2)
+  );
 
   return {
     category: TrainingCategory.warmedUp,
-    distance: { ...convertedDistance, pace: mainPace },
+    distance: pacedDistance,
     isCompleted: isTrainingCompleted,
     number,
     totalDistance,
-    totalSeconds:
-      convertedDistance.value * mainPace.seconds +
-      2 * convertedWarmUpDistance.value * recoveryPace.seconds,
     type: training.type,
-    warmUpDistance: { ...convertedWarmUpDistance, pace: recoveryPace }
+    warmUpDistance: pacedWarmUpDistance
   };
 };

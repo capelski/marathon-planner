@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  convertDistance,
   convertPace,
   createDistance,
   dateToIsoString,
@@ -8,6 +7,7 @@ import {
   extractPaceSeconds,
   getDisplayDistance,
   getPace,
+  getPacedDistance,
   isoStringToLocalDate
 } from '../logic';
 import { DistanceUnits, warmUpDistances } from '../models';
@@ -20,8 +20,8 @@ export interface BaseSettingsComponentProps {
 }
 
 export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (props) => {
-  const [minutes, setMinutes] = useState(extractPaceMinutes(props.baseSettings.racePace));
-  const [seconds, setSeconds] = useState(extractPaceSeconds(props.baseSettings.racePace));
+  const [minutes, setMinutes] = useState(extractPaceMinutes(props.baseSettings.racePace.seconds));
+  const [seconds, setSeconds] = useState(extractPaceSeconds(props.baseSettings.racePace.seconds));
 
   const distanceUnitsChange = (nextValue: string) => {
     const nextDistanceUnits = nextValue as DistanceUnits;
@@ -54,8 +54,8 @@ export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (prop
       parseInt(_minutes) || 0,
       parseInt(_seconds) || 0
     );
-    setMinutes(extractPaceMinutes(nextRacePace));
-    setSeconds(extractPaceSeconds(nextRacePace));
+    setMinutes(extractPaceMinutes(nextRacePace.seconds));
+    setSeconds(extractPaceSeconds(nextRacePace.seconds));
     props.setBaseSettings({
       ...props.baseSettings,
       racePace: nextRacePace
@@ -74,9 +74,14 @@ export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (prop
   };
 
   useEffect(() => {
-    setMinutes(extractPaceMinutes(props.baseSettings.racePace));
-    setSeconds(extractPaceSeconds(props.baseSettings.racePace));
+    setMinutes(extractPaceMinutes(props.baseSettings.racePace.seconds));
+    setSeconds(extractPaceSeconds(props.baseSettings.racePace.seconds));
   }, [props.baseSettings.racePace]);
+
+  const convertedWarmUpDistances = warmUpDistances.map((distance) => ({
+    original: distance,
+    converted: getPacedDistance(distance, props.baseSettings.racePace)
+  }));
 
   return (
     <React.Fragment>
@@ -93,9 +98,9 @@ export const BaseSettingsComponent: React.FC<BaseSettingsComponentProps> = (prop
         label="Warm up/Cool down distance"
         name="warmUpDistance"
         onChange={warmUpDistanceChange}
-        options={warmUpDistances.map((distance) => ({
-          label: getDisplayDistance(convertDistance(distance, props.baseSettings.distanceUnits)),
-          value: String(distance.value)
+        options={convertedWarmUpDistances.map((cd) => ({
+          label: getDisplayDistance(cd.converted),
+          value: String(cd.original.value)
         }))}
         style={{ marginBottom: 8 }}
         value={String(props.baseSettings.warmUpDistance.value)}
