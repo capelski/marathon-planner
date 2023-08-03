@@ -17,11 +17,11 @@ export const IntervalsTraining: React.FC<IntervalsTrainingProps> = (props) => {
   return (
     <React.Fragment>
       <ul style={{ marginBottom: 0, marginTop: 0, paddingInlineStart: 16 }}>
-        <li>
+        <li style={{ marginBottom: 4 }}>
           <DistanceComponent distance={props.training.warmUpDistance} symbol={warmUpSymbol} />
         </li>
 
-        <li>
+        <li style={{ marginBottom: 4 }}>
           <div style={{ display: 'flex' }}>
             <div>{props.training.intervals.intervalsNumber}x</div>
             <div style={{ borderLeft: '1px solid black', marginLeft: 8, paddingLeft: 8 }}>
@@ -37,7 +37,7 @@ export const IntervalsTraining: React.FC<IntervalsTrainingProps> = (props) => {
           </div>
         </li>
 
-        <li>
+        <li style={{ marginBottom: 4 }}>
           <DistanceComponent distance={props.training.warmUpDistance} symbol={coolDownSymbol} />
         </li>
       </ul>

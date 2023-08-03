@@ -12,13 +12,13 @@ export const WarmedUpTraining: React.FC<WarmedUpTrainingProps> = (props) => {
   return (
     <React.Fragment>
       <ul style={{ marginBottom: 0, marginTop: 0, paddingInlineStart: 16 }}>
-        <li>
+        <li style={{ marginBottom: 4 }}>
           <DistanceComponent distance={props.training.warmUpDistance} symbol={warmUpSymbol} />
         </li>
-        <li>
+        <li style={{ marginBottom: 4 }}>
           <DistanceComponent distance={props.training.distance} symbol={trainingCoreSymbol} />
         </li>
-        <li>
+        <li style={{ marginBottom: 4 }}>
           <DistanceComponent distance={props.training.warmUpDistance} symbol={coolDownSymbol} />
         </li>
       </ul>

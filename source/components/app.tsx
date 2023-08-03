@@ -121,9 +121,9 @@ export const App: React.FC = () => {
 
   return (
     <div>
-      <Inliner style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+      <Inliner style={{ justifyContent: 'space-between' }}>
         <h2>Marathon planner</h2>
-        <Inliner style={{ alignItems: 'center' }}>
+        <Inliner>
           <img
             height={28}
             onClick={toggleCollapsedWeeks}

@@ -6,7 +6,7 @@ export interface InlinerProps {
 
 export const Inliner: React.FC<InlinerProps> = (props) => {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4, ...props.style }}>
+    <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', ...props.style }}>
       {props.children}
     </div>
   );

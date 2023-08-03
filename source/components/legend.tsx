@@ -55,13 +55,11 @@ export const Legend: React.FC<LegendProps> = (props) => {
           );
         })}
       <br />
-      <Inliner>
+      <Inliner style={{ marginBottom: 16 }}>
         <span style={{ paddingRight: 8 }}>{trainingCoreSymbol} Training core</span>
         <span style={{ paddingRight: 8 }}>{warmUpSymbol} Warm up</span>
         <span style={{ paddingRight: 8 }}>{coolDownSymbol} Cool down</span>
         <span style={{ paddingRight: 8 }}>{recoveryIntervalSymbol} Recovery interval</span>
-      </Inliner>
-      <Inliner style={{ marginBottom: 16 }}>
         <span style={{ paddingRight: 8 }}>{paceSymbol} Pace</span>
         <span style={{ paddingRight: 8 }}>{totalDistanceSymbol} Total distance</span>
         <span style={{ paddingRight: 8 }}>{timeSymbol} Total time</span>
