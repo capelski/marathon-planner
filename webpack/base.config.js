@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { resolve } = require('path');
+const { publicPath } = require('./common');
 
 module.exports = {
   entry: './source/index.tsx',
@@ -24,7 +25,10 @@ module.exports = {
         test: /\.(jpe?g|gif|png|svg)$/i,
         use: [
           {
-            loader: 'file-loader'
+            loader: 'file-loader',
+            options: {
+              publicPath
+            }
           }
         ]
       }
@@ -32,7 +36,7 @@ module.exports = {
   },
   output: {
     path: resolve(__dirname, '..', 'docs'),
-    publicPath: '/marathon-planner/'
+    publicPath
   },
   plugins: [
     new HtmlWebpackPlugin({
