@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
 import { useMediaQuery } from 'react-responsive';
 import collapseImage from '../../static/images/collapse.png';
 import expandImage from '../../static/images/expand.png';
@@ -17,6 +16,7 @@ import { BaseSettings, CollapsedWeeks, Settings } from '../types';
 import { BaseSettingsComponent } from './base-settings';
 import { Inliner } from './inliner';
 import { Legend } from './legend';
+import { Modal } from './modal';
 import { Plan } from './plan';
 
 export const App: React.FC = () => {
@@ -75,8 +75,6 @@ export const App: React.FC = () => {
     });
   };
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
-
   const collapsedWeekChange = (weekNumber: number) => {
     const nextCollapsedWeeks = {
       ...collapsedWeeks,
@@ -131,21 +129,20 @@ export const App: React.FC = () => {
             style={{ cursor: 'pointer', paddingRight: 8 }}
             width={28}
           />
-          <span style={{ cursor: 'pointer', fontSize: 24, paddingRight: 8 }} onClick={toggleModal}>
+          <span
+            style={{ cursor: 'pointer', fontSize: 24, paddingRight: 8 }}
+            onClick={() => setIsModalOpen(true)}
+          >
             ⚙️
           </span>
         </Inliner>
       </Inliner>
 
-      <Modal isOpen={isModalOpen} onRequestClose={toggleModal} style={{ content: { inset: 0 } }}>
-        <div style={{ display: 'flex', fontSize: 20, justifyContent: 'end' }}>
-          <span onClick={toggleModal} style={{ cursor: 'pointer' }}>
-            ✖️
-          </span>
-        </div>
-
-        <BaseSettingsComponent baseSettings={baseSettings} setBaseSettings={baseSettingsChange} />
-      </Modal>
+      {isModalOpen && (
+        <Modal closeHandler={() => setIsModalOpen(false)}>
+          <BaseSettingsComponent baseSettings={baseSettings} setBaseSettings={baseSettingsChange} />
+        </Modal>
+      )}
 
       <Plan
         collapsedWeeks={collapsedWeeks}

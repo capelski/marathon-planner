@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import menuImage from '../../static/images/menu.png';
 import { currentColor, totalDistanceSymbol } from '../constants';
 import { addDays, dateToIsoString, getDisplayWeekDays } from '../logic';
 import { DetailedWeek } from '../types';
 import { DistanceComponent } from './distance';
+import { Inliner } from './inliner';
+import { Modal } from './modal';
 import { Training } from './training';
 
 export interface WeekProps {
@@ -15,6 +18,8 @@ export interface WeekProps {
 }
 
 export const Week: React.FC<WeekProps> = (props) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const weekDays =
     props.week.startDate &&
     getDisplayWeekDays(props.week.startDate).map((wd) =>
@@ -48,7 +53,45 @@ export const Week: React.FC<WeekProps> = (props) => {
             <span style={{ fontWeight: 'normal', opacity: 0.75 }}> ⛔️</span>
           )}
         </h4>
-        <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
+        <Inliner>
+          <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
+          {props.week.number !== 18 && (
+            <React.Fragment>
+              <img
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setIsModalOpen(true);
+                }}
+                height={20}
+                src={menuImage}
+                width={20}
+              />
+              {isModalOpen && (
+                <Modal closeHandler={() => setIsModalOpen(false)}>
+                  <div
+                    style={{
+                      alignItems: 'center',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      height: '100%'
+                    }}
+                  >
+                    <button
+                      onClick={() => {
+                        setIsModalOpen(false);
+                        props.toggleSkippedWeek(props.week.number);
+                      }}
+                      style={{ minWidth: '150px' }}
+                    >
+                      {props.week.isSkipped ? '✅ Enable' : '❌ Skip'}
+                    </button>
+                  </div>
+                </Modal>
+              )}
+            </React.Fragment>
+          )}
+        </Inliner>
       </div>
       {!props.isCollapsed && (
         <div style={{ paddingLeft: 20 }}>
@@ -80,13 +123,6 @@ export const Week: React.FC<WeekProps> = (props) => {
               );
             })}
           </div>
-          {props.week.number !== 18 && (
-            <div style={{ marginBottom: 8, marginTop: 8 }}>
-              <button onClick={() => props.toggleSkippedWeek(props.week.number)}>
-                {props.week.isSkipped ? 'Enable' : 'Skip'}
-              </button>
-            </div>
-          )}
         </div>
       )}
     </div>
