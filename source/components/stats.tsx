@@ -11,7 +11,7 @@ export interface StatsComponentProps {
 
 export const StatsComponent: React.FC<StatsComponentProps> = (props) => {
   return (
-    <div>
+    <div style={{ marginBottom: 12 }}>
       <Inliner>
         <DistanceComponent distance={props.plan.total.distance} symbol={totalDistanceSymbol} />
         (<DistanceComponent distance={props.plan.completed.distance} /> completed,{' '}

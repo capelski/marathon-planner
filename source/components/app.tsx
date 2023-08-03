@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { useMediaQuery } from 'react-responsive';
+import collapseImage from '../../static/images/collapse.png';
+import expandImage from '../../static/images/expand.png';
 import { defaultBaseSettings, defaultCompletedTrainings, defaultSkippedWeeks } from '../constants';
 import {
   getDetailedPlan,
   persistSettings,
   toggleSkippedWeek,
   toggleTrainingCompleted,
-  retrieveSettings
+  retrieveSettings,
+  retrieveCollapsedWeeks,
+  persistCollapsedWeeks
 } from '../logic';
-import { BaseSettings, Settings } from '../types';
+import { BaseSettings, CollapsedWeeks, Settings } from '../types';
 import { BaseSettingsComponent } from './base-settings';
 import { Inliner } from './inliner';
 import { Legend } from './legend';
@@ -17,6 +21,7 @@ import { Plan } from './plan';
 
 export const App: React.FC = () => {
   const [baseSettings, setBaseSettings] = useState(defaultBaseSettings);
+  const [collapsedWeeks, setCollapsedWeeks] = useState<CollapsedWeeks>({});
   const [completedTrainings, setCompletedTrainings] = useState(defaultCompletedTrainings);
   const [skippedWeeks, setSkippedWeeks] = useState(defaultSkippedWeeks);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,6 +32,8 @@ export const App: React.FC = () => {
       skippedWeeks: defaultSkippedWeeks
     })
   );
+
+  const areAllWeeksCollapsed = plan.weeks.every((week) => collapsedWeeks[week.number]);
 
   const isDesktop = useMediaQuery({ minWidth: 768 });
 
@@ -70,6 +77,26 @@ export const App: React.FC = () => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
+  const collapsedWeekChange = (weekNumber: number) => {
+    const nextCollapsedWeeks = {
+      ...collapsedWeeks,
+      [weekNumber]: !collapsedWeeks[weekNumber]
+    };
+    setCollapsedWeeks(nextCollapsedWeeks);
+    persistCollapsedWeeks(nextCollapsedWeeks);
+  };
+
+  const toggleCollapsedWeeks = () => {
+    const nextCollapsedWeeks = areAllWeeksCollapsed
+      ? {}
+      : plan.weeks.reduce(
+          (_collapsedWeeks, week) => ({ ..._collapsedWeeks, [week.number]: true }),
+          {}
+        );
+    setCollapsedWeeks(nextCollapsedWeeks);
+    persistCollapsedWeeks(nextCollapsedWeeks);
+  };
+
   useEffect(() => {
     const settings = retrieveSettings();
     if (settings) {
@@ -85,15 +112,29 @@ export const App: React.FC = () => {
 
       setPlan(getDetailedPlan(settings));
     }
+
+    const nextCollapsedWeeks = retrieveCollapsedWeeks();
+    if (nextCollapsedWeeks) {
+      setCollapsedWeeks(nextCollapsedWeeks);
+    }
   }, []);
 
   return (
     <div>
       <Inliner style={{ alignItems: 'center', justifyContent: 'space-between' }}>
         <h2>Marathon planner</h2>
-        <span style={{ cursor: 'pointer', fontSize: 24, paddingRight: 8 }} onClick={toggleModal}>
-          ⚙️
-        </span>
+        <Inliner style={{ alignItems: 'center' }}>
+          <img
+            height={28}
+            onClick={toggleCollapsedWeeks}
+            src={areAllWeeksCollapsed ? expandImage : collapseImage}
+            style={{ cursor: 'pointer', paddingRight: 8 }}
+            width={28}
+          />
+          <span style={{ cursor: 'pointer', fontSize: 24, paddingRight: 8 }} onClick={toggleModal}>
+            ⚙️
+          </span>
+        </Inliner>
       </Inliner>
 
       <Modal isOpen={isModalOpen} onRequestClose={toggleModal} style={{ content: { inset: 0 } }}>
@@ -107,8 +148,10 @@ export const App: React.FC = () => {
       </Modal>
 
       <Plan
+        collapsedWeeks={collapsedWeeks}
         isDesktop={isDesktop}
         plan={plan}
+        toggleCollapsedWeek={collapsedWeekChange}
         toggleSkippedWeek={skippedWeekChange}
         toggleTrainingCompleted={trainingCompletedChange}
       />
