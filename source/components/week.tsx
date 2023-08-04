@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import menuImage from '../../static/images/menu.png';
 import { currentColor, totalDistanceSymbol } from '../constants';
 import { addDays, dateToIsoString, getDisplayWeekDays } from '../logic';
+import { TrainingType } from '../models';
 import { DetailedWeek } from '../types';
 import { DistanceComponent } from './distance';
 import { Inliner } from './inliner';
@@ -33,6 +34,8 @@ export const Week: React.FC<WeekProps> = (props) => {
     props.week.startDate < now &&
     addDays(props.week.startDate, 7) > now;
 
+  const isMarathonWeek = props.week.trainings.some((t) => t.type === TrainingType.marathon);
+
   return (
     <div>
       <div
@@ -55,7 +58,7 @@ export const Week: React.FC<WeekProps> = (props) => {
         </h4>
         <Inliner>
           <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
-          {props.week.number !== 18 && (
+          {!isMarathonWeek && (
             <React.Fragment>
               <img
                 onClick={(event) => {
