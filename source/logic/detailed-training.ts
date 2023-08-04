@@ -2,9 +2,9 @@ import { TrainingCategory, TrainingType } from '../models';
 import {
   DetailedTraining,
   Distance,
-  LongRun,
+  EasyTraining,
+  Marathon,
   ModerateTraining,
-  Race,
   RecoveryTraining,
   SpeedTraining,
   StrengthTraining,
@@ -16,7 +16,7 @@ import { createDistance } from './distance';
 import { getPacedDistance, mergePacedDistances, multiplyPacedDistance } from './paced-distance';
 
 const getDetailedDistanceTraining = <
-  T extends LongRun | ModerateTraining | Race | RecoveryTraining
+  T extends EasyTraining | Marathon | ModerateTraining | RecoveryTraining
 >(
   number: number,
   training: T,
@@ -78,7 +78,7 @@ const getDetailedRestTraining = (
   isCompleted: false,
   number,
   totalDistance: getPacedDistance(
-    createDistance(0, trainingPaces.race.distanceUnits),
+    createDistance(0, trainingPaces.rest.distanceUnits),
     trainingPaces.rest
   ),
   type: TrainingType.rest
@@ -96,9 +96,9 @@ export const getDetailedTraining = (
     return getDetailedRestTraining(number, trainingPaces);
   }
 
-  return training.type === TrainingType.longRun ||
+  return training.type === TrainingType.easy ||
+    training.type === TrainingType.marathon ||
     training.type === TrainingType.moderate ||
-    training.type === TrainingType.race ||
     training.type === TrainingType.recovery
     ? getDetailedDistanceTraining(number, training, isTrainingCompleted, trainingPaces)
     : training.type === TrainingType.rest

@@ -1,9 +1,9 @@
 import { TrainingCategory } from '../models';
 import { PacedDistance } from './paced-distance';
 import {
-  LongRun,
+  EasyTraining,
+  Marathon,
   ModerateTraining,
-  Race,
   RecoveryTraining,
   Rest,
   SpeedTraining,
@@ -41,16 +41,16 @@ export type DetailedWarmedUpTraining = DetailedTrainingBase & {
 
 /* Detailed training types */
 
-export type DetailedLongRun = DetailedDistanceTraining & {
-  type: LongRun['type'];
+export type DetailedEasyTraining = DetailedDistanceTraining & {
+  type: EasyTraining['type'];
+};
+
+export type DetailedMarathon = DetailedDistanceTraining & {
+  type: Marathon['type'];
 };
 
 export type DetailedModerateTraining = DetailedDistanceTraining & {
   type: ModerateTraining['type'];
-};
-
-export type DetailedRace = DetailedDistanceTraining & {
-  type: Race['type'];
 };
 
 export type DetailedRecoveryTraining = DetailedDistanceTraining & {
@@ -75,9 +75,9 @@ export type DetailedTimedTraining = DetailedWarmedUpTraining & {
 };
 
 export type DetailedTraining =
-  | DetailedLongRun
+  | DetailedEasyTraining
+  | DetailedMarathon
   | DetailedModerateTraining
-  | DetailedRace
   | DetailedRecoveryTraining
   | DetailedRest
   | DetailedSpeedTraining

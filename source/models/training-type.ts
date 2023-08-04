@@ -1,9 +1,9 @@
 import { Dictionary } from '../types';
 
 export enum TrainingType {
-  longRun = 'long run',
+  easy = 'easy training',
+  marathon = 'marathon',
   moderate = 'moderate training',
-  race = 'race',
   recovery = 'recovery training',
   rest = 'rest',
   speed = 'speed training',
@@ -14,10 +14,10 @@ export enum TrainingType {
 export const sortedTrainingTypes: TrainingType[] = [
   TrainingType.speed,
   TrainingType.strength,
-  TrainingType.race,
+  TrainingType.marathon,
   TrainingType.timed,
-  TrainingType.longRun,
   TrainingType.moderate,
+  TrainingType.easy,
   TrainingType.recovery,
   TrainingType.rest
 ];
@@ -26,17 +26,17 @@ export const trainingTypeColors: Dictionary<
   { backgroundColor: string; textColor: string },
   TrainingType
 > = {
-  [TrainingType.longRun]: {
-    backgroundColor: '#4b944c',
-    textColor: 'white'
-  },
-  [TrainingType.moderate]: {
+  [TrainingType.easy]: {
     backgroundColor: '#15546b',
     textColor: 'white'
   },
-  [TrainingType.race]: {
+  [TrainingType.marathon]: {
     backgroundColor: '#feff02',
     textColor: 'black'
+  },
+  [TrainingType.moderate]: {
+    backgroundColor: '#4b944c',
+    textColor: 'white'
   },
   [TrainingType.recovery]: {
     backgroundColor: '#830040',

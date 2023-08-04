@@ -15,16 +15,16 @@ type IntervalsTraining = {
 
 /* Training types */
 
-export type LongRun = {
-  type: TrainingType.longRun;
+export type EasyTraining = {
+  type: TrainingType.easy;
+} & DistanceTraining;
+
+export type Marathon = {
+  type: TrainingType.marathon;
 } & DistanceTraining;
 
 export type ModerateTraining = {
   type: TrainingType.moderate;
-} & DistanceTraining;
-
-export type Race = {
-  type: TrainingType.race;
 } & DistanceTraining;
 
 export type RecoveryTraining = {
@@ -50,9 +50,9 @@ export type TimedTraining = {
 } & DistanceTraining;
 
 export type Training =
-  | LongRun
+  | EasyTraining
+  | Marathon
   | ModerateTraining
-  | Race
   | RecoveryTraining
   | Rest
   | SpeedTraining
