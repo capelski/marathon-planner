@@ -6,6 +6,7 @@ export enum TrainingType {
   moderate = 'moderate training',
   recovery = 'recovery training',
   rest = 'rest',
+  simulator = 'simulator',
   speed = 'speed training',
   strength = 'strength training',
   timed = 'timed training'
@@ -15,6 +16,7 @@ export const sortedTrainingTypes: TrainingType[] = [
   TrainingType.speed,
   TrainingType.strength,
   TrainingType.marathon,
+  TrainingType.simulator,
   TrainingType.timed,
   TrainingType.moderate,
   TrainingType.easy,
@@ -31,8 +33,8 @@ export const trainingTypeColors: Dictionary<
     textColor: 'white'
   },
   [TrainingType.marathon]: {
-    backgroundColor: '#feff02',
-    textColor: 'black'
+    backgroundColor: '#fea607',
+    textColor: 'white'
   },
   [TrainingType.moderate]: {
     backgroundColor: '#4b944c',
@@ -47,11 +49,15 @@ export const trainingTypeColors: Dictionary<
     textColor: 'black'
   },
   [TrainingType.speed]: {
-    backgroundColor: '#fd600e',
+    backgroundColor: '#dc3545',
     textColor: 'white'
   },
+  [TrainingType.simulator]: {
+    backgroundColor: '#feff02',
+    textColor: 'black'
+  },
   [TrainingType.strength]: {
-    backgroundColor: '#fea607',
+    backgroundColor: '#fd600e',
     textColor: 'white'
   },
   [TrainingType.timed]: {

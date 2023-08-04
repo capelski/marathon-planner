@@ -6,6 +6,7 @@ import {
   Marathon,
   ModerateTraining,
   RecoveryTraining,
+  Simulator,
   SpeedTraining,
   StrengthTraining,
   TimedTraining,
@@ -116,11 +117,13 @@ export const getDetailedTraining = (
         training,
         isTrainingCompleted,
         trainingPaces,
-        warmUpDistance
+        training.type === TrainingType.simulator
+          ? createDistance(1.5, warmUpDistance.distanceUnits)
+          : warmUpDistance
       );
 };
 
-const getDetailedWarmedUpTraining = <T extends TimedTraining>(
+const getDetailedWarmedUpTraining = <T extends TimedTraining | Simulator>(
   number: number,
   training: T,
   isTrainingCompleted: boolean,

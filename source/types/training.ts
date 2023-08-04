@@ -35,6 +35,10 @@ export type Rest = {
   type: TrainingType.rest;
 };
 
+export type Simulator = {
+  type: TrainingType.simulator;
+} & DistanceTraining;
+
 export type SpeedTraining = {
   type: TrainingType.speed;
   intervals: IntervalsTraining;
@@ -55,6 +59,7 @@ export type Training =
   | ModerateTraining
   | RecoveryTraining
   | Rest
+  | Simulator
   | SpeedTraining
   | StrengthTraining
   | TimedTraining;

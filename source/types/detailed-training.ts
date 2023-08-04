@@ -6,6 +6,7 @@ import {
   ModerateTraining,
   RecoveryTraining,
   Rest,
+  Simulator,
   SpeedTraining,
   StrengthTraining,
   TimedTraining
@@ -62,6 +63,10 @@ export type DetailedRest = DetailedTrainingBase & {
   type: Rest['type'];
 };
 
+export type DetailedSimulatorTraining = DetailedWarmedUpTraining & {
+  type: Simulator['type'];
+};
+
 export type DetailedSpeedTraining = DetailedIntervalsTraining & {
   type: SpeedTraining['type'];
 };
@@ -80,6 +85,7 @@ export type DetailedTraining =
   | DetailedModerateTraining
   | DetailedRecoveryTraining
   | DetailedRest
+  | DetailedSimulatorTraining
   | DetailedSpeedTraining
   | DetailedStrengthTraining
   | DetailedTimedTraining;

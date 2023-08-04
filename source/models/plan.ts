@@ -763,10 +763,10 @@ export const basePlan: Plan = [
         type: TrainingType.rest
       },
       {
-        type: TrainingType.timed,
+        type: TrainingType.moderate,
         distance: {
           distanceUnits: DistanceUnits.miles,
-          value: 10
+          value: 9.7
         }
       },
       {
@@ -784,10 +784,10 @@ export const basePlan: Plan = [
         }
       },
       {
-        type: TrainingType.moderate,
+        type: TrainingType.simulator,
         distance: {
           distanceUnits: DistanceUnits.miles,
-          value: 16
+          value: 16.3
         }
       }
     ]

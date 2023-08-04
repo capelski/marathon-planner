@@ -67,6 +67,7 @@ export const getTrainingPaces = (racePace: Pace): TrainingPaces => {
       distanceUnits: racePace.distanceUnits,
       seconds: 0
     },
+    [TrainingType.simulator]: racePace,
     [TrainingType.speed]: mergePaces(
       racePace,
       convertPace(speedPaceVariation, racePace.distanceUnits)
