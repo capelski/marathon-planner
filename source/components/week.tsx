@@ -57,7 +57,6 @@ export const Week: React.FC<WeekProps> = (props) => {
           )}
         </h4>
         <Inliner>
-          <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
           {!isMarathonWeek && (
             <React.Fragment>
               <img
@@ -67,6 +66,7 @@ export const Week: React.FC<WeekProps> = (props) => {
                 }}
                 height={20}
                 src={menuImage}
+                style={{ marginRight: 8 }}
                 width={20}
               />
               {isModalOpen && (
@@ -94,6 +94,7 @@ export const Week: React.FC<WeekProps> = (props) => {
               )}
             </React.Fragment>
           )}
+          <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
         </Inliner>
       </div>
       {!props.isCollapsed && (

@@ -32,7 +32,9 @@ export const createDistance = (value: number, distanceUnits: DistanceUnits): Dis
 };
 
 export const getDisplayDistance = (distance: Distance) => {
-  return `${Math.floor(distance.value * 10) / 10} ${distance.distanceUnits}`;
+  const value = Math.floor(distance.value * 10) / 10;
+  const hasDecimals = value % 1 !== 0;
+  return `${value}${hasDecimals ? '' : '.0'} ${distance.distanceUnits}`;
 };
 
 export const mergeDistances = (first: Distance, ...rest: Distance[]): Distance => {
