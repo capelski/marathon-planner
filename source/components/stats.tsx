@@ -1,6 +1,8 @@
 import React from 'react';
 import { totalDistanceSymbol } from '../constants';
+import { TrainingType, trainingTypeColors } from '../models';
 import { DetailedPlan } from '../types';
+import { ChartComponent } from './chart';
 import { DistanceComponent } from './distance';
 import { Inliner } from './inliner';
 import { Time } from './time';
@@ -9,22 +11,48 @@ export interface StatsComponentProps {
   plan: DetailedPlan;
 }
 
+const round = (number: number) => Math.floor(100 * number) / 100;
+
 export const StatsComponent: React.FC<StatsComponentProps> = (props) => {
+  const completed = round(props.plan.completed.distance.value);
+  const remaining = round(props.plan.remaining.distance.value);
+  const missed = round(props.plan.missed.distance.value);
+
   return (
     <div style={{ marginBottom: 12 }}>
-      <Inliner>
+      <div style={{ margin: 'auto', maxWidth: '100%', width: 300 }}>
+        <ChartComponent
+          data={[
+            {
+              backgroundColor: trainingTypeColors[TrainingType.moderate].backgroundColor,
+              label: `Completed (${completed}km)`,
+              value: completed
+            },
+            {
+              backgroundColor: trainingTypeColors[TrainingType.easy].backgroundColor,
+              label: `Remaining (${remaining}km)`,
+              value: remaining
+            },
+            {
+              label: `Missed (${missed}km)`,
+              value: missed
+            }
+          ]}
+          options={{
+            animation: {
+              duration: 0
+            },
+            legend: {
+              position: 'right'
+            }
+          }}
+          type="doughnut"
+        />
+      </div>
+
+      <Inliner style={{ marginBottom: 12, justifyContent: 'center' }}>
         <DistanceComponent distance={props.plan.total.distance} symbol={totalDistanceSymbol} />
-        (<DistanceComponent distance={props.plan.completed.distance} /> completed,{' '}
-        {Math.floor(
-          (10000 * props.plan.completed.distance.value) / props.plan.total.distance.value
-        ) / 100}
-        %)
-      </Inliner>
-      <Inliner>
         <Time seconds={props.plan.total.seconds} />
-        (<Time hideSymbol={true} seconds={props.plan.completed.seconds} /> completed,{' '}
-        {Math.floor((10000 * props.plan.completed.seconds) / props.plan.total.seconds) / 100}
-        %)
       </Inliner>
     </div>
   );

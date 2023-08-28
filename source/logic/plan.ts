@@ -19,6 +19,13 @@ export const getDetailedPlan = ({
   let startDateOffset = 0;
   const weeks = basePlan.map<DetailedWeek>((week) => {
     const isSkipped = getIsSkippedWeek(skippedWeeks, week.number);
+
+    let weekStartDate: OptionalDate = undefined;
+    if (startDate && !isSkipped) {
+      weekStartDate = addDays(startDate, startDateOffset);
+      startDateOffset += 7;
+    }
+
     const detailedTrainings = week.trainings.map<DetailedTraining>((training, index) =>
       getDetailedTraining(
         index,
@@ -26,15 +33,10 @@ export const getDetailedPlan = ({
         trainingPaces,
         warmUpDistance,
         getIsTrainingCompleted(completedTrainings, week.number, index),
-        skipRecovery
+        skipRecovery,
+        weekStartDate && addDays(weekStartDate, index)
       )
     );
-
-    let weekStartDate: OptionalDate = undefined;
-    if (startDate && !isSkipped) {
-      weekStartDate = addDays(startDate, startDateOffset);
-      startDateOffset += 7;
-    }
 
     const weekStats = getWeekTotalStats(detailedTrainings);
 

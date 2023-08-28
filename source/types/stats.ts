@@ -1,12 +1,13 @@
 import { Distance } from './distance';
 
+export type StatsFact = {
+  distance: Distance;
+  seconds: number;
+};
+
 export type Stats = {
-  completed: {
-    distance: Distance;
-    seconds: number;
-  };
-  total: {
-    distance: Distance;
-    seconds: number;
-  };
+  completed: StatsFact;
+  missed: StatsFact;
+  remaining: StatsFact;
+  total: StatsFact;
 };

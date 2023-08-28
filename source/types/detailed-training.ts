@@ -1,4 +1,5 @@
 import { TrainingCategory } from '../models';
+import { OptionalDate } from './optional-date';
 import { PacedDistance } from './paced-distance';
 import {
   EasyTraining,
@@ -31,6 +32,7 @@ export type DetailedIntervalsTraining = DetailedTrainingBase & {
 type DetailedTrainingBase = {
   number: number;
   isCompleted: boolean;
+  startDate: OptionalDate;
   totalDistance: PacedDistance;
 };
 

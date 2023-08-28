@@ -5,6 +5,7 @@ import {
   EasyTraining,
   Marathon,
   ModerateTraining,
+  OptionalDate,
   RecoveryTraining,
   Simulator,
   SpeedTraining,
@@ -22,7 +23,8 @@ const getDetailedDistanceTraining = <
   number: number,
   training: T,
   isTrainingCompleted: boolean,
-  trainingPaces: TrainingPaces
+  trainingPaces: TrainingPaces,
+  startDate: OptionalDate
 ): DetailedTraining => {
   const pace = trainingPaces[training.type];
   const pacedDistance = getPacedDistance(training.distance, pace);
@@ -31,6 +33,7 @@ const getDetailedDistanceTraining = <
     category: TrainingCategory.distance,
     isCompleted: isTrainingCompleted,
     number,
+    startDate,
     totalDistance: pacedDistance,
     type: training.type
   };
@@ -41,7 +44,8 @@ const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining
   training: T,
   isTrainingCompleted: boolean,
   trainingPaces: TrainingPaces,
-  warmUpDistance: Distance
+  warmUpDistance: Distance,
+  startDate: OptionalDate
 ): DetailedTraining => {
   const mainPace = trainingPaces[training.type];
   const recoveryPace = trainingPaces[TrainingType.recovery];
@@ -65,6 +69,7 @@ const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining
     },
     isCompleted: isTrainingCompleted,
     number,
+    startDate,
     totalDistance,
     type: training.type,
     warmUpDistance: pacedWarmedUpDistance
@@ -73,11 +78,13 @@ const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining
 
 const getDetailedRestTraining = (
   number: number,
-  trainingPaces: TrainingPaces
+  trainingPaces: TrainingPaces,
+  startDate: OptionalDate
 ): DetailedTraining => ({
   category: TrainingCategory.none,
   isCompleted: false,
   number,
+  startDate,
   totalDistance: getPacedDistance(
     createDistance(0, trainingPaces.rest.distanceUnits),
     trainingPaces.rest
@@ -91,26 +98,28 @@ export const getDetailedTraining = (
   trainingPaces: TrainingPaces,
   warmUpDistance: Distance,
   isTrainingCompleted: boolean,
-  skipRecovery: boolean
+  skipRecovery: boolean,
+  startDate: OptionalDate
 ): DetailedTraining => {
   if (skipRecovery && training.type === TrainingType.recovery) {
-    return getDetailedRestTraining(number, trainingPaces);
+    return getDetailedRestTraining(number, trainingPaces, startDate);
   }
 
   return training.type === TrainingType.easy ||
     training.type === TrainingType.marathon ||
     training.type === TrainingType.moderate ||
     training.type === TrainingType.recovery
-    ? getDetailedDistanceTraining(number, training, isTrainingCompleted, trainingPaces)
+    ? getDetailedDistanceTraining(number, training, isTrainingCompleted, trainingPaces, startDate)
     : training.type === TrainingType.rest
-    ? getDetailedRestTraining(number, trainingPaces)
+    ? getDetailedRestTraining(number, trainingPaces, startDate)
     : training.type === TrainingType.speed || training.type === TrainingType.strength
     ? getDetailedIntervalsTraining(
         number,
         training,
         isTrainingCompleted,
         trainingPaces,
-        warmUpDistance
+        warmUpDistance,
+        startDate
       )
     : getDetailedWarmedUpTraining(
         number,
@@ -119,7 +128,8 @@ export const getDetailedTraining = (
         trainingPaces,
         training.type === TrainingType.simulator
           ? createDistance(1.5, warmUpDistance.distanceUnits)
-          : warmUpDistance
+          : warmUpDistance,
+        startDate
       );
 };
 
@@ -128,7 +138,8 @@ const getDetailedWarmedUpTraining = <T extends TimedTraining | Simulator>(
   training: T,
   isTrainingCompleted: boolean,
   trainingPaces: TrainingPaces,
-  warmUpDistance: Distance
+  warmUpDistance: Distance,
+  startDate: OptionalDate
 ): DetailedTraining => {
   const mainPace = trainingPaces[training.type];
   const recoveryPace = trainingPaces[TrainingType.recovery];
@@ -146,6 +157,7 @@ const getDetailedWarmedUpTraining = <T extends TimedTraining | Simulator>(
     distance: pacedDistance,
     isCompleted: isTrainingCompleted,
     number,
+    startDate,
     totalDistance,
     type: training.type,
     warmUpDistance: pacedWarmUpDistance
