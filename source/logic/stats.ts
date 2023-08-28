@@ -1,3 +1,4 @@
+import { TrainingType } from '../models';
 import { DetailedTraining, DetailedWeek, Stats } from '../types';
 import { createDistance, mergeDistances } from './distance';
 
@@ -42,20 +43,23 @@ export const getWeekTotalStats = (detailedTrainings: DetailedTraining[]): Stats 
   };
 
   return detailedTrainings.reduce((reducedStats, training) => {
-    return {
-      completed: training.isCompleted
-        ? {
-            distance: mergeDistances(reducedStats.completed.distance, training.totalDistance),
+    return training.type === TrainingType.marathon
+      ? reducedStats
+      : {
+          completed: training.isCompleted
+            ? {
+                distance: mergeDistances(reducedStats.completed.distance, training.totalDistance),
+                seconds:
+                  reducedStats.completed.seconds +
+                  training.totalDistance.pace * training.totalDistance.value
+              }
+            : reducedStats.completed,
+          total: {
+            distance: mergeDistances(reducedStats.total.distance, training.totalDistance),
             seconds:
-              reducedStats.completed.seconds +
+              reducedStats.total.seconds +
               training.totalDistance.pace * training.totalDistance.value
           }
-        : reducedStats.completed,
-      total: {
-        distance: mergeDistances(reducedStats.total.distance, training.totalDistance),
-        seconds:
-          reducedStats.total.seconds + training.totalDistance.pace * training.totalDistance.value
-      }
-    };
+        };
   }, initialStats);
 };
