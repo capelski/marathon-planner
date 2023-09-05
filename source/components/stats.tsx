@@ -1,6 +1,5 @@
 import React from 'react';
-import { totalDistanceSymbol } from '../constants';
-import { TrainingType, trainingTypeColors } from '../models';
+import { completedColor, remainingColor, totalDistanceSymbol } from '../constants';
 import { DetailedPlan } from '../types';
 import { ChartComponent } from './chart';
 import { DistanceComponent } from './distance';
@@ -24,12 +23,12 @@ export const StatsComponent: React.FC<StatsComponentProps> = (props) => {
         <ChartComponent
           data={[
             {
-              backgroundColor: trainingTypeColors[TrainingType.moderate].backgroundColor,
+              backgroundColor: completedColor,
               label: `Completed (${completed}km)`,
               value: completed
             },
             {
-              backgroundColor: trainingTypeColors[TrainingType.easy].backgroundColor,
+              backgroundColor: remainingColor,
               label: `Remaining (${remaining}km)`,
               value: remaining
             },

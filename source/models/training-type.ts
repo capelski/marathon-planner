@@ -1,3 +1,4 @@
+import { completedColor, remainingColor } from '../constants';
 import { Dictionary } from '../types';
 
 export enum TrainingType {
@@ -29,7 +30,7 @@ export const trainingTypeColors: Dictionary<
   TrainingType
 > = {
   [TrainingType.easy]: {
-    backgroundColor: '#15546b',
+    backgroundColor: remainingColor,
     textColor: 'white'
   },
   [TrainingType.marathon]: {
@@ -37,7 +38,7 @@ export const trainingTypeColors: Dictionary<
     textColor: 'white'
   },
   [TrainingType.moderate]: {
-    backgroundColor: '#4b944c',
+    backgroundColor: completedColor,
     textColor: 'white'
   },
   [TrainingType.recovery]: {
