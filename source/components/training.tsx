@@ -1,6 +1,6 @@
 import React from 'react';
 import { currentColor, trainingCoreSymbol } from '../constants';
-import { TrainingCategory, trainingTypeColors } from '../models';
+import { TrainingCategory, TrainingType, trainingTypeColors } from '../models';
 import { DetailedTraining } from '../types';
 import { DistanceComponent } from './distance';
 import { IntervalsTraining } from './training/intervals-training';
@@ -21,7 +21,9 @@ const margin = `${spacing}px ${spacing}px 0 0`; // Right and top
 export const Training: React.FC<TrainingProps> = (props) => {
   const toggleCompleted = () => props.toggleTrainingCompleted(props.training.number);
   const isActualTraining =
-    !props.isSkippedWeek && props.training.category !== TrainingCategory.none;
+    !props.isSkippedWeek &&
+    props.training.category !== TrainingCategory.none &&
+    props.training.type !== TrainingType.marathon;
 
   return (
     <div
@@ -65,7 +67,16 @@ export const Training: React.FC<TrainingProps> = (props) => {
         }}
       >
         {props.training.category === TrainingCategory.distance ? (
-          <DistanceComponent distance={props.training.totalDistance} symbol={trainingCoreSymbol} />
+          <span
+            style={{
+              fontStyle: props.training.type === TrainingType.marathon ? 'italic' : undefined
+            }}
+          >
+            <DistanceComponent
+              distance={props.training.totalDistance}
+              symbol={trainingCoreSymbol}
+            />
+          </span>
         ) : props.training.category === TrainingCategory.intervals ? (
           <IntervalsTraining training={props.training} />
         ) : props.training.category === TrainingCategory.warmedUp ? (
