@@ -1,5 +1,6 @@
 export * from './collapsed-weeks';
 export * from './completed-trainings';
+export * from './configuration';
 export * from './detailed-training';
 export * from './dictionary';
 export * from './distance';

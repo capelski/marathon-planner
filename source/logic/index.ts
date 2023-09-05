@@ -1,5 +1,6 @@
 export * from './collapsed-weeks';
 export * from './completed-trainings';
+export * from './configuration';
 export * from './dates';
 export * from './detailed-training';
 export * from './distance';
@@ -7,5 +8,4 @@ export * from './pace';
 export * from './paced-distance';
 export * from './plan';
 export * from './skipped-weeks';
-export * from './settings';
 export * from './stats';

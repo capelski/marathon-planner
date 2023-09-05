@@ -10,24 +10,23 @@ import {
 } from '../constants';
 import { getTrainingPaces } from '../logic';
 import { TrainingType, sortedTrainingTypes, trainingTypeColors } from '../models';
-import { BaseSettings } from '../types';
+import { Settings } from '../types';
 import { Inliner } from './inliner';
 import { PaceComponent } from './pace';
 
 export interface LegendProps {
-  baseSettings: BaseSettings;
+  settings: Settings;
 }
 
 export const Legend: React.FC<LegendProps> = (props) => {
-  const trainingPaces = getTrainingPaces(props.baseSettings.racePace);
+  const trainingPaces = getTrainingPaces(props.settings.racePace);
 
   return (
     <React.Fragment>
       <h2>Legend</h2>
       {sortedTrainingTypes
         .filter(
-          (trainingType) =>
-            trainingType !== TrainingType.recovery || !props.baseSettings.skipRecovery
+          (trainingType) => trainingType !== TrainingType.recovery || !props.settings.skipRecovery
         )
         .map((trainingType) => {
           return (

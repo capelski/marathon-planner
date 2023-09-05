@@ -1,5 +1,11 @@
 import { basePlan } from '../models';
-import { DetailedPlan, DetailedTraining, DetailedWeek, OptionalDate, Settings } from '../types';
+import {
+  Configuration,
+  DetailedPlan,
+  DetailedTraining,
+  DetailedWeek,
+  OptionalDate
+} from '../types';
 import { getIsTrainingCompleted } from './completed-trainings';
 import { addDays } from './dates';
 import { getDetailedTraining } from './detailed-training';
@@ -9,12 +15,9 @@ import { getPlanTotalStats, getWeekTotalStats } from './stats';
 
 export const getDetailedPlan = ({
   completedTrainings,
-  racePace,
   skippedWeeks,
-  skipRecovery,
-  startDate,
-  warmUpDistance
-}: Settings): DetailedPlan => {
+  settings: { racePace, skipRecovery, startDate, warmUpDistance }
+}: Configuration): DetailedPlan => {
   const trainingPaces = getTrainingPaces(racePace);
   let startDateOffset = 0;
   const weeks = basePlan.map<DetailedWeek>((week) => {

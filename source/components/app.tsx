@@ -2,118 +2,96 @@ import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import collapseImage from '../../static/images/collapse.png';
 import expandImage from '../../static/images/expand.png';
-import { defaultBaseSettings, defaultCompletedTrainings, defaultSkippedWeeks } from '../constants';
+import { defaultConfiguration } from '../constants';
 import {
   getDetailedPlan,
-  persistSettings,
+  persistConfiguration,
+  retrieveConfiguration,
+  toggleAllCollapsedWeeks,
+  toggleCollapsedWeek,
   toggleSkippedWeek,
-  toggleTrainingCompleted,
-  retrieveSettings,
-  retrieveCollapsedWeeks,
-  persistCollapsedWeeks
+  toggleTrainingCompleted
 } from '../logic';
-import { BaseSettings, CollapsedWeeks, Settings } from '../types';
-import { BaseSettingsComponent } from './base-settings';
+import { Configuration, Settings } from '../types';
 import { Inliner } from './inliner';
 import { Legend } from './legend';
 import { Modal } from './modal';
 import { Plan } from './plan';
+import { SettingsComponent } from './settings';
 
 export const App: React.FC = () => {
-  const [baseSettings, setBaseSettings] = useState(defaultBaseSettings);
-  const [collapsedWeeks, setCollapsedWeeks] = useState<CollapsedWeeks>({});
-  const [completedTrainings, setCompletedTrainings] = useState(defaultCompletedTrainings);
-  const [skippedWeeks, setSkippedWeeks] = useState(defaultSkippedWeeks);
+  const [configuration, setConfiguration] = useState(defaultConfiguration);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [plan, setPlan] = useState(
-    getDetailedPlan({
-      ...defaultBaseSettings,
-      completedTrainings: defaultCompletedTrainings,
-      skippedWeeks: defaultSkippedWeeks
-    })
-  );
+  const [plan, setPlan] = useState(getDetailedPlan(defaultConfiguration));
 
-  const areAllWeeksCollapsed = plan.weeks.every((week) => collapsedWeeks[week.number]);
+  const areAllWeeksCollapsed = plan.weeks.every(
+    (week) => configuration.collapsedWeeks[week.number]
+  );
 
   const isDesktop = useMediaQuery({ minWidth: 768 });
 
-  const baseSettingsChange = (nextBaseSettings: BaseSettings) => {
-    setBaseSettings(nextBaseSettings);
-    settingsUpdate({
-      ...nextBaseSettings,
-      completedTrainings,
-      skippedWeeks
+  const settingsChangeHandler = (nextSettings: Settings) => {
+    updateConfiguration({
+      ...configuration,
+      settings: nextSettings
     });
   };
 
-  const settingsUpdate = (settings: Settings) => {
-    setPlan(getDetailedPlan(settings));
-    persistSettings(settings);
+  const toggleAllCollapsedWeeksHandler = () => {
+    const nextCollapsedWeeks = toggleAllCollapsedWeeks(plan, !areAllWeeksCollapsed);
+
+    updateConfiguration({
+      ...configuration,
+      collapsedWeeks: nextCollapsedWeeks
+    });
   };
 
-  const skippedWeekChange = (weekNumber: number) => {
-    const nextSkippedWeeks = toggleSkippedWeek(skippedWeeks, weekNumber);
-    setSkippedWeeks(nextSkippedWeeks);
-    settingsUpdate({
-      ...baseSettings,
-      completedTrainings,
+  const toggleCollapsedWeekHandler = (weekNumber: number) => {
+    const nextCollapsedWeeks = toggleCollapsedWeek(configuration.collapsedWeeks, weekNumber);
+
+    updateConfiguration({
+      ...configuration,
+      collapsedWeeks: nextCollapsedWeeks
+    });
+  };
+
+  const toggleSkippedWeekHandler = (weekNumber: number) => {
+    const nextSkippedWeeks = toggleSkippedWeek(configuration.skippedWeeks, weekNumber);
+
+    updateConfiguration({
+      ...configuration,
       skippedWeeks: nextSkippedWeeks
     });
   };
 
-  const trainingCompletedChange = (weekNumber: number, trainingNumber: number) => {
+  const toggleTrainingCompletedHandler = (weekNumber: number, trainingNumber: number) => {
     const nextCompletedTrainings = toggleTrainingCompleted(
-      completedTrainings,
+      configuration.completedTrainings,
       weekNumber,
       trainingNumber
     );
-    setCompletedTrainings(nextCompletedTrainings);
-    settingsUpdate({
-      ...baseSettings,
-      completedTrainings: nextCompletedTrainings,
-      skippedWeeks
+
+    updateConfiguration({
+      ...configuration,
+      completedTrainings: nextCompletedTrainings
     });
   };
 
-  const collapsedWeekChange = (weekNumber: number) => {
-    const nextCollapsedWeeks = {
-      ...collapsedWeeks,
-      [weekNumber]: !collapsedWeeks[weekNumber]
-    };
-    setCollapsedWeeks(nextCollapsedWeeks);
-    persistCollapsedWeeks(nextCollapsedWeeks);
-  };
-
-  const toggleCollapsedWeeks = () => {
-    const nextCollapsedWeeks = areAllWeeksCollapsed
-      ? {}
-      : plan.weeks.reduce(
-          (_collapsedWeeks, week) => ({ ..._collapsedWeeks, [week.number]: true }),
-          {}
-        );
-    setCollapsedWeeks(nextCollapsedWeeks);
-    persistCollapsedWeeks(nextCollapsedWeeks);
+  const updateConfiguration = (
+    nextConfiguration: Configuration,
+    { persist }: { persist?: boolean } = { persist: true }
+  ) => {
+    setConfiguration(nextConfiguration);
+    setPlan(getDetailedPlan(nextConfiguration));
+    if (persist) {
+      persistConfiguration(nextConfiguration);
+    }
   };
 
   useEffect(() => {
-    const settings = retrieveSettings();
-    if (settings) {
-      setBaseSettings({
-        distanceUnits: settings.distanceUnits,
-        racePace: settings.racePace,
-        skipRecovery: settings.skipRecovery,
-        startDate: settings.startDate,
-        warmUpDistance: settings.warmUpDistance
-      });
-      setCompletedTrainings(settings.completedTrainings);
-      setSkippedWeeks(settings.skippedWeeks);
-
-      setPlan(getDetailedPlan(settings));
-    }
-
-    const nextCollapsedWeeks = retrieveCollapsedWeeks();
-    if (nextCollapsedWeeks) {
-      setCollapsedWeeks(nextCollapsedWeeks);
+    const configuration = retrieveConfiguration();
+    if (configuration) {
+      updateConfiguration(configuration, { persist: false });
     }
   }, []);
 
@@ -124,7 +102,7 @@ export const App: React.FC = () => {
         <Inliner>
           <img
             height={28}
-            onClick={toggleCollapsedWeeks}
+            onClick={toggleAllCollapsedWeeksHandler}
             src={areAllWeeksCollapsed ? expandImage : collapseImage}
             style={{ cursor: 'pointer', paddingRight: 8 }}
             width={28}
@@ -140,20 +118,23 @@ export const App: React.FC = () => {
 
       {isModalOpen && (
         <Modal closeHandler={() => setIsModalOpen(false)}>
-          <BaseSettingsComponent baseSettings={baseSettings} setBaseSettings={baseSettingsChange} />
+          <SettingsComponent
+            settings={configuration.settings}
+            setSettings={settingsChangeHandler}
+          />
         </Modal>
       )}
 
       <Plan
-        collapsedWeeks={collapsedWeeks}
+        collapsedWeeks={configuration.collapsedWeeks}
         isDesktop={isDesktop}
         plan={plan}
-        toggleCollapsedWeek={collapsedWeekChange}
-        toggleSkippedWeek={skippedWeekChange}
-        toggleTrainingCompleted={trainingCompletedChange}
+        toggleCollapsedWeek={toggleCollapsedWeekHandler}
+        toggleSkippedWeek={toggleSkippedWeekHandler}
+        toggleTrainingCompleted={toggleTrainingCompletedHandler}
       />
 
-      <Legend baseSettings={baseSettings} />
+      <Legend settings={configuration.settings} />
     </div>
   );
 };

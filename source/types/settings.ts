@@ -1,19 +1,12 @@
 import { DistanceUnits } from '../models';
-import { CompletedTrainings } from './completed-trainings';
 import { Distance } from './distance';
 import { OptionalDate } from './optional-date';
 import { Pace } from './pace';
-import { SkippedWeeks } from './skipped-weeks';
 
-export type BaseSettings = {
+export type Settings = {
   distanceUnits: DistanceUnits;
   racePace: Pace;
   skipRecovery: boolean;
   startDate: OptionalDate;
   warmUpDistance: Distance;
-};
-
-export type Settings = BaseSettings & {
-  completedTrainings: CompletedTrainings;
-  skippedWeeks: SkippedWeeks;
 };
