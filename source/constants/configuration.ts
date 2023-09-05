@@ -1,16 +1,9 @@
-import { DistanceUnits, warmUpDistances } from '../models';
 import { Configuration } from '../types';
-import { defaultRacePace } from './pace';
+import { defaultSettings } from './settings';
 
 export const defaultConfiguration: Configuration = {
   collapsedWeeks: {},
   completedTrainings: {},
-  settings: {
-    distanceUnits: DistanceUnits.kilometers,
-    racePace: defaultRacePace,
-    skipRecovery: true,
-    startDate: undefined,
-    warmUpDistance: warmUpDistances[0]
-  },
+  settings: defaultSettings,
   skippedWeeks: {}
 };
