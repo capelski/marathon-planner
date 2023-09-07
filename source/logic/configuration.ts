@@ -21,9 +21,9 @@ export const retrieveConfiguration = (): Configuration | undefined => {
     JSON.parse(stringifiedConfiguration);
 
   const configuration: Configuration = {
-    collapsedWeeks: partialConfiguration.collapsedWeeks ?? defaultConfiguration.collapsedWeeks,
     completedTrainings:
       partialConfiguration.completedTrainings ?? defaultConfiguration.completedTrainings,
+    expandedWeeks: partialConfiguration.expandedWeeks ?? defaultConfiguration.expandedWeeks,
     settings: {
       distanceUnits:
         partialConfiguration.settings?.distanceUnits ?? defaultConfiguration.settings.distanceUnits,

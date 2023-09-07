@@ -10,9 +10,9 @@ import { Modal } from './modal';
 import { Training } from './training';
 
 export interface WeekProps {
-  isCollapsed?: boolean;
   isDesktop: boolean;
-  toggleIsCollapsed: () => void;
+  isExpanded?: boolean;
+  toggleExpandedWeek: () => void;
   toggleSkippedWeek: (weekNumber: number) => void;
   toggleTrainingCompleted: (weekNumber: number, trainingNumber: number) => void;
   week: DetailedWeek;
@@ -29,7 +29,7 @@ export const Week: React.FC<WeekProps> = (props) => {
 
   const now = new Date();
   const isCurrentWeek =
-    props.isCollapsed &&
+    !props.isExpanded &&
     props.week.startDate &&
     props.week.startDate < now &&
     addDays(props.week.startDate, 7) > now;
@@ -39,7 +39,7 @@ export const Week: React.FC<WeekProps> = (props) => {
   return (
     <div>
       <div
-        onClick={props.toggleIsCollapsed}
+        onClick={props.toggleExpandedWeek}
         style={{
           alignItems: 'center',
           backgroundColor: isCurrentWeek ? currentColor : undefined,
@@ -48,7 +48,7 @@ export const Week: React.FC<WeekProps> = (props) => {
         }}
       >
         <h4 style={{ flexGrow: 1, marginBottom: 8, marginTop: 8 }}>
-          <span>{props.isCollapsed ? '☞' : '☟'}</span> Week {props.week.number}
+          <span>{props.isExpanded ? '☟' : '☞'}</span> Week {props.week.number}
           {props.week.startDate && (
             <span style={{ fontWeight: 'normal' }}> - {dateToIsoString(props.week.startDate)}</span>
           )}
@@ -97,7 +97,7 @@ export const Week: React.FC<WeekProps> = (props) => {
           <DistanceComponent distance={props.week.total.distance} symbol={totalDistanceSymbol} />
         </Inliner>
       </div>
-      {!props.isCollapsed && (
+      {props.isExpanded && (
         <div style={{ paddingLeft: 20 }}>
           <div
             className="week"

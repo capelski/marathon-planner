@@ -7,8 +7,8 @@ import {
   getDetailedPlan,
   persistConfiguration,
   retrieveConfiguration,
-  toggleAllCollapsedWeeks,
-  toggleCollapsedWeek,
+  toggleAllExpandedWeeks,
+  toggleExpandedWeek,
   toggleSkippedWeek,
   toggleTrainingCompleted
 } from '../logic';
@@ -25,7 +25,7 @@ export const App: React.FC = () => {
   const [plan, setPlan] = useState(getDetailedPlan(defaultConfiguration));
 
   const areAllWeeksCollapsed = plan.weeks.every(
-    (week) => configuration.collapsedWeeks[week.number]
+    (week) => !configuration.expandedWeeks[week.number]
   );
 
   const isDesktop = useMediaQuery({ minWidth: 768 });
@@ -37,21 +37,21 @@ export const App: React.FC = () => {
     });
   };
 
-  const toggleAllCollapsedWeeksHandler = () => {
-    const nextCollapsedWeeks = toggleAllCollapsedWeeks(plan, !areAllWeeksCollapsed);
+  const toggleAllExpandedWeeksHandler = () => {
+    const nextExpandedWeeks = toggleAllExpandedWeeks(plan, areAllWeeksCollapsed);
 
     updateConfiguration({
       ...configuration,
-      collapsedWeeks: nextCollapsedWeeks
+      expandedWeeks: nextExpandedWeeks
     });
   };
 
-  const toggleCollapsedWeekHandler = (weekNumber: number) => {
-    const nextCollapsedWeeks = toggleCollapsedWeek(configuration.collapsedWeeks, weekNumber);
+  const toggleExpandedWeekHandler = (weekNumber: number) => {
+    const nextExpandedWeeks = toggleExpandedWeek(configuration.expandedWeeks, weekNumber);
 
     updateConfiguration({
       ...configuration,
-      collapsedWeeks: nextCollapsedWeeks
+      expandedWeeks: nextExpandedWeeks
     });
   };
 
@@ -102,7 +102,7 @@ export const App: React.FC = () => {
         <Inliner>
           <img
             height={28}
-            onClick={toggleAllCollapsedWeeksHandler}
+            onClick={toggleAllExpandedWeeksHandler}
             src={areAllWeeksCollapsed ? expandImage : collapseImage}
             style={{ cursor: 'pointer', paddingRight: 8 }}
             width={28}
@@ -126,10 +126,10 @@ export const App: React.FC = () => {
       )}
 
       <Plan
-        collapsedWeeks={configuration.collapsedWeeks}
+        expanded={configuration.expandedWeeks}
         isDesktop={isDesktop}
         plan={plan}
-        toggleCollapsedWeek={toggleCollapsedWeekHandler}
+        toggleExpandedWeek={toggleExpandedWeekHandler}
         toggleSkippedWeek={toggleSkippedWeekHandler}
         toggleTrainingCompleted={toggleTrainingCompletedHandler}
       />
