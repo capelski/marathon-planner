@@ -17,8 +17,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = (props) => {
       <div style={{ display: 'inline-block', marginLeft: 4 }}>
         {props.options.map((option) => {
           return (
-            <React.Fragment key={option.value}>
-              {' '}
+            <span key={option.value} style={{ whiteSpace: 'nowrap' }}>
               <input
                 checked={props.value === option.value}
                 name={props.name}
@@ -27,7 +26,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = (props) => {
                 value={option.value}
               />{' '}
               {option.label || option.value}
-            </React.Fragment>
+            </span>
           );
         })}
       </div>
