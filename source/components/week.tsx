@@ -19,7 +19,7 @@ export interface WeekProps {
 }
 
 export const Week: React.FC<WeekProps> = (props) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [displayWeekMenu, setDisplayWeekMenu] = useState(false);
 
   const weekDays =
     props.week.startDate &&
@@ -62,34 +62,24 @@ export const Week: React.FC<WeekProps> = (props) => {
               <img
                 onClick={(event) => {
                   event.stopPropagation();
-                  setIsModalOpen(true);
+                  setDisplayWeekMenu(true);
                 }}
                 height={20}
                 src={menuImage}
                 style={{ marginRight: 8 }}
                 width={20}
               />
-              {isModalOpen && (
-                <Modal closeHandler={() => setIsModalOpen(false)}>
-                  <div
-                    style={{
-                      alignItems: 'center',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      height: '100%'
+              {displayWeekMenu && (
+                <Modal closeHandler={() => setDisplayWeekMenu(false)}>
+                  <button
+                    onClick={() => {
+                      setDisplayWeekMenu(false);
+                      props.toggleSkippedWeek(props.week.number);
                     }}
+                    style={{ minWidth: '150px' }}
                   >
-                    <button
-                      onClick={() => {
-                        setIsModalOpen(false);
-                        props.toggleSkippedWeek(props.week.number);
-                      }}
-                      style={{ minWidth: '150px' }}
-                    >
-                      {props.week.isSkipped ? '✅ Enable' : '❌ Skip'}
-                    </button>
-                  </div>
+                    {props.week.isSkipped ? '✅ Enable' : '❌ Skip'}
+                  </button>
                 </Modal>
               )}
             </React.Fragment>

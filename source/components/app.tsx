@@ -21,7 +21,7 @@ import { SettingsComponent } from './settings';
 
 export const App: React.FC = () => {
   const [configuration, setConfiguration] = useState(defaultConfiguration);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [displaySettingsMenu, setDisplaySettingsMenu] = useState(false);
   const [plan, setPlan] = useState(getDetailedPlan(defaultConfiguration));
 
   const areAllWeeksCollapsed = plan.weeks.every(
@@ -109,15 +109,18 @@ export const App: React.FC = () => {
           />
           <span
             style={{ cursor: 'pointer', fontSize: 24, paddingRight: 8 }}
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setDisplaySettingsMenu(true)}
           >
             ⚙️
           </span>
         </Inliner>
       </Inliner>
 
-      {isModalOpen && (
-        <Modal closeHandler={() => setIsModalOpen(false)}>
+      {displaySettingsMenu && (
+        <Modal
+          closeHandler={() => setDisplaySettingsMenu(false)}
+          style={{ alignItems: 'baseline' }}
+        >
           <SettingsComponent
             settings={configuration.settings}
             setSettings={settingsChangeHandler}
