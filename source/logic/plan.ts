@@ -1,11 +1,5 @@
 import { basePlan } from '../models';
-import {
-  Configuration,
-  DetailedPlan,
-  DetailedTraining,
-  DetailedWeek,
-  OptionalDate
-} from '../types';
+import { Configuration, DetailedPlan, DetailedTraining, DetailedWeek } from '../types';
 import { getIsTrainingCompleted } from './completed-trainings';
 import { addDays } from './dates';
 import { getDetailedTraining } from './detailed-training';
@@ -23,7 +17,7 @@ export const getDetailedPlan = ({
   const weeks = basePlan.map<DetailedWeek>((week) => {
     const isSkipped = getIsSkippedWeek(skippedWeeks, week.number);
 
-    let weekStartDate: OptionalDate = undefined;
+    let weekStartDate: Date | undefined = undefined;
     if (startDate && !isSkipped) {
       weekStartDate = addDays(startDate, startDateOffset);
       startDateOffset += 7;

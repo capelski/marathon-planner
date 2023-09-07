@@ -4,7 +4,6 @@ export * from './detailed-training';
 export * from './dictionary';
 export * from './distance';
 export * from './expanded-weeks';
-export * from './optional-date';
 export * from './pace';
 export * from './paced-distance';
 export * from './plan';

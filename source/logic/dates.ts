@@ -1,4 +1,4 @@
-import { Dictionary, OptionalDate } from '../types';
+import { Dictionary } from '../types';
 
 const weekDays: Dictionary<string, number> = {
   0: 'Sunday',
@@ -21,8 +21,7 @@ export const addDays = (date: Date, days: number) => {
   return nextDate;
 };
 
-export const dateToIsoString = (date: OptionalDate) =>
-  date ? date.toISOString().split('T')[0] : '';
+export const dateToIsoString = (date?: Date) => (date ? date.toISOString().split('T')[0] : '');
 
 export const getDisplayWeekDays = (date: Date) => {
   // '2022-03-29', Tuesday, would be displayed as Monday in GMT-X

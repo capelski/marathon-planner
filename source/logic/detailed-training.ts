@@ -5,7 +5,6 @@ import {
   EasyTraining,
   Marathon,
   ModerateTraining,
-  OptionalDate,
   RecoveryTraining,
   Simulator,
   SpeedTraining,
@@ -24,7 +23,7 @@ const getDetailedDistanceTraining = <
   training: T,
   isTrainingCompleted: boolean,
   trainingPaces: TrainingPaces,
-  startDate: OptionalDate
+  startDate?: Date
 ): DetailedTraining => {
   const pace = trainingPaces[training.type];
   const pacedDistance = getPacedDistance(training.distance, pace);
@@ -45,7 +44,7 @@ const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining
   isTrainingCompleted: boolean,
   trainingPaces: TrainingPaces,
   warmUpDistance: Distance,
-  startDate: OptionalDate
+  startDate?: Date
 ): DetailedTraining => {
   const mainPace = trainingPaces[training.type];
   const recoveryPace = trainingPaces[TrainingType.recovery];
@@ -79,7 +78,7 @@ const getDetailedIntervalsTraining = <T extends SpeedTraining | StrengthTraining
 const getDetailedRestTraining = (
   number: number,
   trainingPaces: TrainingPaces,
-  startDate: OptionalDate
+  startDate?: Date
 ): DetailedTraining => ({
   category: TrainingCategory.none,
   isCompleted: false,
@@ -99,7 +98,7 @@ export const getDetailedTraining = (
   warmUpDistance: Distance,
   isTrainingCompleted: boolean,
   skipRecovery: boolean,
-  startDate: OptionalDate
+  startDate?: Date
 ): DetailedTraining => {
   if (skipRecovery && training.type === TrainingType.recovery) {
     return getDetailedRestTraining(number, trainingPaces, startDate);
@@ -139,7 +138,7 @@ const getDetailedWarmedUpTraining = <T extends TimedTraining | Simulator>(
   isTrainingCompleted: boolean,
   trainingPaces: TrainingPaces,
   warmUpDistance: Distance,
-  startDate: OptionalDate
+  startDate?: Date
 ): DetailedTraining => {
   const mainPace = trainingPaces[training.type];
   const recoveryPace = trainingPaces[TrainingType.recovery];
