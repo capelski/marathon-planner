@@ -1,11 +1,10 @@
 import { defaultConfiguration } from '../constants';
-import { Configuration, Settings } from '../types';
+import { Configuration } from '../types';
 import { isoStringToLocalDate } from './dates';
 
 const configurationKey = 'settings';
 
-type SerializedSettings = Omit<Settings, 'startDate'> & { startDate: string };
-type SerializedConfiguration = Omit<Configuration, 'settings'> & { settings: SerializedSettings };
+type SerializedConfiguration = Omit<Configuration, 'startDate'> & { startDate?: string };
 
 export const persistConfiguration = (configuration: Configuration) => {
   localStorage.setItem(configurationKey, JSON.stringify(configuration));
@@ -30,11 +29,11 @@ export const retrieveConfiguration = (): Configuration | undefined => {
       racePace: partialConfiguration.settings?.racePace ?? defaultConfiguration.settings.racePace,
       skipRecovery:
         partialConfiguration.settings?.skipRecovery ?? defaultConfiguration.settings.skipRecovery,
-      startDate: isoStringToLocalDate(partialConfiguration.settings?.startDate),
       warmUpDistance:
         defaultConfiguration.settings.warmUpDistance ?? defaultConfiguration.settings.warmUpDistance
     },
-    skippedWeeks: partialConfiguration.skippedWeeks ?? defaultConfiguration.skippedWeeks
+    skippedWeeks: partialConfiguration.skippedWeeks ?? defaultConfiguration.skippedWeeks,
+    startDate: isoStringToLocalDate(partialConfiguration.startDate)
   };
 
   return configuration;

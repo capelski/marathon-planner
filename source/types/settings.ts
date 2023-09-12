@@ -6,6 +6,5 @@ export type Settings = {
   distanceUnits: DistanceUnits;
   racePace: Pace;
   skipRecovery: boolean;
-  startDate?: Date;
   warmUpDistance: Distance;
 };

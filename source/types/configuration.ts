@@ -8,4 +8,5 @@ export type Configuration = {
   expandedWeeks: ExpandedWeeks;
   settings: Settings;
   skippedWeeks: SkippedWeeks;
+  startDate?: Date;
 };

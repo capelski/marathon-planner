@@ -6,6 +6,5 @@ export const defaultSettings: Settings = {
   distanceUnits: DistanceUnits.kilometers,
   racePace: defaultRacePace,
   skipRecovery: true,
-  startDate: undefined,
   warmUpDistance: warmUpDistances[0]
 };

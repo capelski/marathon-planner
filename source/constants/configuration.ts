@@ -5,5 +5,6 @@ export const defaultConfiguration: Configuration = {
   completedTrainings: {},
   expandedWeeks: { 1: true },
   settings: defaultSettings,
-  skippedWeeks: {}
+  skippedWeeks: {},
+  startDate: undefined
 };

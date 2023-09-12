@@ -12,12 +12,12 @@ import {
   toggleSkippedWeek,
   toggleTrainingCompleted
 } from '../logic';
-import { Configuration, Settings } from '../types';
+import { Configuration } from '../types';
+import { ConfigurationComponent } from './configuration';
 import { Inliner } from './inliner';
 import { Legend } from './legend';
 import { Modal } from './modal';
 import { Plan } from './plan';
-import { SettingsComponent } from './settings';
 
 export const App: React.FC = () => {
   const [configuration, setConfiguration] = useState(defaultConfiguration);
@@ -29,13 +29,6 @@ export const App: React.FC = () => {
   );
 
   const isDesktop = useMediaQuery({ minWidth: 768 });
-
-  const settingsChangeHandler = (nextSettings: Settings) => {
-    updateConfiguration({
-      ...configuration,
-      settings: nextSettings
-    });
-  };
 
   const toggleAllExpandedWeeksHandler = () => {
     const nextExpandedWeeks = toggleAllExpandedWeeks(plan, areAllWeeksCollapsed);
@@ -117,17 +110,13 @@ export const App: React.FC = () => {
       </Inliner>
 
       {displaySettingsMenu && (
-        <Modal
-          closeHandler={() => setDisplaySettingsMenu(false)}
-          style={{ alignItems: 'baseline' }}
-        >
-          <SettingsComponent
-            settings={configuration.settings}
-            setSettings={settingsChangeHandler}
+        <Modal closeHandler={() => setDisplaySettingsMenu(false)} style={{ textAlign: 'center' }}>
+          <ConfigurationComponent
+            configuration={configuration}
+            updateConfiguration={updateConfiguration}
           />
         </Modal>
       )}
-
       <Plan
         expanded={configuration.expandedWeeks}
         isDesktop={isDesktop}

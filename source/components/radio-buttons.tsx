@@ -12,9 +12,9 @@ export interface RadioButtonsProps {
 export const RadioButtons: React.FC<RadioButtonsProps> = (props) => {
   return (
     <div style={props.style}>
-      {`${props.label}: `}
+      {props.label}
       <br />
-      <div style={{ display: 'inline-block', marginLeft: 4 }}>
+      <div style={{ display: 'inline-block', marginLeft: 4, marginTop: 4 }}>
         {props.options.map((option) => {
           return (
             <span key={option.value} style={{ whiteSpace: 'nowrap' }}>
