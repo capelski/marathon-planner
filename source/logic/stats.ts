@@ -58,13 +58,13 @@ export const getWeekTotalStats = (detailedTrainings: DetailedTraining[]): Stats 
             ? processDetailedTraining(reducedStats.completed, training)
             : reducedStats.completed,
           missed:
-            isPastTraining && !training.isCompleted
+            !training.isCompleted && isPastTraining
               ? processDetailedTraining(reducedStats.missed, training)
               : reducedStats.missed,
           remaining:
-            !isPastTraining && !training.isCompleted
+            !training.isCompleted && !isPastTraining
               ? processDetailedTraining(reducedStats.remaining, training)
-              : reducedStats.missed,
+              : reducedStats.remaining,
           total: processDetailedTraining(reducedStats.total, training)
         };
   }, initialStats);
