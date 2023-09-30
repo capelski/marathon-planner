@@ -31,6 +31,7 @@ export const ChartComponent: React.FC<ChartComponentProps> = (props) => {
             datasets: [
               {
                 backgroundColor: props.data.map((x) => x.backgroundColor || ''),
+                borderWidth: 0,
                 data: props.data.map((x) => x.value)
               }
             ]
